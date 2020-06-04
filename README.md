@@ -2,4 +2,6 @@
 Food Delivery Application
 - MongoDB
 - NodeJS
-- React
+- HTML
+- CSS
+- JavaScript
