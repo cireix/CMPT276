@@ -10,8 +10,6 @@ Alcohol Delivery Application
 - Apple Store
 - Android
 
-
-
 # APIs
 - Google Maps API
 - Firebase
