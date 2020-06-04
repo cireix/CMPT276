@@ -22,4 +22,6 @@ Alcohol Delivery Application
 - Driver
 - Admin
 
+# Function
+- Favourite Section
 
