@@ -7,3 +7,5 @@ Food Delivery Application
 - JavaScript
 
 - Persistent Web Application ??
+- Apple Store
+- Android
