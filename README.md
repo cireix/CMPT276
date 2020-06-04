@@ -15,6 +15,7 @@ Alcohol Delivery Application
 - Firebase
 - BC Liquor Store
 - Twilio API
+- Stripe API
 
 # Partitions
 - Client
@@ -23,4 +24,5 @@ Alcohol Delivery Application
 
 # Functions
 - Favourite Section
+
 
