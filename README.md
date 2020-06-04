@@ -20,5 +20,6 @@ Alcohol Delivery Application
 # Partitions
 - Client
 - Driver
+- Admin
 
 
