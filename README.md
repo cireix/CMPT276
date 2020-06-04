@@ -17,7 +17,7 @@ Alcohol Delivery Application
 - Firebase
 - BC Liquor Store
 
-#Partitions
+# Partitions
 - Client
 - Driver
 
