@@ -1,5 +1,5 @@
 # CMPT276
-Food Delivery Application
+Alcohol Delivery Application
 - MongoDB
 - NodeJS
 - HTML
@@ -9,3 +9,16 @@ Food Delivery Application
 - Persistent Web Application ??
 - Apple Store
 - Android
+
+
+
+# APIs
+- Google Maps Api
+- Firebase
+- BC Liquor Store
+
+#Partitions
+- Client
+- Driver
+
+
