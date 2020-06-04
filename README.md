@@ -13,9 +13,10 @@ Alcohol Delivery Application
 
 
 # APIs
-- Google Maps Api
+- Google Maps API
 - Firebase
 - BC Liquor Store
+- Twilio API
 
 # Partitions
 - Client
