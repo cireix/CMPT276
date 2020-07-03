@@ -18,7 +18,7 @@ function generateCode() {
 
 var needVerification = {}
 
-
+//Don't have needVerification in server, move to mongoDB
 router.post("/register", (req, res) => {
 	// Form validation
 	const { errors, isValid } = validateRegisterInput(req.body);
