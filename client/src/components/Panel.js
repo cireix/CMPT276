@@ -11,7 +11,9 @@ class Panel extends React.Component {
     // Open a popup panel
     open = (options) => {
         const { component, callback, user } = options;
+        // create a time stamp
         const _key = new Date().getTime();
+        // create a renderable component in the Panel component with close function, a time stamp and a ser object
         const _component = React.createElement(component, { close: this.close, key: _key, user: user });  
         this.setState({
             component: _component,

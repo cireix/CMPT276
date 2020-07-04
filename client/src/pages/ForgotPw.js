@@ -26,7 +26,7 @@ export default function ForgotPw(props) {
                         <div class="field is-expanded">
                             <div class="field has-addons">
                                 <p class="control">
-                                <a class="button is-static">+1</a>
+                                <p class="button is-static">+1</p>
                                 </p>
                                 <input 
                                 type="text" 

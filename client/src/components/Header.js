@@ -11,9 +11,11 @@ const Header = (props) => {
             component: UserProfile,
             user: props.user,
             callback: data => {
-                console.log(data)
                 if ( data === 'logout' ) {
                     props.history.go(0);   
+                }
+                if ( data === 'allusers' ) {
+                    props.history.push('/admin/allusers');
                 }
             }
         })
