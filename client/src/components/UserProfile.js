@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'; 
 
 export default function UserProfile(props) {
 
@@ -28,7 +29,13 @@ export default function UserProfile(props) {
                 <div className="field">
                     <label className="label">Type</label>
                     <div className="control">
-                        <input className="input" type="text" defaultValue={props.user.type === 1 ? "Admin" : "General User"} />
+                        <input 
+                        className="input" 
+                        type="text" 
+                        defaultValue={
+                            props.user.type === 1 ? "Admin" : 
+                            [props.user.type === 2 ? "Driver" : 
+                            "General User"]} />
                     </div>
                 </div>
             </fieldset>
@@ -37,11 +44,13 @@ export default function UserProfile(props) {
             <br />
             <div className="field is-grouped is-grouped-centered">
                 <div className="control">
-                    <button className="button is-dangered" onClick={logout}>Logout</button>
+                    <button className="button is-danger" onClick={logout}>Logout</button>
                 </div>
-                <div className="control">
-                    <button className="button" onClick={() => {props.close();}}>Cancel</button>
-                </div>
+                { props.user.type === 1 ? (
+                    <div className="control">
+                        <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
+                    </div>
+                ) : (null) }
             </div>
         </div>
     )

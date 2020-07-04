@@ -5,6 +5,7 @@ import Login from 'pages/Login';
 import SignUp from 'pages/SignUp';
 import ForgotPw from 'pages/ForgotPw';
 import ResetPw from 'pages/ResetPw';
+import AllUsers from 'pages/AllUsers';
 
 const Router = () => (
     <BrowserRouter>
@@ -14,6 +15,7 @@ const Router = () => (
             <Route path='/signup' component={SignUp} />
             <Route path='/forgotpw' component={ForgotPw} />
             <Route path='/resetpw' component={ResetPw} />
+            <Route path='/admin/allusers' component={AllUsers} />
         </Switch>
     </BrowserRouter>
 )
