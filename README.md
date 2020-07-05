@@ -12,7 +12,6 @@ Alcohol Delivery Application
 
 # APIs
 - Google Maps API
-- Firebase
 - BC Liquor Store
 - Twilio API
 - Stripe API
