@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'; 
 import axios from 'commons/axios';
 import { toast } from 'react-toastify';
+import decode from 'jwt-decode';
 
 
 export default function Login(props)  {
@@ -10,11 +11,13 @@ export default function Login(props)  {
 
     const submitHnadler = async (data) => {
         try {
+            //global.auth.logOut();
             const { phoneNumber, password } = data;
             // post to server side for login
-            const res = await axios.post('/auth/login', { phoneNumber, password });  
+            const res = await axios.post('/api/users/login', { phone:phoneNumber, password: password });  
             // receive a jwtoken from server side if success
-            const jwToken = res.data;
+            const jwToken = res.data.token.replace('Bearer ','');
+            console.log(decode(jwToken));
             // store the token locally
             global.auth.setToken(jwToken);  
             // route to the home page

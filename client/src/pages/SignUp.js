@@ -2,17 +2,28 @@ import React from 'react';
 import {useForm} from 'react-hook-form';
 import axios from 'commons/axios';
 import { toast } from 'react-toastify';
+import decode from 'jwt-decode';
 
 export default function Login(props) {
     const { register, handleSubmit, errors, watch } = useForm();
     
-    const submitHandler = async (data) => {    
-        try {
+    const onSubmit = data => {    
+
             const { nickname, phoneNumber, password } = data;
+            // post to server side for register        
+            axios.post('/api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
+            .catch((err)=>console.log(err));
+
+    };
+
+    const onSubmit2 = async(data) => {    
+        try {
+            const { phoneNumber, code } = data;
             // post to server side for register
-            const res = await axios.post('/auth/signup', { nickname, phoneNumber, password, type: 0 });  
+            const res = await axios.post('/api/users/register2', { phone: phoneNumber,code });  
             // receive a jwtoken from server side if successful
-            const jwToken = res.data;
+            const jwToken = res.data.token.replace('Bearer ','');
+            console.log(decode(jwToken));
             // store the token locally
             global.auth.setToken(jwToken); 
             // route to the home page 
@@ -22,12 +33,12 @@ export default function Login(props) {
             console.log(error);
             toast.error("This phone number already exists");
         }
+};
 
-    };
 
     return(
         <div className="login_wrapper">
-            <form className="box login_box" onSubmit={ handleSubmit(submitHandler) }>
+            <form className="box login_box" >
                 <div className="field">
                     <label className="label">Name</label>
                     <div className="control">
@@ -106,7 +117,28 @@ export default function Login(props) {
                 </div>
 
                 <div className="control">
-                    <button className="button is-link login_button">Submit</button>
+                    <button className="button is-link login_button" onClick={handleSubmit(onSubmit)}>Get Authentication Code</button>
+                </div>
+
+                <div className="field">
+                    <label className="label">Authentication Code</label>
+                    <div className="control">
+                        <input 
+                        className={`input ${errors.code && 'is-danger'}`}  
+                        type="number" 
+                        placeholder="Authentication Code" 
+                        name='code'     
+                        ref={ register({       
+                            maxLength: {
+                                value: 6,
+                                message: 'should be 6 digits'
+                            }}) }  />   
+                        { errors.code && <p className="helper has-text-danger">{ errors.code.message }</p> }  
+                    </div>
+                </div>
+
+                <div className="control">
+                    <button className="button is-link login_button" onClick={handleSubmit(onSubmit2)}>Submit</button>
                 </div>
             </form>
         </div>      
