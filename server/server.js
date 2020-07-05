@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
+const path = require("path");
 const app = express();
 // Bodyparser middleware
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(
 	bodyParser.urlencoded({
 		extended: false

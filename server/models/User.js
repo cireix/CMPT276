@@ -17,6 +17,14 @@ const UserSchema = new Schema({
 	type: {
 		type: Number,
 		required: true
+	},
+	verified: {
+		type: Boolean,
+		required: false,
+	},
+	code: {
+		type: Number,
+		required: false
 	}
 });
 module.exports = User = mongoose.model("users", UserSchema);
