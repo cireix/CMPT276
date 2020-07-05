@@ -11,6 +11,7 @@ export default function Login(props)  {
 
     const submitHnadler = async (data) => {
         try {
+           
             //global.auth.logOut();
             const { phoneNumber, password } = data;
             // post to server side for login
@@ -34,12 +35,10 @@ export default function Login(props)  {
             <form action="" className="box login_box" onSubmit={ handleSubmit(submitHnadler) }>
                 <div className="field">
                     <label className="label">Phone Number</label>             
-                    <div class="field-body">
-                        <div class="field is-expanded">
-                            <div class="field has-addons">
-                                <p class="control">
-                                <p class="button is-static">+1</p>
-                                </p>
+                    <div className="field-body">
+                        <div className="field is-expanded">
+                            <div className="field has-addons">
+                                <p className="button is-static">+1</p>
                                 <input 
                                 type="text" 
                                 className={`input ${errors.phoneNumber && 'is-danger'}`}
