@@ -3,12 +3,12 @@ const isEmpty = require("is-empty");
 module.exports = function validateLoginInput(data) {
 	let errors = {};
 // Convert empty fields to an empty string so we can use validator functions
-	data.Phone = !isEmpty(data.Phone) ? data.Phone : "";
+	data.phone = !isEmpty(data.phone) ? data.phone : "";
 	data.password = !isEmpty(data.password) ? data.password : "";
 // Phone checks
-	if (Validator.isEmpty(data.Phone)) {
+	if (Validator.isEmpty(data.phone)) {
 		errors.Phone = "Phone field is required";
-	} else if (!Validator.isMobilePhone(data.Phone)) {
+	} else if (!Validator.isMobilePhone(data.phone)) {
 		errors.Phone = "Phone is invalid";
 	}
 // Password checks

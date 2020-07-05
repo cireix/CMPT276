@@ -18,6 +18,10 @@ function generateCode() {
 
 var needVerification = {}
 
+const createToken = (payload) => {
+    return jwt.sign(payload, SECRET, { expiresIn })
+}
+
 //Don't have needVerification in server, move to mongoDB
 router.post("/register", (req, res) => {
 	// Form validation
@@ -33,7 +37,8 @@ router.post("/register", (req, res) => {
 			const newUser = new User({
 				name: req.body.name,
 				phone: req.body.phone,
-				password: req.body.password
+				password: req.body.password,
+				type: 0
 			});
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -76,7 +81,24 @@ router.post("/register2", (req, res) => {
 	
 	newUser
 		.save()
-		.then(user => res.json(user))
+		.then(user => {
+			jwt.sign(
+				{
+					nickname: user.name,
+					phoneNumber: user.phone,
+					type:user.type
+				},
+			keys.secretOrKey,
+			{
+				expiresIn: 31556926 // 1 year in seconds
+			},
+			(err, token) => {
+				res.json({
+					success: true,
+					token: "Bearer "+ token
+				});
+			}
+		)})
 		.catch(err => console.log(err));
 	
 	
@@ -105,10 +127,11 @@ router.post("/login", (req, res) => {
 				// User matched
 				// Create JWT Payload
 				const payload = {
-					id: user.id,
-					name: user.name
+					nickname: user.name,
+					phoneNumber: user.phone,
+					type:user.type
 				};
-				// Sign token
+				//Sign token
 				jwt.sign(
 					payload,
 					keys.secretOrKey,
@@ -118,10 +141,11 @@ router.post("/login", (req, res) => {
 					(err, token) => {
 						res.json({
 							success: true,
-							token: "Bearer " + token
+							token: "Bearer "+ token
 						});
 					}
 				);
+	
 			} else {
 				return res
 					.status(400)
