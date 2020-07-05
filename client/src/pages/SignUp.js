@@ -62,9 +62,7 @@ export default function Login(props) {
                     <div class="field-body">
                         <div class="field is-expanded">
                             <div class="field has-addons">
-                                <p class="control">
                                 <p class="button is-static">+1</p>
-                                </p>
                                 <input 
                                 type="text" 
                                 className={`input ${errors.phoneNumber && 'is-danger'}`}
@@ -119,7 +117,7 @@ export default function Login(props) {
                 <div className="control">
                     <button className="button is-link login_button" onClick={handleSubmit(onSubmit)}>Get Authentication Code</button>
                 </div>
-
+                <br />
                 <div className="field">
                     <label className="label">Authentication Code</label>
                     <div className="control">
