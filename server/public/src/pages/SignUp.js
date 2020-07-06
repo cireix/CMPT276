@@ -10,8 +10,9 @@ export default function Login(props) {
     const onSubmit = data => {    
 
             const { nickname, phoneNumber, password } = data;
-            // post to server side for register        
-            axios.post('/api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
+            // post to server side for register   
+            // api/users/register'     
+            axios.post('http://localhost:5000/api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
             .catch((err)=>console.log(err));
 
     };
@@ -20,7 +21,8 @@ export default function Login(props) {
         try {
             const { phoneNumber, code } = data;
             // post to server side for register
-            const res = await axios.post('/api/users/register2', { phone: phoneNumber,code });  
+            // api/users/register2
+            const res = await axios.post('http://localhost:5000/api/users/register2', { phone: phoneNumber,code });  
             // receive a jwtoken from server side if successful
             const jwToken = res.data.token.replace('Bearer ','');
             console.log(decode(jwToken));

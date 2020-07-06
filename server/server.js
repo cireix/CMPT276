@@ -6,6 +6,9 @@ const users = require("./routes/api/users");
 const path = require("path");
 const app = express();
 // Bodyparser middleware
+var cors = require('cors');
+app.use(cors());
+app.options('*', cors())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(
 	bodyParser.urlencoded({

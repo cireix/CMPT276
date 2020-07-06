@@ -28,19 +28,20 @@ router.post("/register", (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
-	User.findOne({ phone: req.body.phone }).then(user => {
-		if (user) {
+	const phone = "+1"+req.body.phone;
+	User.findOne({ phone: phone }).then(user => {
+		if (user && user["verified"]) {
 			return res.status(400).json({ phone: "Phone number already exists" });
 		} else {
 			var code = generateCode();
 			twil.messages.create({
-				to: req.body.phone,
+				to: phone,
 				from: "+16042391939",
 				body: 'Your verification code is: ' + code 
-			}).then(message => console.log(message.sid));
+			}).then(message => console.log(message));
 			const newUser = new User({
 				name: req.body.name,
-				phone: req.body.phone,
+				phone: phone,
 				password: req.body.password,
 				type: 0,
 				verified: false,
@@ -50,6 +51,11 @@ router.post("/register", (req, res) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
 					if (err) throw err;
 					newUser.password = hash;
+					if (user) {
+						User.deleteOne({phone:phone}).then(result=> {
+							console.log(result);
+						}); //If not verified and user is valid, replace
+					}
 					newUser.save()
 				})
 			});
@@ -61,11 +67,13 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/register2", (req, res) => {
-	const phone = req.body.phone;
+	const phone = "+1"+req.body.phone;
 	const code = req.body.code;
+
 	User.findOne({ phone: phone }).then(user => {
 		if (user) {
 			console.log("good1")
+			console.log(user["code"]);
 			if (code != user["code"]) {
 				res.status(400).json({code: "Verification code is not valid"})
 				return
@@ -88,11 +96,12 @@ router.post("/register2", (req, res) => {
 						success: true,
 						token: "Bearer "+ token
 					});
-					return
+					console.log(err);
+					return;
+					
 				}
 			)})
 			.catch(err => console.log(err));
-			return res.status(400).json({error:"An error has occurred"})
 		} else {
 			return res.status(400).json({ phone: "Phone number does not exist" });
 		}
