@@ -9,10 +9,15 @@ const app = express();
 // Bodyparser middleware
 app.use(cors());
 app.options('*', cors())
-app.use(express.static(path.join(__dirname, 'public/build')))
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/build', 'index.html'));
-  });
+if (process.env.NODE_ENV == 'production') {
+    app.use(express.static(path.join(__dirname, 'public/build')))
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'public/build', 'index.html'));
+	});
+}else{
+	app.use(express.static(path.join(__dirname, 'public/build')))
+}
+
 app.use(
 	bodyParser.urlencoded({
 		extended: false
