@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'commons/axios';
 
 class AllUsers extends React.Component {
-    headers = ['id', 'nickname', 'phone number', 'password', 'type'];
-
+    headers = ['User Id', 'Name', 'Phone Number', 'Type'];
     state = {
-        data : []
+        users : []
     };
     
     componentDidMount() {
-        axios.get('/allusers').then(response => {
+        axios.get('/api/users/allUsers').then(response => {
+            console.log(response.data.users);
             this.setState({
-                data : response.data
-            });
-        });
+                users : response.data.users
+            })}).catch((err)=> console.log(err));
+        
     }
 
     render() {
+
         return (
             <div className="allusers">
                 <table className="table is-fullwidth">
@@ -27,22 +28,15 @@ class AllUsers extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.data.map(row => {
-                                return (<tr>
-                                    {
-                                        row.map(cell => {
-                                            return (
-                                                <td>
-                                                    { cell === '1' ? "Admin" : 
-                                                    [cell === '2' ? "Driver" : 
-                                                    [cell === '0' ? "General User" : 
-                                                    cell]] }
-                                                </td>
-                                            )
-                                        })
-                                    }
-                                </tr>)
-                            })
+                            this.state.users.map(row =>
+                                <tr>
+                                    <td>{row._id}</td>
+                                    <td>{row.name}</td>
+                                    <td>{row.phone}</td>
+                                    <td>{row.type === 1 ?"Admin" : [row.type === 2 ? "Driver":"General User"]}</td>
+                                </tr>
+                            
+                            )
                         }
                     </tbody>
                 </table>
