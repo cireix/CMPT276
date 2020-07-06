@@ -8,8 +8,8 @@
     "test": "node test.js",
     "start": "node server.js",
     "server": "node server.js",
-    "client": "npm start --prefix public",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "public": "npm start --prefix public",
+    "dev": "concurrently \"npm run server\" \"npm run public\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public"
   },
   "engines": {
