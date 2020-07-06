@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "NodeJS Backend",
   "main": "server.js",
+  "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public",
   "scripts": {
     "test": "node test.js",
     "start": "node server.js",
