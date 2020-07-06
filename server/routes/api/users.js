@@ -158,4 +158,15 @@ router.post("/login", (req, res) => {
 		});
 	});
 });
+
+router.get("/allUsers", (req, res) => {
+	User.find({ }).then(users => {
+		// Check if user exists
+		if (!users) {
+			return res.status(404).json({ userNotfound: "users not found" });
+		}else {
+			res.json({users});
+		}
+	}).catch(err => console.log(err));
+});
 module.exports = router;
