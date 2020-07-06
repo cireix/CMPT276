@@ -59,7 +59,6 @@ router.post("/register", (req, res) => {
 					newUser.save()
 				})
 			});
-			
 			res.send("Sent verification code.");
 			console.log(newUser)
 		}
