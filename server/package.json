@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "NodeJS Backend",
   "main": "server.js",
-  "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public",
+  
   "scripts": {
     "test": "node test.js",
     "start": "node server.js",
     "server": "node server.js",
     "client": "npm start --prefix public",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public"
   },
   "engines": {
     "node": "12.x"
