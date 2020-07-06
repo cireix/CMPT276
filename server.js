@@ -7,10 +7,12 @@ const path = require("path");
 const cors = require('cors');
 const app = express();
 // Bodyparser middleware
-var cors = require('cors');
 app.use(cors());
 app.options('*', cors())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public/build')))
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public/build', 'index.html'));
+  });
 app.use(
 	bodyParser.urlencoded({
 		extended: false

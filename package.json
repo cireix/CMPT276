@@ -10,7 +10,7 @@
     "server": "node server.js",
     "public": "npm start --prefix public",
     "dev": "concurrently \"npm run server\" \"npm run public\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd public && npm install --prefix public && npm run build --prefix public"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix public && npm run build --prefix public"
   },
   "engines": {
     "node": "12.x"
