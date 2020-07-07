@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'commons/axios';
+import { toast } from 'react-toastify';
 
 class AllUsers extends React.Component {
     headers = ['User Id', 'Name', 'Phone Number', 'Type'];
@@ -12,7 +13,7 @@ class AllUsers extends React.Component {
             console.log(response.data.users);
             this.setState({
                 users : response.data.users
-            })}).catch((err)=> console.log(err));
+            })}).catch((err)=> toast.error(err));
         
     }
 

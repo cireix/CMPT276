@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "NodeJS Backend",
   "main": "server.js",
-  
   "scripts": {
     "test": "node test.js",
     "start": "node server.js",
@@ -27,8 +26,10 @@
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.21",
+    "node-sass": "^4.14.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "react-scripts": "^3.4.1",
     "twilio": "^3.47.0",
     "validator": "^13.1.1"
   },

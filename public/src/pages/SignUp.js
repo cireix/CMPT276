@@ -12,7 +12,7 @@ export default function Login(props) {
             const { nickname, phoneNumber, password } = data;
             // post to server side for register   
             // api/users/register'     
-            axios.post('http://localhost:5000/api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
+            axios.post('api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
             .catch((err)=>console.log(err));
 
     };
@@ -22,7 +22,7 @@ export default function Login(props) {
             const { phoneNumber, code } = data;
             // post to server side for register
             // api/users/register2
-            const res = await axios.post('http://localhost:5000/api/users/register2', { phone: phoneNumber,code });  
+            const res = await axios.post('api/users/register2', { phone: phoneNumber,code });  
             // receive a jwtoken from server side if successful
             const jwToken = res.data.token.replace('Bearer ','');
             console.log(decode(jwToken));
@@ -32,8 +32,8 @@ export default function Login(props) {
             props.history.push('/');
             toast.success("Sign up successfully!");
         } catch (error) {
-            console.log(error);
-            toast.error("This phone number already exists");
+            const message = error.response.data.message;
+            toast.error(message);
         }
 };
 

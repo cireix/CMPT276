@@ -4,7 +4,6 @@ import App from 'pages/App';
 import Login from 'pages/Login';
 import SignUp from 'pages/SignUp';
 import ForgotPw from 'pages/ForgotPw';
-import ResetPw from 'pages/ResetPw';
 import AllUsers from 'pages/AllUsers';
 
 const Router = () => (
@@ -14,7 +13,6 @@ const Router = () => (
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
             <Route path='/forgotpw' component={ForgotPw} />
-            <Route path='/resetpw' component={ResetPw} />
             <Route path='/admin/allusers' component={AllUsers} />
         </Switch>
     </BrowserRouter>

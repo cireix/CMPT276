@@ -31,7 +31,7 @@ router.post("/register", (req, res) => {
 	const phone = "+1"+req.body.phone;
 	User.findOne({ phone: phone }).then(user => {
 		if (user && user["verified"]) {
-			return res.status(400).json({ phone: "Phone number already exists" });
+			return res.status(400).json({ message: "Phone number already exists" });
 		} else {
 			var code = generateCode();
 			twil.messages.create({
@@ -74,7 +74,7 @@ router.post("/register2", (req, res) => {
 			console.log("good1")
 			console.log(user["code"]);
 			if (code != user["code"]) {
-				res.status(400).json({code: "Verification code is not valid"})
+				res.status(400).json({message: "Verification code is not valid"})
 				return
 			} 
 			User.updateOne({phone:phone},{verified: true}).then(user2 => {
@@ -102,12 +102,48 @@ router.post("/register2", (req, res) => {
 			)})
 			.catch(err => console.log(err));
 		} else {
-			return res.status(400).json({ phone: "Phone number does not exist" });
+			
 		}
 	});
 });
 
+router.post("/forgotpw", (req, res) => {
+	const phone = "+1" + req.body.phone;
+	console.log(phone);
+	User.findOne({ phone }).then(user => {
+		console.log(user);
+		if (!user) {
+			return res.status(404).json({ message: "Phone number not found" });
+		} else {
+			var code = generateCode();
+			twil.messages.create({
+				to: phone,
+				from: "+16042391939",
+				body: 'Your verification code is: ' + code 
+			});
+			res.send("Sent verification code.");
+		}
+	})
+});
 
+router.post("/forgotpw2", (req, res) => {
+	var { code, password } = req.body;
+	var phone = "+1" + req.body.phone;
+
+	User.findOne({ phone: phone }).then(user => {
+		if (user) {
+			if (code != user["code"]) {
+				return res.status(400).json({message: "Verification code is not valid"})
+			} else {
+
+				// code here: hash password then update the database
+				
+			}
+		} else {
+			return res.status(400).json({ message: "Phone number does not exist" });
+		}
+	})
+});
 
 router.post("/login", (req, res) => {
 	// Form validation
@@ -116,13 +152,13 @@ router.post("/login", (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
-	const phone = req.body.phone;
+	const phone = "+1"+req.body.phone;
 	const password = req.body.password;
 	// Find user by phone
 	User.findOne({ phone }).then(user => {
 		// Check if user exists
 		if (!user) {
-			return res.status(404).json({ phonenotfound: "Phone number not found" });
+			return res.status(404).json({ message: "Phone number not found" });
 		}
 		// Check password
 		bcrypt.compare(password, user.password).then(isMatch => {
@@ -152,7 +188,7 @@ router.post("/login", (req, res) => {
 			} else {
 				return res
 					.status(400)
-					.json({ passwordincorrect: "Password incorrect" });
+					.json({ message: "Password incorrect" });
 			}
 		});
 	});
@@ -162,7 +198,7 @@ router.get("/allUsers", (req, res) => {
 	User.find({ }).then(users => {
 		// Check if user exists
 		if (!users) {
-			return res.status(404).json({ userNotfound: "users not found" });
+			return res.status(404).json({ message: "users not found" });
 		}else {
 			res.json({users});
 		}

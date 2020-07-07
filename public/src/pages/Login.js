@@ -15,7 +15,8 @@ export default function Login(props)  {
             //global.auth.logOut();
             const { phoneNumber, password } = data;
             // post to server side for login
-            const res = await axios.post('/api/users/login', { phone:phoneNumber, password: password });  
+            // api/users/login
+            const res = await axios.post('api/users/login', { phone:phoneNumber, password: password });  
             // receive a jwtoken from server side if success
             const jwToken = res.data.token.replace('Bearer ','');
             console.log(decode(jwToken));
@@ -24,9 +25,9 @@ export default function Login(props)  {
             // route to the home page
             props.history.push('/');  
             toast.success("Login successful!");
-        } catch (error) {
-            console.log(error);
-            toast.error('Invalid phone number or password');
+        } catch (error) {           
+            const message = error.response.data.message;
+            toast.error(message);
         }
     };
 
