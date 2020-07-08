@@ -15,7 +15,7 @@ const Header = (props) => {
                     props.history.go(0);   
                 }
                 if ( data === 'allusers' ) {
-                    props.history.push('/admin/allusers');
+                    props.history.push('/allusers');
                 }
             }
         })

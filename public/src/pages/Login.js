@@ -3,23 +3,20 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import decode from 'jwt-decode';
-
 
 export default function Login(props)  {
     const { register, handleSubmit, errors } = useForm();
 
-    const submitHnadler = async (data) => {
+    const submitHandler = async (data) => {
         try {
            
             //global.auth.logOut();
             const { phoneNumber, password } = data;
             // post to server side for login
             // api/users/login
-            const res = await axios.post('api/users/login', { phone:phoneNumber, password: password });  
+            const res = await axios.post('api/users/login', { phone:phoneNumber, password: password});  
             // receive a jwtoken from server side if success
             const jwToken = res.data.token.replace('Bearer ','');
-            console.log(decode(jwToken));
             // store the token locally
             global.auth.setToken(jwToken);  
             // route to the home page
@@ -33,7 +30,7 @@ export default function Login(props)  {
 
     return(
         <div className="login_wrapper">
-            <form action="" className="box login_box" onSubmit={ handleSubmit(submitHnadler) }>
+            <form action="" className="box login_box" onSubmit={ handleSubmit(submitHandler) }>
                 <div className="field">
                     <label className="label">Phone Number</label>             
                     <div className="field-body">

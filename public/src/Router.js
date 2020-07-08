@@ -13,7 +13,7 @@ const Router = () => (
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
             <Route path='/forgotpw' component={ForgotPw} />
-            <Route path='/admin/allusers' component={AllUsers} />
+            <Route path='/allusers' component={AllUsers} />
         </Switch>
     </BrowserRouter>
 )

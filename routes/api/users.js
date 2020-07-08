@@ -6,7 +6,7 @@ const keys = require("../../config/keys");
 require("dotenv").config();
 const accountSid = process.env.TWILSid;
 const authToken = process.env.TWILAuth;
-const twil = require("twilio")(accountSid,authToken);
+const twil = require("twilio")(accountSid, authToken);
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -28,17 +28,18 @@ router.post("/register", (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
-	const phone = "+1"+req.body.phone;
+	const phone = "+1" + req.body.phone;
 	User.findOne({ phone: phone }).then(user => {
 		if (user && user["verified"]) {
 			return res.status(400).json({ message: "Phone number already exists" });
 		} else {
 			var code = generateCode();
-			twil.messages.create({
-				to: phone,
-				from: "+16042391939",
-				body: 'Your verification code is: ' + code 
-			}).then(message => console.log(message));
+			// twil.messages.create({
+			// 	to: phone,
+			// 	from: "+16042391939",
+			// 	body: 'Your verification code is: ' + code
+			// }).then(message => console.log(message));
+			console.log("verification code" + code);
 			const newUser = new User({
 				name: req.body.name,
 				phone: phone,
@@ -52,7 +53,7 @@ router.post("/register", (req, res) => {
 					if (err) throw err;
 					newUser.password = hash;
 					if (user) {
-						User.deleteOne({phone:phone}).then(result=> {
+						User.deleteOne({ phone: phone }).then(result => {
 							console.log(result);
 						}); //If not verified and user is valid, replace
 					}
@@ -66,44 +67,39 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/register2", (req, res) => {
-	const phone = "+1"+req.body.phone;
+	const phone = "+1" + req.body.phone;
 	const code = req.body.code;
 
 	User.findOne({ phone: phone }).then(user => {
-		if (user) {
 			console.log("good1")
 			console.log(user["code"]);
 			if (code != user["code"]) {
-				res.status(400).json({message: "Verification code is not valid"})
+				res.status(400).json({ message: "Verification code is not valid" })
 				return
-			} 
-			User.updateOne({phone:phone},{verified: true}).then(user2 => {
-				console.log(user)
+			}
+			User.updateOne({ phone: phone }, { verified: true }).then(user2 => {
 				jwt.sign(
 					{
 						nickname: user.name,
 						phoneNumber: user.phone,
-						type:user.type
+						type: user.type
 					},
-				keys.secretOrKey,
-				{
-					expiresIn: 31556926 // 1 year in seconds
-				},
-				(err, token) => {
-					console.log("done")
-					res.status(200).json({
-						success: true,
-						token: "Bearer "+ token
-					});
-					console.log(err);
-					return;
-					
-				}
-			)})
-			.catch(err => console.log(err));
-		} else {
-			
-		}
+					keys.secretOrKey,
+					{
+						expiresIn: 31556926 // 1 year in seconds
+					},
+					(err, token) => {
+						//console.log("done")
+						res.status(200).json({
+							success: true,
+							token: "Bearer " + token
+						});
+						//console.log(err);
+						return;
+
+					}
+				)
+			}).catch(err => console.log(err));
 	});
 });
 
@@ -111,41 +107,53 @@ router.post("/forgotpw", (req, res) => {
 	const phone = "+1" + req.body.phone;
 	console.log(phone);
 	User.findOne({ phone }).then(user => {
-		console.log(user);
 		if (!user) {
 			return res.status(404).json({ message: "Phone number not found" });
 		} else {
 			var code = generateCode();
-			twil.messages.create({
-				to: phone,
-				from: "+16042391939",
-				body: 'Your verification code is: ' + code 
+			// twil.messages.create({
+			// 	to: phone,
+			// 	from: "+16042391939",
+			// 	body: 'Your verification code is: ' + code
+			// });			
+			User.findOneAndUpdate({ phone: phone }, { code: code }, function (err, result) {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log("New auth code: "+code);
+					res.send("Sent verification code.");
+				}
 			});
-			res.send("Sent verification code.");
 		}
 	})
 });
 
 router.post("/forgotpw2", (req, res) => {
 	var { phone, code, password } = req.body;
-	var phone = "+1" + phone ;
-
-	bcrypt.genSalt(10, (err, salt) => {
-		bcrypt.hash(password, salt, (err, hash) => {
-			if (err) throw err;
-			password = hash;
-			User.findOneAndUpdate({phone: phone}, { password: hash, code: code}, function(err, result) {
-				if (err) {
-				  console.log(err);
-				} else {
-				  console.log(result);
-				}
-			  });
-		})
-	});
-
-	
+	var phone = "+1" + phone;
+	User.findOne({phone}).then(user=>{		
+		if(user.code === Number(code)){
+			bcrypt.genSalt(10, (err, salt) => {
+				bcrypt.hash(password, salt, (err, hash) => {
+					if (err) throw err;
+					password = hash;
+					User.findOneAndUpdate({ phone: phone }, { password: hash }, function (err, result) {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(result);
+							res.send("Password reset successfully!")
+						}
+					});
+				})
+			})
+		}else {
+			res.status(400).json({ message: "Verification code is not valid" })
+		}
+	}).catch(err=>{res.send(err); console.log(err)});
 });
+
+
 
 router.post("/login", (req, res) => {
 	// Form validation
@@ -154,7 +162,7 @@ router.post("/login", (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
-	const phone = "+1"+req.body.phone;
+	const phone = "+1" + req.body.phone;
 	const password = req.body.password;
 	// Find user by phone
 	User.findOne({ phone }).then(user => {
@@ -170,7 +178,7 @@ router.post("/login", (req, res) => {
 				const payload = {
 					nickname: user.name,
 					phoneNumber: user.phone,
-					type:user.type
+					type: user.type
 				};
 				//Sign token
 				jwt.sign(
@@ -182,11 +190,11 @@ router.post("/login", (req, res) => {
 					(err, token) => {
 						res.json({
 							success: true,
-							token: "Bearer "+ token
+							token: "Bearer " + token
 						});
 					}
 				);
-	
+
 			} else {
 				return res
 					.status(400)
@@ -197,12 +205,12 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/allUsers", (req, res) => {
-	User.find({ }).then(users => {
+	User.find({}).then(users => {
 		// Check if user exists
 		if (!users) {
 			return res.status(404).json({ message: "users not found" });
-		}else {
-			res.json({users});
+		} else {
+			res.json({ users });
 		}
 	}).catch(err => console.log(err));
 });

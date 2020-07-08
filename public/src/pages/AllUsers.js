@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 class AllUsers extends React.Component {
     headers = ['User Id', 'Name', 'Phone Number', 'Type'];
@@ -28,10 +27,10 @@ class AllUsers extends React.Component {
                         {
                             this.state.users.map(row =>
                                 <tr>
-                                    <td>{row._id}</td>
-                                    <td>{row.name}</td>
-                                    <td>{row.phone}</td>
-                                    <td>{row.type === 1 ?"Admin" : [row.type === 2 ? "Driver":"General User"]}</td>
+                                    <td key={row._id}>{row._id}</td>
+                                    <td key={row.name}>{row.name}</td>
+                                    <td key={row.phone}>{row.phone}</td>
+                                    <td key={row.type}>{row.type === 1 ?"Admin" : [row.type === 2 ? "Driver":"General User"]}</td>
                                 </tr>
                             
                             )
