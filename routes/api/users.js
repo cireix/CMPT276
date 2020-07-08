@@ -34,11 +34,11 @@ router.post("/register", (req, res) => {
 			return res.status(400).json({ message: "Phone number already exists" });
 		} else {
 			var code = generateCode();
-			twil.messages.create({
-				to: phone,
-				from: "+16042391939",
-				body: 'Your verification code is: ' + code
-			}).then(message => console.log(message));
+			// twil.messages.create({
+			// 	to: phone,
+			// 	from: "+16042391939",
+			// 	body: 'Your verification code is: ' + code
+			// }).then(message => console.log(message));
 			console.log("verification code" + code);
 			const newUser = new User({
 				name: req.body.name,
@@ -111,11 +111,11 @@ router.post("/forgotpw", (req, res) => {
 			return res.status(404).json({ message: "Phone number not found" });
 		} else {
 			var code = generateCode();
-			twil.messages.create({
-				to: phone,
-				from: "+16042391939",
-				body: 'Your verification code is: ' + code
-			});			
+			// twil.messages.create({
+			// 	to: phone,
+			// 	from: "+16042391939",
+			// 	body: 'Your verification code is: ' + code
+			// });			
 			User.findOneAndUpdate({ phone: phone }, { code: code }, function (err, result) {
 				if (err) {
 					console.log(err);
@@ -204,7 +204,7 @@ router.post("/login", (req, res) => {
 	});
 });
 
-router.get("/allUsers", (req, res) => {
+router.post("/allUsers", (req, res) => {
 	User.find({}).then(users => {
 		// Check if user exists
 		if (!users) {
