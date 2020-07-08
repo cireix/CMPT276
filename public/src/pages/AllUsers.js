@@ -9,7 +9,7 @@ class AllUsers extends React.Component {
     };
     
     componentDidMount() {
-        axios.get('/api/users/allUsers').then(response => {
+        axios.get('api/users/allUsers').then(response => {
             this.setState({
                 users : response.data.users
             })}).catch((err)=> console.log(err));     
