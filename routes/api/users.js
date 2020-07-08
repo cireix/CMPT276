@@ -127,22 +127,24 @@ router.post("/forgotpw", (req, res) => {
 });
 
 router.post("/forgotpw2", (req, res) => {
-	var { code, password } = req.body;
-	var phone = "+1" + req.body.phone;
+	var { phone, code, password } = req.body;
+	var phone = "+1" + phone ;
 
-	User.findOne({ phone: phone }).then(user => {
-		if (user) {
-			if (code != user["code"]) {
-				return res.status(400).json({message: "Verification code is not valid"})
-			} else {
+	bcrypt.genSalt(10, (err, salt) => {
+		bcrypt.hash(password, salt, (err, hash) => {
+			if (err) throw err;
+			password = hash;
+			User.findOneAndUpdate({phone: phone}, { password: hash, code: code}, function(err, result) {
+				if (err) {
+				  console.log(err);
+				} else {
+				  console.log(result);
+				}
+			  });
+		})
+	});
 
-				// code here: hash password then update the database
-				
-			}
-		} else {
-			return res.status(400).json({ message: "Phone number does not exist" });
-		}
-	})
+	
 });
 
 router.post("/login", (req, res) => {

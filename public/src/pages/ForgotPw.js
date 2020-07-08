@@ -26,9 +26,8 @@ export default function ForgotPw(props) {
             const { phoneNumber, code, password } = data;
             // post phone number to server side
             // api/users/forgotpw2
-            const res = await axios.post('api/users/forgotpw2', { phone: phoneNumber, code: code, password: password });
+            axios.post('api/users/forgotpw2', { phone: phoneNumber, code: code, password: password }).then(props.history.push('/login'));
             // route to the login page
-            props.history.push('/login');
         } catch (error) {
             const message = error.response.data.message;
             toast.error(message);
