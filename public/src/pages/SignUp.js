@@ -12,8 +12,8 @@ export default function Login(props) {
             const { nickname, phoneNumber, password } = data;
             // post to server side for register   
             // api/users/register'     
-            axios.post('api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
-            .catch((err)=>console.log(err));
+            axios.post('http://localhost:5000/api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password,type: 1 }).then(res=>{console.log('res=>',res); })
+            .catch((err)=>toast.error(err.response.data.message));
 
     };
 
