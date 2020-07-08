@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 class AllUsers extends React.Component {
@@ -10,15 +10,12 @@ class AllUsers extends React.Component {
     
     componentDidMount() {
         axios.get('/api/users/allUsers').then(response => {
-            console.log(response.data.users);
             this.setState({
                 users : response.data.users
-            })}).catch((err)=> toast.error(err));
-        
+            })}).catch((err)=> console.log(err));     
     }
 
     render() {
-
         return (
             <div className="allusers">
                 <table className="table is-fullwidth">

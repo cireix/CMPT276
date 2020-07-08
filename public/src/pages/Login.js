@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'; 
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import decode from 'jwt-decode';
 

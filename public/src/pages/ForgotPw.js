@@ -1,11 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function ForgotPw(props) {
     const { register, handleSubmit, errors, watch } = useForm();
-
+    
+    // Get phone number that user input in the form
     const onSubmit = async (data) => {
         try {
             const { phoneNumber } = data;
@@ -19,12 +20,14 @@ export default function ForgotPw(props) {
         }
     };
 
+    // Get phone number, verification code, password that user input in the form
     const onSubmit2 = async (data) => {
         try {
             const { phoneNumber, code, password } = data;
             // post phone number to server side
             // api/users/forgotpw2
             const res = await axios.post('api/users/forgotpw2', { phone: phoneNumber, code: code, password: password });
+            // route to the login page
             props.history.push('/login');
         } catch (error) {
             const message = error.response.data.message;

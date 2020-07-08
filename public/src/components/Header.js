@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';   
-import Panel from 'components/Panel'; 
+import PopupPanel from 'components/PopupPanel'; 
 import UserProfile from 'components/UserProfile'; 
 
 const Header = (props) => {
-
     // Open the UserProfile popup panel when nickname is clicked
     const toProfile = () => {
-        Panel.open({
+        PopupPanel.open({
             component: UserProfile,
             user: props.user,
-            callback: data => {
+            // This callback function is used to route to another page depending on data passed from the child component of the Panel component
+            func: data => {
                 if ( data === 'logout' ) {
                     props.history.go(0);   
                 }

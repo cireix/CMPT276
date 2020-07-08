@@ -4,6 +4,7 @@ export default function UserProfile(props) {
 
     const logout = () => {
         global.auth.logOut();
+        // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
         props.close("logout");
     }
 

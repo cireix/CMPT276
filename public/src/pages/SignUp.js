@@ -1,14 +1,14 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import axios from 'commons/axios';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import decode from 'jwt-decode';
 
 export default function Login(props) {
     const { register, handleSubmit, errors, watch } = useForm();
     
+    // Get name, phone number, and password that user input in the form
     const onSubmit = data => {    
-
             const { nickname, phoneNumber, password } = data;
             // post to server side for register   
             // api/users/register'     
@@ -17,6 +17,7 @@ export default function Login(props) {
 
     };
 
+    // Get phone number, and verification code that user input in the form
     const onSubmit2 = async(data) => {    
         try {
             const { phoneNumber, code } = data;

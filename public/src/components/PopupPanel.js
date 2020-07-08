@@ -1,24 +1,24 @@
 import React from 'react';
 import { render } from 'react-dom'
 
-class Panel extends React.Component {
+class PopupPanel extends React.Component {
     state = {
         component: null,
         active: false,
-        callback: () => {}
+        func: () => {}
     }
 
     // Open a popup panel
     open = (options) => {
-        const { component, callback, user } = options;
-        // create a time stamp
+        const { component, func, user } = options;
+        // create a time stamp that used to re-render the child component everytime when the Panel component opened
         const _key = new Date().getTime();
         // create a renderable component in the Panel component with close function, a time stamp and a ser object
         const _component = React.createElement(component, { close: this.close, key: _key, user: user });  
         this.setState({
             component: _component,
             active: true,
-            callback: callback
+            func: func
         })
     }
 
@@ -27,17 +27,12 @@ class Panel extends React.Component {
         this.setState({
             active: false
         });
-        this.state.callback(data);
+        this.state.func(data);
     }
 
     render() {
-        const _class = {
-            true: 'panel-wrapper active',
-            false: 'panel-wrapper'
-        }
-
         return (
-            <div className={ _class[this.state.active] }>     
+            <div className={ this.state.active === true ? 'panel-wrapper active' : 'panel-wrapper'}>     
                 <div className="over-layer" onClick={ this.close }></div>      
                 <div className="panel">       
                     <div className="panel-head">    
@@ -55,7 +50,7 @@ class Panel extends React.Component {
 const _div = document.createElement('div');
 document.body.appendChild(_div);
 
+// Let the Panel component be a independent component
+const _popUpPanel = render(<PopupPanel />, _div);
 
-const _panel = render(<Panel />, _div);
-
-export default _panel;
+export default _popUpPanel;
