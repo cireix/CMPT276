@@ -2,8 +2,7 @@
 Alcohol Delivery Application
 - MongoDB
 - NodeJS
-- HTML
-- CSS
+- ReactJS
 - JavaScript
 
 - Persistent Web Application ??
