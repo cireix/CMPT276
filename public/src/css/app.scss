@@ -5,6 +5,13 @@
 // react-toastify
 @import '~react-toastify/dist/ReactToastify.min.css';
 
+$phone: 576px;
+// Small tablets (portrait view)
+$tablet: 768px;
+// Tablets and small desktops
+$desktop: 992px;
+
+
 // ---------- Login Component ---------- 
 .login_wrapper {
     display: flex;
@@ -42,11 +49,23 @@
         .end {
             margin-right: 30px;
         }
-        & a {
+        a {
             display: inline-block;
             color: white;
             padding: 0 8px;
+            
             font-size: 15px;
+            @media (min-width: $phone) {
+                font-size:15px;
+            }
+            @media (min-width: $tablet) {
+                font-size:20px;
+            }
+            @media (min-width: $desktop) {
+                font-size:20px;
+            }
+           
+            
             transition: all 0.2s;
             &:hover {
                 color: rgb(189, 186, 186);
@@ -75,14 +94,44 @@
     margin: auto;
     border-bottom: 3px solid black;
     padding: 2rem 0.2rem 1.5rem 0.2rem;
+    flex-direction: row;
+    @media (min-width: $phone) {
+        flex-direction: row;
+    }
+    @media (min-width: $tablet) {
+        flex-direction: row;
+    }
+    @media (min-width: $desktop) {
+        flex-direction: row;
+    }
     .logo-text {
-        font-size: 2rem;
+        // font-size: 2rem;
+        font-size: 20px;
+            @media (min-width: $phone) {
+                font-size:20px;
+            }
+            @media (min-width: $tablet) {
+                font-size:30px;
+            }
+            @media (min-width: $desktop) {
+                font-size:50px;
+            }
         color: black;
         font-weight: 600;
+        
     }
     .search-box {
         .search-input {
-            width: 500px;
+            width: 250px;
+            @media (min-width: $phone) {
+                width: 250px;
+            }
+            @media (min-width: $tablet) {
+                font-size:15px;
+            }
+            @media (min-width: $desktop) {
+                font-size:15px;
+            }
             outline: 0;
         }
     }
