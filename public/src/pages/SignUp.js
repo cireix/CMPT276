@@ -92,7 +92,7 @@ export default function SignUp(props) {
                     <div className="control">
                         <input 
                         className={`input ${errors.password && 'is-danger'}`}
-                        type="text" 
+                        type="password" 
                         placeholder="Password" 
                         name='password'     
                         ref={ register({ 
@@ -110,7 +110,7 @@ export default function SignUp(props) {
                     <div className="control">
                         <input 
                         className={`input ${errors.password2 && 'is-danger'}`}  
-                        type="text" 
+                        type="password" 
                         placeholder="Confirm Password" 
                         name='password2'     
                         ref={ register({       
