@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function ForgotPw(props) {
     const { register, handleSubmit, errors, watch } = useForm();
-
+    var [codeSent,setCodeSent] = useState(false);
     // Get phone number that user input in the form
     const onSubmit = async (data) => {
         try {
@@ -13,6 +13,7 @@ export default function ForgotPw(props) {
             // post phone number to server side
             // api/users/forgotpw
             const res = await axios.post('api/users/forgotpw', { phone: phoneNumber });
+            setCodeSent(true);
             toast.success("Verification code sent");
         } catch (error) {
             const message = error.response.data.message;
@@ -75,6 +76,7 @@ export default function ForgotPw(props) {
                     <label className="label">Authentication Code</label>
                     <div className="control">
                         <input
+                            disabled = {(codeSent)?"":"disabled"}
                             className={`input ${errors.code && 'is-danger'}`}
                             type="number"
                             placeholder="Authentication Code"
@@ -93,8 +95,9 @@ export default function ForgotPw(props) {
                     <label className="label">Password</label>
                     <div className="control">
                         <input
+                            disabled = {(codeSent)?"":"disabled"}
                             className={`input ${errors.password && 'is-danger'}`}
-                            type="text"
+                            type="password"
                             placeholder="Password"
                             name='password'
                             ref={register({
@@ -112,8 +115,9 @@ export default function ForgotPw(props) {
                     <label className="label">Confirm Password</label>
                     <div className="control">
                         <input
+                            disabled = {(codeSent)?"":"disabled"}
                             className={`input ${errors.password2 && 'is-danger'}`}
-                            type="text"
+                            type="password"
                             placeholder="Confirm Password"
                             name='password2'
                             ref={register({
@@ -125,7 +129,10 @@ export default function ForgotPw(props) {
                 </div>
 
                 <div className="control">
-                    <button className="button is-link login_button" onClick={handleSubmit(onSubmit2)}>Submit</button>
+                    <button 
+                        className="button is-link login_button" 
+                        onClick={handleSubmit(onSubmit2)}
+                        disabled = {(codeSent)?"":"disabled"}>Submit</button>
                 </div>
             </form>
         </div>
