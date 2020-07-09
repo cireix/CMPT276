@@ -120,7 +120,7 @@ router.post("/forgotpw", (req, res) => {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log("New auth code: "+code);
+					// console.log("New auth code: "+code);
 					res.send("Sent verification code.");
 				}
 			});
