@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import decode from 'jwt-decode';
 
-export default function Login(props) {
+export default function SignUp(props) {
     const { register, handleSubmit, errors, watch } = useForm();
     var [codeSent,setCodeSent] = useState(false);
     // Get name, phone number, and password that user input in the form
