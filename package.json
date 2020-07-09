@@ -37,5 +37,8 @@
     "node",
     "heroku",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/preset-react": "^7.10.4"
+  }
 }
