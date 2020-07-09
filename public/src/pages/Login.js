@@ -69,7 +69,7 @@ export default function Login(props)  {
                                 message: "cannot be less then 6 digits"
                             }})}/>
                         { errors.password && <p className="helper has-text-danger">{ errors.password.message }</p >}
-                        <Link to='/ForgoPw' className="has-text-danger forgotpw">forgot password?</Link>
+                        <Link to='/forgotpw' className="has-text-danger forgotpw">forgot password?</Link>
                     </div>
                 </div>
 
