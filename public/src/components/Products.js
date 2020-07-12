@@ -17,7 +17,7 @@ class Products extends Component {
         {"_id":{"$oid":"5d28522e2870460a36f78ec1"},"productId":"127112","alcoholPercentage":{"$numberDouble":"6.5"},"companyName":"CENTRAL CITY ","country":"Canada","countryCode":"CA","desc":"Don't be deterred by the idea of IPA in a can—but do pour it into a glass so you can enjoy the full experience. Pouring orange with a thick, creamy head and a potent, tropical/grapefruit hop aroma, this fantastic IPA shows off an array of hop flavours on a strong base of malt.\n","fullName":"CENTRAL CITY - RED RACER IPA 500ML 6PACK","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/127112.jpg","price":{"$numberDouble":"13.29"},"productName":" RED RACER IPA 500ML 6PACK","rating":{"$numberDouble":"4.4"},"size":{"$numberInt":"6"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.5"}},
         {"_id":{"$oid":"5d28522e2870460a36f78ecd"},"productId":"919373","alcoholPercentage":{"$numberInt":"5"},"companyName":"COLUMBIA ","country":"Canada","countryCode":"CA","desc":"A Canadian lager brewed in the BC interior, where glacier rivers flow from pristine mountain tops. Kokanee is fermented at colder temperatures, providing a clean refreshing experience with a very smooth finish.\n","fullName":"COLUMBIA - KOKANEE CAN","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/919373.jpg","price":{"$numberDouble":"37.49"},"productName":" KOKANEE CAN","rating":{"$numberDouble":"2.8"},"size":{"$numberInt":"24"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.355"}},
         {"_id":{"$oid":"5d28522e2870460a36f78ee5"},"productId":"163111","alcoholPercentage":{"$numberInt":"5"},"companyName":"DEAD FROG ","country":"Canada","countryCode":"CA","desc":"A refreshing white ale with a fresh squeeze of lime, crushed ginger, and a crisp, easy-drinking finish.\n","fullName":"DEAD FROG - MOSCOW MULE WHITE ALE TALL CAN 4 PACK","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/163111.jpg","price":{"$numberDouble":"10.79"},"productName":" MOSCOW MULE WHITE ALE TALL CAN 4 PACK","rating":{"$numberInt":"5"},"size":{"$numberInt":"4"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.473"}}
-    ],
+        ],
         productsFullList: [
             {"_id":{"$oid":"5d28522e2870460a36f78e9d"},"productId":"35182","alcoholPercentage":{"$numberInt":"8"},"companyName":"BARKERVILLE ","country":"Canada","countryCode":"CA","desc":"This smooth Northwest IPA features hints of soft pineapple, succulent stone fruit, ripe grapefruit and sticky pine forest balanced with a subtle malt base. The gold mine you've been searching for, this 80 IBU motherlode of hops includes Columbus and Chinook, followed by dry-hopping with Amarillo, Citra and Centennial.\n","fullName":"BARKERVILLE - HIGH STAKES","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/35182.jpg","price":{"$numberDouble":"5.99"},"productName":" HIGH STAKES","rating":{"$numberDouble":"4.6"},"size":{"$numberInt":"1"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.65"}},
             {"_id":{"$oid":"5d28522e2870460a36f78e8d"},"productId":"880930","alcoholPercentage":{"$numberInt":"7"},"companyName":null,"country":"Canada","countryCode":"CA","desc":false,"fullName":"33 ACRES OF NIRVANA 6 PACK","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/880930.jpg","price":{"$numberDouble":"13.49"},"productName":"33 ACRES OF NIRVANA 6 PACK","rating":{"$numberInt":"3"},"size":{"$numberInt":"6"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.33"}},
@@ -29,7 +29,8 @@ class Products extends Component {
             {"_id":{"$oid":"5d28522e2870460a36f78ec1"},"productId":"127112","alcoholPercentage":{"$numberDouble":"6.5"},"companyName":"CENTRAL CITY ","country":"Canada","countryCode":"CA","desc":"Don't be deterred by the idea of IPA in a can—but do pour it into a glass so you can enjoy the full experience. Pouring orange with a thick, creamy head and a potent, tropical/grapefruit hop aroma, this fantastic IPA shows off an array of hop flavours on a strong base of malt.\n","fullName":"CENTRAL CITY - RED RACER IPA 500ML 6PACK","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/127112.jpg","price":{"$numberDouble":"13.29"},"productName":" RED RACER IPA 500ML 6PACK","rating":{"$numberDouble":"4.4"},"size":{"$numberInt":"6"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.5"}},
             {"_id":{"$oid":"5d28522e2870460a36f78ecd"},"productId":"919373","alcoholPercentage":{"$numberInt":"5"},"companyName":"COLUMBIA ","country":"Canada","countryCode":"CA","desc":"A Canadian lager brewed in the BC interior, where glacier rivers flow from pristine mountain tops. Kokanee is fermented at colder temperatures, providing a clean refreshing experience with a very smooth finish.\n","fullName":"COLUMBIA - KOKANEE CAN","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/919373.jpg","price":{"$numberDouble":"37.49"},"productName":" KOKANEE CAN","rating":{"$numberDouble":"2.8"},"size":{"$numberInt":"24"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.355"}},
             {"_id":{"$oid":"5d28522e2870460a36f78ee5"},"productId":"163111","alcoholPercentage":{"$numberInt":"5"},"companyName":"DEAD FROG ","country":"Canada","countryCode":"CA","desc":"A refreshing white ale with a fresh squeeze of lime, crushed ginger, and a crisp, easy-drinking finish.\n","fullName":"DEAD FROG - MOSCOW MULE WHITE ALE TALL CAN 4 PACK","image":"http://www.bcliquorstores.com/sites/default/files/imagecache/height400px/163111.jpg","price":{"$numberDouble":"10.79"},"productName":" MOSCOW MULE WHITE ALE TALL CAN 4 PACK","rating":{"$numberInt":"5"},"size":{"$numberInt":"4"},"type":"Domestic - BC Beer","volume":{"$numberDouble":"0.473"}}
-        ]
+        ],
+        cartNum: 0
     }
 
     // componentDidMount() {
@@ -43,6 +44,7 @@ class Products extends Component {
     //     })
     // }
 
+    // Search box 
     search = (string) => {
         // Get a copy of full list of products
         var productList = [...this.state.productsFullList]
@@ -57,10 +59,36 @@ class Products extends Component {
         })
     }
 
+    // // Update the cartNum state
+    // updateCart = async () => {
+    //     const cartNum = await this.getCartNum();
+    //     this.setState({
+    //         cartNum: cartNum
+    //     });
+    // }
+
+    // // Get the sum of numbers of products in the cart
+    // getCartNum = () => {
+    //     // Return a list containing all products in the cart
+    //     axios.get('/carts')
+    //     .then(res => {
+    //         const carts = res.data;
+    //         var cartNum = 0;
+    //         // If cart is not empty, return the sum 
+    //         if (carts !== []) {
+    //             carts.forEach(cart => {
+    //                 cartNum += cart.num
+    //             })
+    //         }
+    //         return cartNum; 
+    //     })
+    //     .catch(err => console.log('get sum err => ', err))
+    // }
+
     render() {
         return (
             <div>
-                <ToolBox search={this.search} />
+                <ToolBox search={this.search} cartNum={this.state.cartNum} />
                 <div className="products">
                     <div className="columns is-multiline ">
                         {
