@@ -3,16 +3,14 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Header from 'components/Header';
+import Layout from 'Layout';
 
 export default function Login(props)  {
-    const user = global.auth.getUser();
 
     const { register, handleSubmit, errors } = useForm();
 
     const submitHandler = async (data) => {
         try {
-
             //global.auth.logOut();
             const { phoneNumber, password } = data;
             // post to server side for login
@@ -32,8 +30,7 @@ export default function Login(props)  {
     };
 
     return(
-        <React.Fragment>
-            <Header user={user} />
+        <Layout>
             <div className="login_wrapper">
                 <form action="" className="box login_box" onSubmit={ handleSubmit(submitHandler) }>
                     <div className="field">
@@ -86,6 +83,6 @@ export default function Login(props)  {
 
                 </form>
             </div>
-        </React.Fragment>
+        </Layout>
     );
 }

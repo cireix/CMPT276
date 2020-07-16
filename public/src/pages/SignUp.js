@@ -3,10 +3,9 @@ import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import decode from 'jwt-decode';
-import Header from 'components/Header';
+import Layout from 'Layout';
 
 export default function SignUp(props) {
-    const user = global.auth.getUser();
 
     const { register, handleSubmit, errors, watch } = useForm();
 
@@ -48,8 +47,7 @@ export default function SignUp(props) {
 
 
     return(
-        <React.Fragment>
-            <Header user={user} />
+        <Layout>
             <div className="login_wrapper">
                 <form className="box login_box" >
                     <div className="field">
@@ -72,10 +70,10 @@ export default function SignUp(props) {
 
                     <div className="field">
                         <label className="label">Phone Number</label>             
-                        <div class="field-body">
-                            <div class="field is-expanded">
-                                <div class="field has-addons">
-                                    <p class="button is-static">+1</p>
+                        <div className="field-body">
+                            <div className="field is-expanded">
+                                <div className="field has-addons">
+                                    <p className="button is-static">+1</p>
                                     <input 
                                     type="text" 
                                     className={`input ${errors.phoneNumber && 'is-danger'}`}
@@ -154,6 +152,6 @@ export default function SignUp(props) {
                     </div>
                 </form>
             </div>  
-        </React.Fragment>    
+        </Layout>    
     );
 }

@@ -1,15 +1,13 @@
-import React from 'react';
-import Header from 'components/Header';    
+import React from 'react';   
 import Products from 'components/Products';
+import Layout from 'Layout';
 
 const App = (props) => {
-    const user = global.auth.getUser();
 
     return(
-        <div className="main">
-            <Header user={user} />
+        <Layout>
             <Products />
-        </div>
+        </Layout>
     );
 
 }

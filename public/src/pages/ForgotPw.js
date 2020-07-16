@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Header from 'components/Header';
+import Layout from 'Layout';
 
 export default function ForgotPw(props) {
-    const user = global.auth.getUser();
 
     const { register, handleSubmit, errors, watch } = useForm();
     var [codeSent,setCodeSent] = useState(false);
@@ -42,8 +41,7 @@ export default function ForgotPw(props) {
     }
 
     return (
-        <React.Fragment>
-            <Header user={user} />
+        <Layout>
             <div className="login_wrapper">
                 <form className="box login_box" >
 
@@ -141,6 +139,6 @@ export default function ForgotPw(props) {
                     </div>
                 </form>
             </div>  
-        </React.Fragment>
+        </Layout>
     );
 }

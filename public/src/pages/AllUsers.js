@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Header from 'components/Header';
+import Layout from 'Layout';
 
 class AllUsers extends React.Component {
     
@@ -17,10 +17,8 @@ class AllUsers extends React.Component {
     }
 
     render() {
-        const user = global.auth.getUser();
         return (
-            <React.Fragment>
-                <Header user={user} />
+            <Layout>
                 <div className="allusers">
                     <table className="table is-fullwidth">
                         <thead>
@@ -43,7 +41,7 @@ class AllUsers extends React.Component {
                         </tbody>
                     </table>
                 </div>
-            </React.Fragment>
+            </Layout>
         )
     }
 }
