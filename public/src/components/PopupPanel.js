@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom'
+import { render } from 'react-dom';
+import 'css/popPanel.scss';
 
 class PopupPanel extends React.Component {
     state = {

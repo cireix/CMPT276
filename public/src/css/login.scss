@@ -1,0 +1,19 @@
+@import 'css/app.scss';
+
+.login_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    .login_box {
+        width: 350px;
+        background-color: rgb(217, 240, 248);
+    }
+    .login_button {
+        width: 100%;
+    }
+    .forgotpw {
+        cursor: pointer;
+        text-align: right;
+    }
+}

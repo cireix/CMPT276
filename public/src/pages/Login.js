@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Layout from 'Layout';
+import 'css/login.scss';
 
 export default function Login(props)  {
 

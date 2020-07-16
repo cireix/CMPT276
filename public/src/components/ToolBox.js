@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import 'css/toolbox.scss';
 
 class ToolBox extends Component {
     state = {

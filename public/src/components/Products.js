@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
 import axios from 'axios';
+import 'css/products.scss';
 
 class Products extends Component {
     
