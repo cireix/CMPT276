@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
+import { Cart, AddCartButton } from 'react-cart-components'
 import axios from 'axios';
 import 'css/products.scss';
 
 class Products extends Component {
     
-    // Product details, only for local test
     state = {
         currentProducts: [],
         productsFullList: [],
@@ -41,36 +41,11 @@ class Products extends Component {
         })
     }
 
-    // // Update the cartNum state
-    // updateCart = async () => {
-    //     const cartNum = await this.getCartNum();
-    //     this.setState({
-    //         cartNum: cartNum
-    //     });
-    // }
-
-    // // Get the sum of numbers of products in the cart
-    // getCartNum = () => {
-    //     // Return a list containing all products in the cart
-    //     axios.get('/carts')
-    //     .then(res => {
-    //         const carts = res.data;
-    //         var cartNum = 0;
-    //         // If cart is not empty, return the sum 
-    //         if (carts !== []) {
-    //             carts.forEach(cart => {
-    //                 cartNum += cart.num
-    //             })
-    //         }
-    //         return cartNum; 
-    //     })
-    //     .catch(err => console.log('get sum err => ', err))
-    // }
-
     render() {
         return (
             <div>
                 <ToolBox search={this.search} cartNum={this.state.cartNum} />
+                <Cart currency="CAD" />
                 <div className="products">
                     <div className="columns is-multiline ">
                         {
@@ -78,6 +53,10 @@ class Products extends Component {
                                 return (
                                     <div className="column is-2" key={pdct.productId}>
                                         <Product product={pdct} />
+                                        <AddCartButton
+                                        product={{id: pdct.productId, name: pdct.fullName, price: pdct.price, image:pdct.image}}
+                                        styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                     />
                                     </div>
                                 )
                             })
