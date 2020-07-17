@@ -29,7 +29,9 @@
     "node-sass": "^4.14.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "react-cart-components": "^2.1.0",
     "react-scripts": "^3.4.1",
+    "redux": "^4.0.5",
     "twilio": "^3.47.0",
     "validator": "^13.1.1"
   },

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
+import { Cart, AddCartButton } from 'react-cart-components'
 import axios from 'axios';
 import 'css/products.scss';
 
@@ -111,6 +112,7 @@ class Products extends Component {
         return (
             <div>
                 <ToolBox search={this.search} cartNum={this.state.cartNum} />
+                <Cart currency="CAD" />
                 <div className="products">
                     <div className="columns is-multiline ">
                         {
@@ -118,6 +120,10 @@ class Products extends Component {
                                 return (
                                     <div className="column is-2" key={pdct.productId}>
                                         <Product product={pdct} />
+                                        <AddCartButton
+                                        product={{id: pdct.productId, name: pdct.fullName, price: pdct.price, image:pdct.image}}
+                                        styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                     />
                                     </div>
                                 )
                             })
