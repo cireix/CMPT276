@@ -1,7 +1,16 @@
 @import 'css/app.scss';
 
 .products {
-    width: 1150px;
+    width: 90%;
     margin: auto;
     padding-top: 40px;
+    .to-another {
+        padding-bottom: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .to-prev {
+            margin: 0 20px ;
+        }
+    }
 }
