@@ -5,11 +5,11 @@ import 'css/product.scss';
 
 class Product extends Component {
 
-    // // add this product into cart
+    // add this product into cart
     // addCart = () => {
     //     const { productId, productName, image,  type , price, volume } = this.props.product;
     //     // Check if this product is in the cart, return an array containing this product or []
-    //     axios.get(`/carts?productId=${productId}`).then(res => {
+    //     axios.get(`/carts/?productId=${productId}`).then(res => {
     //         // If so, add the number of this object with 1,then post it
     //         if (res.data.length > 0) {
     //             const product = res.data[0]
@@ -40,8 +40,8 @@ class Product extends Component {
 
     render() {
         const { productName, image,  type , price, volume } = this.props.product;
-        const productPrice = '$' + price.$numberDouble;
-        const productVolume = volume.$numberDouble + 'L';
+        const productPrice = '$' + price;
+        const productVolume = volume + 'L';
 
         return (
             <div className="product">
