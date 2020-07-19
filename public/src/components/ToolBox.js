@@ -36,7 +36,7 @@ class ToolBox extends Component {
                         <div className="control">
                             <button 
                                 className="button"
-                                onClick={this.clearSearch}>search</button>
+                                onClick={this.search}>search</button>
                         </div>    
                     </div>       
                 </div>
