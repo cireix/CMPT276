@@ -54,9 +54,9 @@ class Product extends Component {
                 </div>
                 <div className="p-footer">
                     <p className="p-price">{productPrice}</p>      
-                    <button className="add-cart" >
+                    {/* <button className="add-cart" >
                         <i className="fas fa-shopping-cart"></i> 
-                    </button>
+                    </button> */}
                 </div>
             </div>
         )

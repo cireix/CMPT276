@@ -6,6 +6,7 @@ import { createStore, combineReducers } from 'redux'
 import { CartReducers } from 'react-cart-components'
 import 'globalFunc/auth';
 import { ToastContainer } from 'react-toastify';
+
  
 const store = createStore(
   combineReducers({

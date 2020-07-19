@@ -4,27 +4,35 @@ import Product from 'components/Product';
 import { Cart, AddCartButton } from 'react-cart-components'
 import axios from 'axios';
 import 'css/products.scss';
+import Checkout from 'components/Checkout';
+import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 class Products extends Component {
-    
-    // Product details, only for local test
-    state = {
-        currentProducts: [],
-        productsFullList: [],
-        cartNum: 0,
-        maxPerPage: 18,
-        numOfFirst: 0,
-        currentPage: [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentProducts: [],
+            productsFullList: [],
+            cartNum: 0,
+            maxPerPage: 18,
+            numOfFirst: 0,
+            currentPage: [],
+            showCart: true,
+            checkOutData: []
+        }
+
     }
+
 
     async componentDidMount() {
         // Get data from server side
         try {
             const res = await axios.post('api/beer/products');
-            console.log(res.data.beer);
             this.setState({
                 productsFullList: res.data.beer
             })
+            console.log(this.props.user);
         } catch (e) {
             console.log(e)
         }
@@ -32,7 +40,7 @@ class Products extends Component {
         //  Display 24 products per page
         var currentPage = [];
         var num = this.state.numOfFirst;
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
+        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -46,7 +54,7 @@ class Products extends Component {
         // Get a copy of full list of products
         var productList = [...this.state.productsFullList]
         // Get an array of matched products
-        productList = productList.filter( pdct => {
+        productList = productList.filter(pdct => {
             const match = pdct.fullName.match(new RegExp(string, 'gi'));
             return match !== null;
         })
@@ -86,7 +94,7 @@ class Products extends Component {
     toNextPage = () => {
         var currentPage = [];
         var num = this.state.numOfFirst
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
+        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -99,7 +107,7 @@ class Products extends Component {
     toPervPage = () => {
         var currentPage = [];
         var num = this.state.numOfFirst - 2 * this.state.maxPerPage
-        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num ++) {
+        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -108,34 +116,51 @@ class Products extends Component {
         })
     }
 
+    handleCheckout = (data) => {
+        if (!this.props.user.nickname) {
+            this.props.history.push('/login');
+            toast.error('Please login to checkout!');
+        }
+        console.log(data);
+        this.setState({ showCart: false, checkOutData: data })
+
+    }
+
+    handleCloseCheckout = () => {
+        this.setState({ showCart: true })
+    }
+
     render() {
         return (
             <div>
                 <ToolBox search={this.search} cartNum={this.state.cartNum} />
-                <Cart currency="CAD" />
-                <div className="products">
-                    <div className="columns is-multiline ">
+                {this.state.showCart ?
+                    <Cart currency="CAD" handleCheckout={this.handleCheckout} />
+                    : <Checkout products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
+                }
+                <div className={this.state.showCart ? 'products' : 'hide'} >
+                    <div className="columns is-multiline">
                         {
                             this.state.currentPage.map(pdct => {
                                 return (
-                                    <div className="column is-2" key={pdct.productId}>
+                                    <div className='column is-2' key={pdct.productId}>
                                         <Product product={pdct} />
                                         <AddCartButton
-                                        product={{id: pdct.productId, name: pdct.fullName, price: pdct.price, image:pdct.image}}
-                                        styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
-                                     />
+                                            product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
+                                            styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                        />
                                     </div>
                                 )
                             })
                         }
                     </div>
-                    
+
                     <div className="control to-another">
-                        <button 
-                            className="button to-prev" 
+                        <button
+                            className="button to-prev"
                             onClick={this.toPervPage}
                             disabled={this.state.numOfFirst === this.state.maxPerPage ? true : false}
-                            >Previous Page
+                        >Previous Page
                         </button>
                         <button className="button" onClick={this.toNextPage}>Next Page</button>
                     </div>
@@ -145,4 +170,4 @@ class Products extends Component {
     }
 }
 
-export default Products
+export default withRouter(Products);

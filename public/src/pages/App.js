@@ -3,10 +3,11 @@ import Products from 'components/Products';
 import Layout from 'Layout';
 
 const App = (props) => {
+    const user = global.auth.getUser();
 
     return(
         <Layout>
-            <Products />
+            <Products user = {user}/>
         </Layout>
     );
 

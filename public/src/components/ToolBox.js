@@ -44,10 +44,10 @@ class ToolBox extends Component {
                         </div>    
                     </div>       
                 </div>
-                <div className="cart-box">
+                {/* <div className="cart-box">
                     <i className="fas fa-shopping-cart"></i>
                     <span className="cart-num">({this.props.cartNum})</span>
-                </div>
+                </div> */}
             </div>
             
         );
