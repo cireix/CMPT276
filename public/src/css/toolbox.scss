@@ -1,0 +1,62 @@
+@import 'css/app.scss';
+
+.tool-box {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    margin: auto;
+    border-bottom: 3px solid black;
+    padding: 2rem 0.2rem 1.5rem 0.2rem;
+    flex-direction: row;
+    @media (min-width: $phone) {
+        flex-direction: row;
+    }
+    @media (min-width: $tablet) {
+        flex-direction: row;
+    }
+    @media (min-width: $desktop) {
+        flex-direction: row;
+    }
+    .logo-text {
+        // font-size: 2rem;
+        font-size: 20px;
+            @media (min-width: $phone) {
+                font-size:20px;
+            }
+            @media (min-width: $tablet) {
+                font-size:30px;
+            }
+            @media (min-width: $desktop) {
+                font-size:50px;
+            }
+        color: black;
+        font-weight: 600;
+        
+    }
+    .search-box {
+        .search-input {
+            width: 250px;
+            height: 2.5rem;
+            @media (min-width: $phone) {
+                width: 250px;
+            }
+            @media (min-width: $tablet) {
+                font-size:15px;
+            }
+            @media (min-width: $desktop) {
+                font-size:15px;
+            }
+            outline: 0;
+        }
+    }
+    .cart-box {
+        cursor: pointer;
+        display: inline-block;
+        color: black;
+        font-size: 1.2rem;
+        .cart-num {
+            padding-left: 5px;
+        }
+    }
+}

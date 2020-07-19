@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';   
 import PopupPanel from 'components/PopupPanel'; 
 import UserProfile from 'components/UserProfile'; 
+import 'css/header.scss';
 
 const Header = (props) => {
     // Open the UserProfile popup panel when nickname is clicked
