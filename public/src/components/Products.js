@@ -14,7 +14,6 @@ class Products extends Component {
         this.state = {
             currentProducts: [],
             productsFullList: [],
-            cartNum: 0,
             maxPerPage: 18,
             numOfFirst: 0,
             currentPage: [],
@@ -37,10 +36,9 @@ class Products extends Component {
             console.log(e)
         }
 
-        //  Display 24 products per page
+        //  Display 18 products per page
         var currentPage = [];
-        var num = this.state.numOfFirst;
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
+        for (var num = 0; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -50,18 +48,37 @@ class Products extends Component {
     }
 
     // Search box 
-    search = (string) => {
+    search = async(string) => {
         // Get a copy of full list of products
         var productList = [...this.state.productsFullList]
         // Get an array of matched products
-        productList = productList.filter(pdct => {
+        productList = productList.filter( pdct => {
             const match = pdct.fullName.match(new RegExp(string, 'gi'));
             return match !== null;
         })
-        // Render the matched products
-        this.setState({
+        // currentProducts contains all matched objects
+        await this.setState({
             currentProducts: productList
         })
+
+        // Push 18 objects in matched list into currentPage list to render
+        // When next page button is clicked, push another 18 with 19th object start.....
+        var currentPage = [];
+        if (productList.length <= this.state.maxPerPage) {
+            this.setState({
+                currentPage: productList,
+                numOfFirst: this.state.currentProducts.length
+            })
+        } else {
+            for (var num = 0; num < this.state.maxPerPage; num ++) {
+                currentPage.push(this.state.currentProducts[num])
+            }
+            console.log(currentPage)
+            this.setState({
+                currentPage: currentPage,
+                numOfFirst: num
+            })
+        }
     }
 
     // // Update the cartNum state
@@ -93,9 +110,10 @@ class Products extends Component {
     // Go to the next page
     toNextPage = () => {
         var currentPage = [];
-        var num = this.state.numOfFirst
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
-            currentPage.push(this.state.productsFullList[num])
+        var num = this.state.numOfFirst;
+        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
+            if (num === this.state.currentProducts.length) break;
+            currentPage.push(this.state.currentProducts[num]);
         }
         this.setState({
             currentPage: currentPage,
@@ -107,8 +125,8 @@ class Products extends Component {
     toPervPage = () => {
         var currentPage = [];
         var num = this.state.numOfFirst - 2 * this.state.maxPerPage
-        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num++) {
-            currentPage.push(this.state.productsFullList[num])
+        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num ++) {
+            currentPage.push(this.state.currentProducts[num])
         }
         this.setState({
             currentPage: currentPage,
@@ -133,7 +151,7 @@ class Products extends Component {
     render() {
         return (
             <div>
-                <ToolBox search={this.search} cartNum={this.state.cartNum} />
+                <ToolBox search={this.search} />
                 {this.state.showCart ?
                     <Cart currency="CAD" handleCheckout={this.handleCheckout} />
                     : <Checkout products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
@@ -156,13 +174,17 @@ class Products extends Component {
                     </div>
 
                     <div className="control to-another">
-                        <button
-                            className="button to-prev"
+                        <button 
+                            className="button to-prev" 
                             onClick={this.toPervPage}
-                            disabled={this.state.numOfFirst === this.state.maxPerPage ? true : false}
-                        >Previous Page
+                            disabled={this.state.numOfFirst < 2 * this.state.maxPerPage ? true : false}
+                            >Previous Page
                         </button>
-                        <button className="button" onClick={this.toNextPage}>Next Page</button>
+                        <button 
+                            className="button" 
+                            onClick={this.toNextPage}
+                            disabled={this.state.numOfFirst === this.state.currentProducts.length ? true : false}
+                            >Next Page</button>
                     </div>
                 </div>
             </div>
