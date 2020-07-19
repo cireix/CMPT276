@@ -29,9 +29,9 @@ class Products extends Component {
         try {
             const res = await axios.post('api/beer/products');
             this.setState({
+                currentProducts: res.data.beer,
                 productsFullList: res.data.beer
             })
-            console.log(this.props.user);
         } catch (e) {
             console.log(e)
         }
