@@ -5,7 +5,11 @@ const OrderSchema = new Schema({
 	products: {
 		type: Object,
 		require: true
-	},
+    },
+    phone: {
+        type: String,
+        require: true
+    },
 	name: {
 		type: String,
 		require: true
@@ -13,7 +17,11 @@ const OrderSchema = new Schema({
 	address: {
 		type: String,
 		require: true
-	}, 
+    }, 
+    city: {
+        type: String,
+        require: true
+    },
 	country: {
 		type: String,
 		require: true
@@ -22,9 +30,15 @@ const OrderSchema = new Schema({
         type: Number,
         require: true
     },
-    phone: {
+    stripeToken: {
         type: String,
         require: true
+    },
+    complete: {
+        type: Boolean,
+        require: true
     }
+    
+    
 });
 module.exports = Order = mongoose.model("order", OrderSchema, 'order');
