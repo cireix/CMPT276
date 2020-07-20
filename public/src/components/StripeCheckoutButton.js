@@ -9,7 +9,7 @@ const StripeCheckoutButton = ({ user, price, products }) => {
   const onToken = async token => {
     console.log(products,user,token);
     alert('Payment Succesful!');
-    const res = await axios.post('api/stripe/checkout', { 
+    const res = await axios.post('api/orders/checkout', { 
       products: products,
       phone: user.phoneNumber, 
       name: user.nickName,

@@ -7,6 +7,9 @@ class Driver extends Component {
     constructor(props) {
         super(props);
     }
+    async componentDidMount() {
+
+    }
     render() {
         return (
             <div>im driver</div>

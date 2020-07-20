@@ -27,11 +27,13 @@ class Products extends Component {
     async componentDidMount() {
         // Get data from server side
         try {
-            const res = await axios.post('api/beer/products');
-            this.setState({
-                currentProducts: res.data.beer,
-                productsFullList: res.data.beer
-            })
+            const res = await axios.post('api/beer/products').then(resp => {
+                this.setState({
+                    currentProducts: resp.data.beer,
+                    productsFullList: resp.data.beer
+                })
+            });
+           
         } catch (e) {
             console.log(e)
         }
@@ -160,15 +162,18 @@ class Products extends Component {
                     <div className="columns is-multiline">
                         {
                             this.state.currentPage.map(pdct => {
-                                return (
-                                    <div className='column is-2' key={pdct.productId}>
-                                        <Product product={pdct} />
-                                        <AddCartButton
-                                            product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
-                                            styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
-                                        />
-                                    </div>
-                                )
+                                if(pdct) {
+                                    return (
+                                        <div className='column is-2' key={pdct.productId}>
+                                            <Product product={pdct} />
+                                            <AddCartButton
+                                                product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
+                                                styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                            />
+                                        </div>
+                                    )
+                                }
+                                
                             })
                         }
                     </div>
