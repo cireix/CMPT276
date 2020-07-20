@@ -22,21 +22,25 @@ class Products extends Component {
         }
     }
 
+
+
     async componentDidMount() {
         // Get data from server side
         try {
-            const res = await axios.post('api/beer/products');
-            this.setState({
-                currentProducts: res.data.beer,
-                productsFullList: res.data.beer
-            })
+            const res = await axios.post('api/beer/products').then(resp => {
+                this.setState({
+                    currentProducts: resp.data.beer,
+                    productsFullList: resp.data.beer
+                })
+            });
+           
         } catch (e) {
             console.log(e)
         }
 
         //  Display 18 products per page
         var currentPage = [];
-        for (var num = 0; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
+        for (var num = 0; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -46,11 +50,11 @@ class Products extends Component {
     }
 
     // Search box 
-    search = async (string) => {
+    search = async(string) => {
         // Get a copy of full list of products
         var productList = [...this.state.productsFullList]
         // Get an array of matched products
-        productList = productList.filter(pdct => {
+        productList = productList.filter( pdct => {
             const match = pdct.fullName.match(new RegExp(string, 'gi'));
             return match !== null;
         })
@@ -68,7 +72,7 @@ class Products extends Component {
                 numOfFirst: this.state.currentProducts.length
             })
         } else {
-            for (var num = 0; num < this.state.maxPerPage; num++) {
+            for (var num = 0; num < this.state.maxPerPage; num ++) {
                 currentPage.push(this.state.currentProducts[num])
             }
             console.log(currentPage)
@@ -79,11 +83,37 @@ class Products extends Component {
         }
     }
 
+    // // Update the cartNum state
+    // updateCart = async () => {
+    //     const cartNum = await this.getCartNum();
+    //     this.setState({
+    //         cartNum: cartNum
+    //     });
+    // }
+
+    // // Get the sum of numbers of products in the cart
+    // getCartNum = () => {
+    //     // Return a list containing all products in the cart
+    //     axios.get('/carts')
+    //     .then(res => {
+    //         const carts = res.data;
+    //         var cartNum = 0;
+    //         // If cart is not empty, return the sum 
+    //         if (carts !== []) {
+    //             carts.forEach(cart => {
+    //                 cartNum += cart.num
+    //             })
+    //         }
+    //         return cartNum; 
+    //     })
+    //     .catch(err => console.log('get sum err => ', err))
+    // }
+
     // Go to the next page
     toNextPage = () => {
         var currentPage = [];
         var num = this.state.numOfFirst;
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
+        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num ++) {
             if (num === this.state.currentProducts.length) break;
             currentPage.push(this.state.currentProducts[num]);
         }
@@ -97,7 +127,7 @@ class Products extends Component {
     toPervPage = () => {
         var currentPage = [];
         var num = this.state.numOfFirst - 2 * this.state.maxPerPage
-        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num++) {
+        for (num; num < this.state.numOfFirst - this.state.maxPerPage; num ++) {
             currentPage.push(this.state.currentProducts[num])
         }
         this.setState({
@@ -125,38 +155,41 @@ class Products extends Component {
             <div>
                 <ToolBox search={this.search} />
                 {this.state.showCart ?
-                    <Cart currency="CDN" handleCheckout={this.handleCheckout} />
+                    <Cart currency="CAD" handleCheckout={this.handleCheckout} />
                     : <Checkout user={this.props.user} products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
                 }
                 <div className={this.state.showCart ? 'products' : 'hide'} >
                     <div className="columns is-multiline">
                         {
                             this.state.currentPage.map(pdct => {
-                                return (
-                                    <div className='column is-2' key={pdct.productId}>
-                                        <Product product={pdct} />
-                                        <AddCartButton
-                                            product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image, quantity: pdct.quantity}}
-                                            styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
-                                        />
-                                    </div>
-                                )
+                                if(pdct) {
+                                    return (
+                                        <div className='column is-2' key={pdct.productId}>
+                                            <Product product={pdct} />
+                                            <AddCartButton
+                                                product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
+                                                styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                            />
+                                        </div>
+                                    )
+                                }
+                                
                             })
                         }
                     </div>
 
                     <div className="control to-another">
-                        <button
-                            className="button to-prev"
+                        <button 
+                            className="button to-prev" 
                             onClick={this.toPervPage}
                             disabled={this.state.numOfFirst < 2 * this.state.maxPerPage ? true : false}
-                        >Previous Page
+                            >Previous Page
                         </button>
-                        <button
-                            className="button"
+                        <button 
+                            className="button" 
                             onClick={this.toNextPage}
                             disabled={this.state.numOfFirst === this.state.currentProducts.length ? true : false}
-                        >Next Page</button>
+                            >Next Page</button>
                     </div>
                 </div>
             </div>

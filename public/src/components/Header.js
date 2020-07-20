@@ -18,9 +18,13 @@ const Header = (props) => {
                 if ( data === 'allusers' ) {
                     props.history.push('/allusers');
                 }
+                if ( data === 'order' ) {
+                    props.history.push('prevorder');
+                }
             }
         })
     }
+    console.log(props);
 
     return (
         <div className="header">
@@ -29,7 +33,7 @@ const Header = (props) => {
             <div className="start">     
                 <Link to="/">HOME</Link>
             </div>
-            <div className="end">
+            <div className={props.user.type === 2 ? "end-driver" : "end"}>
                 { props.user.nickname ? (
                     <React.Fragment>      
                         <i className="far fa-user icon" onClick={toProfile}></i>

@@ -29,13 +29,20 @@
     "node-sass": "^4.14.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+<<<<<<< HEAD
     "react-autocomplete-places": "^7.3.0",
     "react-bootstrap": "^1.2.2",
     "react-cart-components": "^2.1.0",
     "react-paginate": "^6.3.2",
+=======
+    "react": "^16.13.1",
+    "react-cart-components": "^2.1.0",
+    "react-dom": "^16.13.1",
+>>>>>>> 6b547e40435e59dc9f8aa4829b9beccf234284f3
     "react-scripts": "^3.4.1",
     "react-stripe-checkout": "^2.6.3",
     "redux": "^4.0.5",
+    "stripe": "^8.76.0",
     "twilio": "^3.47.0",
     "validator": "^13.1.1"
   },

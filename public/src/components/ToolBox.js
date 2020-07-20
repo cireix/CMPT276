@@ -12,15 +12,11 @@ class ToolBox extends Component {
         this.setState({
             searchString: string
         })
-        this.props.search(string);
     }
 
-    // Clear search box
-    clearSearch = () => {
-        this.setState({
-            searchString: ''
-        })
-        this.props.search('');
+    // search box
+    search = () => {
+        this.props.search(this.state.searchString);
     }
 
     render() {
@@ -40,7 +36,7 @@ class ToolBox extends Component {
                         <div className="control">
                             <button 
                                 className="button"
-                                onClick={this.clearSearch}>X</button>
+                                onClick={this.search}>search</button>
                         </div>    
                     </div>       
                 </div>

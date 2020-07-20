@@ -3,7 +3,7 @@ import Header from 'components/Header'
 
 const Layout = (props) => {
     const user = global.auth.getUser();
-
+    console.log(user);
     return (
         <div className="main">
             <Header user={user} />
