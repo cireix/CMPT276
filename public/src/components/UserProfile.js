@@ -50,7 +50,11 @@ export default function UserProfile(props) {
                     <div className="control">
                         <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
                     </div>
-                ) : (null) }
+                ) : (
+                    <div className="control">
+                        <button className="button" onClick={() => {props.close("order");}}>Previous Order</button>
+                    </div>
+                )}
             </div>
         </div>
     )

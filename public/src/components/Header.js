@@ -18,6 +18,9 @@ const Header = (props) => {
                 if ( data === 'allusers' ) {
                     props.history.push('/allusers');
                 }
+                if ( data === 'order' ) {
+                    props.history.push('prevorder');
+                }
             }
         })
     }

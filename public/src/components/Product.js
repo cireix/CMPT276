@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import {toast} from 'react-toastify';
+// import axios from 'axios';
+// import {toast} from 'react-toastify';
 import 'css/product.scss';
 import PopupPanel from 'components/PopupPanel';
 import ProductDetail from 'components/ProductDetail';
