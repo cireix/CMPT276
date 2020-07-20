@@ -14,33 +14,29 @@ class Products extends Component {
         this.state = {
             currentProducts: [],
             productsFullList: [],
-            cartNum: 0,
             maxPerPage: 18,
             numOfFirst: 0,
             currentPage: [],
             showCart: true,
             checkOutData: []
         }
-
     }
-
 
     async componentDidMount() {
         // Get data from server side
         try {
             const res = await axios.post('api/beer/products');
             this.setState({
+                currentProducts: res.data.beer,
                 productsFullList: res.data.beer
             })
-            console.log(this.props.user);
         } catch (e) {
             console.log(e)
         }
 
-        //  Display 24 products per page
+        //  Display 18 products per page
         var currentPage = [];
-        var num = this.state.numOfFirst;
-        for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
+        for (var num = 0; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
             currentPage.push(this.state.productsFullList[num])
         }
         this.setState({
@@ -50,7 +46,7 @@ class Products extends Component {
     }
 
     // Search box 
-    search = (string) => {
+    search = async (string) => {
         // Get a copy of full list of products
         var productList = [...this.state.productsFullList]
         // Get an array of matched products
@@ -58,44 +54,38 @@ class Products extends Component {
             const match = pdct.fullName.match(new RegExp(string, 'gi'));
             return match !== null;
         })
-        // Render the matched products
-        this.setState({
+        // currentProducts contains all matched objects
+        await this.setState({
             currentProducts: productList
         })
+
+        // Push 18 objects in matched list into currentPage list to render
+        // When next page button is clicked, push another 18 with 19th object start.....
+        var currentPage = [];
+        if (productList.length <= this.state.maxPerPage) {
+            this.setState({
+                currentPage: productList,
+                numOfFirst: this.state.currentProducts.length
+            })
+        } else {
+            for (var num = 0; num < this.state.maxPerPage; num++) {
+                currentPage.push(this.state.currentProducts[num])
+            }
+            console.log(currentPage)
+            this.setState({
+                currentPage: currentPage,
+                numOfFirst: num
+            })
+        }
     }
-
-    // // Update the cartNum state
-    // updateCart = async () => {
-    //     const cartNum = await this.getCartNum();
-    //     this.setState({
-    //         cartNum: cartNum
-    //     });
-    // }
-
-    // // Get the sum of numbers of products in the cart
-    // getCartNum = () => {
-    //     // Return a list containing all products in the cart
-    //     axios.get('/carts')
-    //     .then(res => {
-    //         const carts = res.data;
-    //         var cartNum = 0;
-    //         // If cart is not empty, return the sum 
-    //         if (carts !== []) {
-    //             carts.forEach(cart => {
-    //                 cartNum += cart.num
-    //             })
-    //         }
-    //         return cartNum; 
-    //     })
-    //     .catch(err => console.log('get sum err => ', err))
-    // }
 
     // Go to the next page
     toNextPage = () => {
         var currentPage = [];
-        var num = this.state.numOfFirst
+        var num = this.state.numOfFirst;
         for (num; num < this.state.numOfFirst + this.state.maxPerPage; num++) {
-            currentPage.push(this.state.productsFullList[num])
+            if (num === this.state.currentProducts.length) break;
+            currentPage.push(this.state.currentProducts[num]);
         }
         this.setState({
             currentPage: currentPage,
@@ -108,7 +98,7 @@ class Products extends Component {
         var currentPage = [];
         var num = this.state.numOfFirst - 2 * this.state.maxPerPage
         for (num; num < this.state.numOfFirst - this.state.maxPerPage; num++) {
-            currentPage.push(this.state.productsFullList[num])
+            currentPage.push(this.state.currentProducts[num])
         }
         this.setState({
             currentPage: currentPage,
@@ -133,10 +123,10 @@ class Products extends Component {
     render() {
         return (
             <div>
-                <ToolBox search={this.search} cartNum={this.state.cartNum} />
+                <ToolBox search={this.search} />
                 {this.state.showCart ?
-                    <Cart currency="CAD" handleCheckout={this.handleCheckout} />
-                    : <Checkout products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
+                    <Cart currency="CDN" handleCheckout={this.handleCheckout} />
+                    : <Checkout user={this.props.user} products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
                 }
                 <div className={this.state.showCart ? 'products' : 'hide'} >
                     <div className="columns is-multiline">
@@ -146,7 +136,7 @@ class Products extends Component {
                                     <div className='column is-2' key={pdct.productId}>
                                         <Product product={pdct} />
                                         <AddCartButton
-                                            product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
+                                            product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image, quantity: pdct.quantity}}
                                             styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
                                         />
                                     </div>
@@ -159,10 +149,14 @@ class Products extends Component {
                         <button
                             className="button to-prev"
                             onClick={this.toPervPage}
-                            disabled={this.state.numOfFirst === this.state.maxPerPage ? true : false}
+                            disabled={this.state.numOfFirst < 2 * this.state.maxPerPage ? true : false}
                         >Previous Page
                         </button>
-                        <button className="button" onClick={this.toNextPage}>Next Page</button>
+                        <button
+                            className="button"
+                            onClick={this.toNextPage}
+                            disabled={this.state.numOfFirst === this.state.currentProducts.length ? true : false}
+                        >Next Page</button>
                     </div>
                 </div>
             </div>

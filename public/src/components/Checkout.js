@@ -1,11 +1,9 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import StripeCheckoutButton from'components/StripeCheckoutButton';
+import LocationSearchInput from 'components/LocationSearchInput'
 
-const Checkout = ({ products, handleCloseCheckout, total }) => {
-
-
-    console.log(products);
+const Checkout = ({ user, products, handleCloseCheckout, total }) => {
     return (
         <Modal.Dialog>
             <Modal.Header >
@@ -20,6 +18,7 @@ const Checkout = ({ products, handleCloseCheckout, total }) => {
                                 <li className="list-group-item d-flex justify-content-between" key={pdct.productId}>
                                     <img src={pdct.image} alt="product-img" class="img-thumbnail" style={{height: '100px', width: 'auto'}}></img>
                                     <p>{pdct.name}</p>
+                                    <p>{pdct.quantity}</p>
                                     <p>{'$' + pdct.price}</p>
                                 </li>
                             )
@@ -29,16 +28,16 @@ const Checkout = ({ products, handleCloseCheckout, total }) => {
                 </ul>
                 <ul className="list-group mb-3" >
                     <li className="list-group-item d-flex justify-content-end">
+                    {/* <span>{'total quantity = ' + total.productQuantity}</span> */}
                         <span>Total price(CAD)  $</span> 
-                        <strong>{total.totalPrice}</strong>
-                        </li>
-                    {/* <li>{'total quantity = ' + total.productQuantity}</li> */}
+                        <strong>{total.totalPrice.toFixed(2)}</strong>
+                    </li>
                 </ul>
-
+                <LocationSearchInput/>
             </Modal.Body>
 
             <Modal.Footer>
-                <StripeCheckoutButton price={total.totalPrice}/>
+                <StripeCheckoutButton user={user} price={total.totalPrice.toFixed(2)} products={products}/>
             </Modal.Footer>
         </Modal.Dialog>
     )
