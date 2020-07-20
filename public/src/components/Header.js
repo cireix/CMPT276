@@ -21,6 +21,7 @@ const Header = (props) => {
             }
         })
     }
+    console.log(props);
 
     return (
         <div className="header">
@@ -29,7 +30,7 @@ const Header = (props) => {
             <div className="start">     
                 <Link to="/">HOME</Link>
             </div>
-            <div className="end">
+            <div className={props.user.type === 2 ? "end-driver" : "end"}>
                 { props.user.nickname ? (
                     <React.Fragment>      
                         <i className="far fa-user icon" onClick={toProfile}></i>

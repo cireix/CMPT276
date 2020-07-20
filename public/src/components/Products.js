@@ -20,8 +20,8 @@ class Products extends Component {
             showCart: true,
             checkOutData: []
         }
-
     }
+
 
 
     async componentDidMount() {
@@ -154,7 +154,7 @@ class Products extends Component {
                 <ToolBox search={this.search} />
                 {this.state.showCart ?
                     <Cart currency="CAD" handleCheckout={this.handleCheckout} />
-                    : <Checkout products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
+                    : <Checkout user={this.props.user} products={this.state.checkOutData.products} handleCloseCheckout={this.handleCloseCheckout} total={this.state.checkOutData.total} />
                 }
                 <div className={this.state.showCart ? 'products' : 'hide'} >
                     <div className="columns is-multiline">

@@ -2,10 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import StripeCheckoutButton from'components/StripeCheckoutButton';
 
-const Checkout = ({ products, handleCloseCheckout, total }) => {
-
-
-    console.log(products);
+const Checkout = ({ user, products, handleCloseCheckout, total }) => {
     return (
         <Modal.Dialog>
             <Modal.Header >
@@ -38,7 +35,7 @@ const Checkout = ({ products, handleCloseCheckout, total }) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <StripeCheckoutButton price={total.totalPrice}/>
+                <StripeCheckoutButton user={user} price={total.totalPrice} products={products}/>
             </Modal.Footer>
         </Modal.Dialog>
     )
