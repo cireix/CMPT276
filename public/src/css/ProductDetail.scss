@@ -1,0 +1,34 @@
+@import 'css/app.scss';
+
+.product-detail {
+    width: 100%;
+    height: auto;
+    .detail-image-wrapper {
+        width: 100%;
+        height: auto;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        .detail-img {
+            display: block;
+            width: auto;
+            height: 180px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .detail-volume {
+            font-size: 18px;
+            color: rgb(165, 165, 165);
+            margin-top: 0.8rem;
+        }
+        .detail-desc {
+            font-size: 16px;
+            font-weight: 600;  
+        }
+    }
+    .detail-price {
+        margin-top: 0.8rem;
+        font-size: 30px;
+        font-weight: 800;
+        text-align: right;
+    }
+}

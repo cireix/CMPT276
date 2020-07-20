@@ -11,11 +11,11 @@ class PopupPanel extends React.Component {
 
     // Open a popup panel
     open = (options) => {
-        const { component, func, user } = options;
+        const { component, func, user, product } = options;
         // create a time stamp that used to re-render the child component everytime when the Panel component opened
         const _key = new Date().getTime();
         // create a renderable component in the Panel component with close function, a time stamp and a ser object
-        const _component = React.createElement(component, { close: this.close, key: _key, user: user });  
+        const _component = React.createElement(component, { close: this.close, key: _key, user: user, product: product });  
         this.setState({
             component: _component,
             active: true,

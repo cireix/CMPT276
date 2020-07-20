@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'css/product.scss';
+import PopupPanel from 'components/PopupPanel';
+import ProductDetail from 'components/ProductDetail';
 
 class Product extends Component {
 
@@ -38,13 +40,22 @@ class Product extends Component {
     //     })
     // }
 
+    // Display product detail
+    toDetail = () => {
+        PopupPanel.open({
+            component: ProductDetail,
+            product: this.props.product,
+            func: data => {}
+        })
+    }
+
     render() {
         const { productName, image,  type , price, volume } = this.props.product;
         const productPrice = '$' + price;
         const productVolume = volume + 'L';
 
         return (
-            <div className="product">
+            <div className="product" onClick={this.toDetail} >
                 <div className="img-wrapper">
                     <figure className="image">
                         <img className="img" src={image} alt="" />
