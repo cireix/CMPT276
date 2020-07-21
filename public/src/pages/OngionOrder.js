@@ -3,7 +3,7 @@ import axios from 'axios';
 import Layout from 'Layout';
 import { toast } from 'react-toastify';
 
-class PreviousOrder extends React.Component {
+class OngoingOrder extends React.Component {
 
     headers = ['Product Name', 'Price', 'Quantity', 'Total']
     state = {
@@ -15,8 +15,8 @@ class PreviousOrder extends React.Component {
         const user = global.auth.getUser();
         const { phoneNumber } = user;
         console.log(phoneNumber);
-        // post to server side and get the qrevious order
-        await axios.post("api/orders/getPrevious", { phone: phoneNumber }).then(res => {
+        // post to server side and get the ongoing order
+        await axios.post("api/orders/getOngoing", { phone: phoneNumber }).then(res => {
             this.setState({
                 order: res.data[0].products
             })
@@ -48,7 +48,7 @@ class PreviousOrder extends React.Component {
                                     )
                                 ) : (
                                     <div>
-                                        <p>No Previous Order</p>
+                                        <p>No Ongoing Order</p>
                                     </div>
                                 )
                             }
@@ -57,8 +57,7 @@ class PreviousOrder extends React.Component {
                 </div>
             </Layout>
         )
-    }    
+    }
 }
 
-
-export default PreviousOrder;
+export default OngoingOrder;

@@ -7,6 +7,7 @@ import ForgotPw from 'pages/ForgotPw';
 import AllUsers from 'pages/AllUsers';
 import Checkout from 'components/Checkout';
 import PreviousOrder from 'pages/PreviousOrder';
+import OngoingOrder from 'pages/OngionOrder';
 
 const Router = () => (
     <BrowserRouter>
@@ -18,6 +19,7 @@ const Router = () => (
             <Route path='/allusers' component={AllUsers} />
             <Route path='/checkout' component={Checkout} />
             <Route path='/prevorder' component={PreviousOrder} />
+            <Route path='/ongoingorder' component={OngoingOrder} />
         </Switch>
     </BrowserRouter>
 )

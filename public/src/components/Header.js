@@ -13,13 +13,16 @@ const Header = (props) => {
             // This callback function is used to route to another page depending on data passed from the child component of the Panel component
             func: data => {
                 if ( data === 'logout' ) {
-                    props.history.go(0);   
+                    props.history.push('/');   
                 }
                 if ( data === 'allusers' ) {
                     props.history.push('/allusers');
                 }
-                if ( data === 'order' ) {
+                if ( data === 'prevorder' ) {
                     props.history.push('prevorder');
+                }
+                if ( data === 'ongoingorder') {
+                    props.history.push('ongoingorder');
                 }
             }
         })

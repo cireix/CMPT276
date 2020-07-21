@@ -1,4 +1,5 @@
 import React from 'react'
+import 'css/userprofile.scss';
 
 export default function UserProfile(props) {
 
@@ -43,18 +44,22 @@ export default function UserProfile(props) {
             <br />
             <br />
             <div className="field is-grouped is-grouped-centered">
-                <div className="control">
-                    <button className="button is-danger" onClick={logout}>Logout</button>
-                </div>
+
                 { props.user.type === 1 ? (
                     <div className="control">
                         <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
                     </div>
                 ) : (
                     <div className="control">
-                        <button className="button" onClick={() => {props.close("order");}}>Previous Order</button>
-                    </div>
+                        <button className="button" onClick={() => {props.close("prevorder");}}>Previous Order</button>
+                        <button className="button" onClick={() => {props.close("ongingorder");}}>Ongoing Order</button><br />
+                    </div>    
+                    
                 )}
+                <br />
+                <div className="control">
+                    <button className="button is-danger" onClick={logout}>Logout</button>
+                </div>
             </div>
         </div>
     )
