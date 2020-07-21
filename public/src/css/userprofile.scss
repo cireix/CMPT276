@@ -1,10 +1,11 @@
 @import 'css/app.scss';
 
-// .user-button {
-//     margin-left: auto;
-//     margin-right: auto;
-//     // display: flex;
-//     // justify-content: space-between;  
-//     // align-items: center;
-//     // margin: auto;
-// }
+.user-button {
+   width: 80%;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 10px; 
+}
+.user-control {
+    display: flex;
+}
