@@ -11,6 +11,7 @@ class LocationSearchInput extends React.Component {
 
   parentUpdate = address => {
     this.props.update(address);
+    this.props.selectUpdate(false);
   }
   parentSelect = () => {
     this.props.selectUpdate(true);

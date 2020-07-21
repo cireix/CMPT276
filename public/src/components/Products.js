@@ -169,7 +169,7 @@ class Products extends Component {
                                             <AddCartButton
                                                 product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
                                                 styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
-                                            />
+                                            /> 
                                         </div>
                                     )
                                 }

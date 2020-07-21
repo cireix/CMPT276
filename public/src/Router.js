@@ -5,9 +5,9 @@ import Login from 'pages/Login';
 import SignUp from 'pages/SignUp';
 import ForgotPw from 'pages/ForgotPw';
 import AllUsers from 'pages/AllUsers';
-import Checkout from 'components/Checkout';
 import PreviousOrder from 'pages/PreviousOrder';
 import OngoingOrder from 'pages/OngionOrder';
+import ThankYou from 'pages/ThankYou';
 
 const Router = () => (
     <BrowserRouter>
@@ -17,9 +17,9 @@ const Router = () => (
             <Route path='/signup' component={SignUp} />
             <Route path='/forgotpw' component={ForgotPw} />
             <Route path='/allusers' component={AllUsers} />
-            <Route path='/checkout' component={Checkout} />
             <Route path='/prevorder' component={PreviousOrder} />
             <Route path='/ongoingorder' component={OngoingOrder} />
+            <Route path='/thankyou' component={ThankYou} />
         </Switch>
     </BrowserRouter>
 )
