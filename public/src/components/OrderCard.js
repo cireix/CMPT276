@@ -40,9 +40,24 @@ class OrderCard extends Component {
     render() {
         return (
            <div className="orderCard">
-               <p>Address: <span>{this.props.address}</span></p>
-               <button onClick={this.refreshMap}>Accept</button>
-               
+               <div className="order-info">
+                    {
+                        this.props.products.map(p => {
+                            return (
+                                <div className="pdct-info">
+                                    <img className="order-image" src={p.image} />
+                                    <div className="order-text">
+                                        <p><strong>Name: </strong>{ p.name}</p>
+                                        <p><strong>Price: </strong>{"$" + p.price}</p>
+                                        <p><strong>Quantity: </strong>{ p.quantity}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <p className="order-addr">Address: <span>{this.props.address}</span></p>
+               </div>
+               <button className="button order-button" onClick={this.refreshMap}>Accept</button>             
            </div>
         )
     }
