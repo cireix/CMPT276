@@ -45,7 +45,7 @@ class Driver extends Component {
         return (
            <div class="driverMain">
                <div class="orderList">
-                   orderList
+                   <p className="title has-text-centered">Order List</p>
                 {this.state.orders.map((data,idx)=>{
                     return(
                         // <div>{data.phone}</div>
@@ -53,7 +53,7 @@ class Driver extends Component {
                             latLng={data.latLng}
                             updateLatLng={this.updateLatLng}
                             updateZoom={this.updateZoom}
-
+                            products={data.products}
                         />
                     )
                 })}
