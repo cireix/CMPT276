@@ -1,4 +1,5 @@
 import React from 'react';
+// import geo
 import PlacesAutocomplete from 'react-autocomplete-places';
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -8,12 +9,20 @@ class LocationSearchInput extends React.Component {
       };
   }
 
+  parentUpdate = address => {
+    this.props.update(address);
+  }
+  // parentSelect = () => {
+  //   this.props.selectUpdate(true);
+  // }
   handleChange = address => {
     this.setState({ address });
+    this.parentUpdate(address);
   };
 
   handleSelect = address => {
     this.setState({ address });
+    this.parentUpdate(address);
   };
 
   render() {

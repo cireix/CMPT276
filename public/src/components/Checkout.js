@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import StripeCheckoutButton from'components/StripeCheckoutButton';
 import LocationSearchInput from 'components/LocationSearchInput'
 
 const Checkout = ({ user, products, handleCloseCheckout, total }) => {
+    const [address, setAddress] = useState("");
+    const [selected, setSelected] = useState(false);
+    function updateAddress(s){
+        setAddress(s);
+    }
+    function updateSelected(b) {
+        setAddress(b);
+    }
     return (
         <Modal.Dialog>
             <Modal.Header >
@@ -29,15 +37,14 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
                 <ul className="list-group mb-3" >
                     <li className="list-group-item d-flex justify-content-end">
                     {/* <span>{'total quantity = ' + total.productQuantity}</span> */}
-                        <span>Total price(CAD)  $</span> 
+                        <span>Total price (CAD)  $</span> 
                         <strong>{total.totalPrice.toFixed(2)}</strong>
                     </li>
                 </ul>
-                <LocationSearchInput/>
+                <LocationSearchInput update={updateAddress} />
             </Modal.Body>
-
             <Modal.Footer>
-                <StripeCheckoutButton user={user} price={total.totalPrice.toFixed(2)} products={products}/>
+                <StripeCheckoutButton user={user} price={total.totalPrice.toFixed(2)} products={products} disabled={address !== "" ? false : true}/>
             </Modal.Footer>
         </Modal.Dialog>
     )

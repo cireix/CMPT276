@@ -43,13 +43,13 @@ router.post("/getOrders", (req, res) => {
 });
 
 router.post("/getPrevious",(req,res) => {
-    Order.find({phone:req.body.phone,complete:true}).then(order => {
+    Order.find({"phone":req.body.phone,"complete":true}).then(order => {
         res.json(order)
     })
 })
 
 router.post("/getOngoing",(req,res) => {
-    Order.find({phone:req.body.phone,complete:false}).then(order => {
+    Order.find({"phone":req.body.phone,"complete":false}).then(order => {
         res.json(order)
     })
 })
