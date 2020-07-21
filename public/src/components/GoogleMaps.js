@@ -57,7 +57,7 @@ class GoogleMaps extends Component {
 }
 const mapStyles = {
     width: '70vw',
-    height: '100%',
+    height: 'calc(100vh - 45px)',
   };
 
 
