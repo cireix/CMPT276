@@ -1,8 +1,9 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
+import { withRouter } from 'react-router-dom';
 const axios = require("axios");
 
-const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng }) => {
+const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng,history }) => {
   const priceForStripe = price * 100;
   const publishableKey = 'pk_test_51H6m1cIWCPZAHnFyPL64e93LGguHVGL4h4F7LxFn5vRzDUpDggtz5cJSX2VwfprNWspvhqZq1fMFzH3SKN28l4V500sgaYh6Jq';
 
@@ -17,7 +18,10 @@ const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng
       latLng: latLng,
       stripeToken: token.id
     });
-    console.log(res.data)
+    if(res) {
+      history.push('/thankyou');
+    }
+    console.log(res.data);
 
   };
 
@@ -34,11 +38,11 @@ const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng
       token={onToken}
       stripeKey={publishableKey}
     >
-      <button disabled={disabled}>
+      <button class="btn btn-primary" disabled={disabled}>
         Pay Now
       </button>
     </StripeCheckout>
   );
 };
 
-export default StripeCheckoutButton;
+export default withRouter(StripeCheckoutButton);

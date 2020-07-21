@@ -11,7 +11,6 @@ import { ToastContainer } from 'react-toastify';
 const store = createStore(
   combineReducers({
     cart: CartReducers
-    // Your own reducers here,
   })
 );
 
