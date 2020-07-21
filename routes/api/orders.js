@@ -35,4 +35,23 @@ router.post("/checkout", (req, res) => {
 		}
 	});
 });
+router.post("/getOrders", (req, res) => {
+    Order.find({"complete":false}).then(order => {
+        // console.log(order)
+        res.json(order)
+	});
+});
+
+router.post("/getPrevious",(req,res) => {
+    Order.find({phone:req.body.phone,complete:true}).then(order => {
+        res.json(order)
+    })
+})
+
+router.post("/getOngoing",(req,res) => {
+    Order.find({phone:req.body.phone,complete:false}).then(order => {
+        res.json(order)
+    })
+})
+
 module.exports = router;

@@ -18,7 +18,7 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
                                 <li className="list-group-item d-flex justify-content-between" key={pdct.productId}>
                                     <img src={pdct.image} alt="product-img" class="img-thumbnail" style={{height: '100px', width: 'auto'}}></img>
                                     <p>{pdct.name}</p>
-                                    <p>{pdct.quantity}</p>
+                                    <p>{pdct.quantity}x</p>
                                     <p>{'$' + pdct.price}</p>
                                 </li>
                             )
