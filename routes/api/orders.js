@@ -19,8 +19,7 @@ router.post("/checkout", (req, res) => {
                             phone: req.body.phone,
                             name: req.body.name,
                             address: req.body.address,
-                            city: req.body.city,
-                            country: req.body.country,
+                            latLng: req.body.latLng,
                             timestamp: token.created,
                             stripeToken: req.body.stripeToken,
                             complete: false

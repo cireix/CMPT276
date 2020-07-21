@@ -6,11 +6,15 @@ import LocationSearchInput from 'components/LocationSearchInput'
 const Checkout = ({ user, products, handleCloseCheckout, total }) => {
     const [address, setAddress] = useState("");
     const [selected, setSelected] = useState(false);
+    const [latlng,setLatLng] = useState({})
     function updateAddress(s){
         setAddress(s);
     }
     function updateSelected(b) {
-        setAddress(b);
+        setSelected(b);
+    }
+    function updateLatLng(d) {
+        setLatLng(d);
     }
     return (
         <Modal.Dialog>
@@ -41,10 +45,10 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
                         <strong>{total.totalPrice.toFixed(2)}</strong>
                     </li>
                 </ul>
-                <LocationSearchInput update={updateAddress} />
+                <LocationSearchInput update={updateAddress} selectUpdate={updateSelected} latlngUpdate = {updateLatLng}/>
             </Modal.Body>
             <Modal.Footer>
-                <StripeCheckoutButton user={user} price={total.totalPrice.toFixed(2)} products={products} disabled={address !== "" ? false : true}/>
+                <StripeCheckoutButton user={user} price={total.totalPrice.toFixed(2)} products={products} disabled={selected ? false : true} latLng={latlng} address={address}/>
             </Modal.Footer>
         </Modal.Dialog>
     )

@@ -18,14 +18,10 @@ const OrderSchema = new Schema({
 		type: String,
 		require: true
     }, 
-    city: {
-        type: String,
+    latLng: {
+        type: Object,
         require: true
     },
-	country: {
-		type: String,
-		require: true
-	}, 
     timestamp: {
         type: Number,
         require: true

@@ -5,36 +5,37 @@ import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react';
 class GoogleMaps extends Component {
     constructor(props) {
         super(props);
-    }
-    async componentDidMount() {
-        
+        console.log("GooglePoints")
+        console.log(this.props.points);
+        this.state = {
+            points: this.props.points
+        }
     }
     render() {
         return (
             <Map
             google={this.props.google}
-            zoom={12}
+            zoom={this.props.zoom}
             style={mapStyles}
-            initialCenter={{ lat: 49.2027, lng: -122.9207}}
+            initialCenter={{ lat: 49.2027, lng: -123.1007}}
+            center={this.props.latLng}
           >
-            <Marker
+            {this.state.points.map(p => {
+                return(<Marker
                 title={'The marker`s title will appear as a tooltip.'}
                 name={'SOMA'}
-                position={{lat: 49.2027, lng: -122.9207}}>
-                    <InfoWindow
-                        >
-                        <div>
-                            <p>Click on the map or drag the marker to select location where the incident occurred</p>
-                        </div>
-                    </InfoWindow>
-            </Marker>
+                position={{lat: p.lat, lng: p.lng}}>
+                   
+                </Marker>)
+            })}
+            
           </Map>
            
         )
     }
 }
 const mapStyles = {
-    width: '70w',
+    width: '70vw',
     height: '100%',
   };
 export default GoogleApiWrapper({
