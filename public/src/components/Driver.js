@@ -16,18 +16,40 @@ class Driver extends Component {
             latLng: {
                 lat: 49.2027, lng: -122.9207
             },
+            bounds: null,
+            current: null
+        }
+        this.getCurrentLoc();
+    }
+    getCurrentLoc = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position => {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            this.setState({
+              current: pos
+            })
+          });
         }
     }
     updateLatLng = d => {
         this.setState({
             latLng: d
         })
-        console.log(d);
     }
     updateZoom = () => {
         this.setState({
             zoom:18
         })
+    }
+    updateBounds = (a) =>  {
+        this.setState({
+            bounds: [a,this.state.current] 
+        })
+        console.log(this.state.bounds)
+
     }
     async componentDidMount() {
         const res = await axios.post('api/orders/getOrders', {}).then(resp => {
@@ -37,8 +59,6 @@ class Driver extends Component {
             for(var x in this.state.orders) {
                 this.state.points.push(this.state.orders[x].latLng)
             }
-            console.log(this.state.orders)
-            console.log(this.state.points);
         })
     }
     render() {
@@ -53,13 +73,19 @@ class Driver extends Component {
                             latLng={data.latLng}
                             updateLatLng={this.updateLatLng}
                             updateZoom={this.updateZoom}
-
+                            updateBounds={this.updateBounds}
                         />
                     )
                 })}
                </div>
                
-               <GoogleMaps points={this.state.points} zoom={this.state.zoom} latLng={this.state.latLng}/>
+                <GoogleMaps ref="theMap"
+                    points={this.state.points} 
+                    zoom={this.state.zoom} 
+                    latLng={this.state.latLng} 
+                    bounds={this.state.bounds}
+                    current={this.state.current}
+                />
            </div>           
         )
     }

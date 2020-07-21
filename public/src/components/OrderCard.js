@@ -33,9 +33,9 @@ class OrderCard extends Component {
 
     }
     refreshMap = () =>{
-        console.log("latlng: ", this.props.latLng);
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
+        this.props.updateBounds(this.props.latLng);
     }
     render() {
         return (
