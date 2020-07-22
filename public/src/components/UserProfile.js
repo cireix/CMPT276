@@ -43,24 +43,37 @@ export default function UserProfile(props) {
 
             <br />
             <br />
-            <div className="field is-grouped is-grouped-centered">
+            
 
                 { props.user.type === 1 ? (
-                    <div className="control">
-                        <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
+                    <div className="field is-grouped is-grouped-centered">
+                        <div className="control">
+                            <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
+                        </div>
+                        <div className="control">
+                            <button className="button is-danger" onClick={logout}>Logout</button>
+                        </div>
                     </div>
                 ) : (
-                    <div className="control">
-                        <button className="button" onClick={() => {props.close("prevorder");}}>Previous Order</button>
-                        <button className="button" onClick={() => {props.close("ongingorder");}}>Ongoing Order</button><br />
-                    </div>    
+                    <div className="field">
+                
+                        <div className="control user-control">
+                            <button className="button user-button" onClick={() => {props.close("prevorder");}}>Previous Order</button>
+                        </div>
+                        <br />
+                        <div className="control user-control">
+                            <button className="button user-button" onClick={() => {props.close("ongoingorder");}}>Ongoing Order</button><br />
+                        </div> 
+                        <br />
+                        <div className="control user-control">
+                            <button className="button is-danger user-button" onClick={logout}>Logout</button>
+                        </div>
+                    </div>
                     
                 )}
                 <br />
-                <div className="control">
-                    <button className="button is-danger" onClick={logout}>Logout</button>
-                </div>
-            </div>
+                
+            
         </div>
     )
 }

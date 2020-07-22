@@ -55,7 +55,7 @@ class OrderCard extends Component {
                             )
                         })
                     }
-                    <p className="order-addr">Address: <span>{this.props.address}</span></p>
+                    <p className="order-addr"><strong>Address: </strong><span>{this.props.address}</span></p>
                </div>
                <button className="button order-button" onClick={this.refreshMap}>Accept</button>             
            </div>
