@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Map, GoogleApiWrapper } from 'google-maps-react'; 
 // import {toast} from 'react-toastify';
 import GoogleMaps from "./GoogleMaps";
-import 'css/driver.scss';
 import OrderCard from "./OrderCard";
+import 'css/driver.scss';
+
 
 class Driver extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class Driver extends Component {
             orders: [],
             zoom: 12,
             latLng: {
-                lat: 49.2027, lng: -122.9207
+                lat: 49.2027, lng: -123.1007
             },
             bounds: null,
             current: null
@@ -31,6 +32,7 @@ class Driver extends Component {
             this.setState({
               current: pos
             })
+            console.log("wowowow",pos);
           });
         }
     }
@@ -81,6 +83,10 @@ class Driver extends Component {
                </div>
                
                 <GoogleMaps ref="theMap"
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={ <div style={{ height: 'calc(100vh - 45px)', width: '100%' }} /> }
+                    mapElement={ <div style={{ height: `100%` }} />}
                     points={this.state.points} 
                     zoom={this.state.zoom} 
                     latLng={this.state.latLng} 

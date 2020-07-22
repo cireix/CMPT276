@@ -1,57 +1,80 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react'; 
+// import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react'; 
+import { withGoogleMap, GoogleMap, Marker, withScriptjs, DirectionsRenderer } from 'react-google-maps';
 // import {toast} from 'react-toastify';
 // https://github.com/fullstackreact/google-maps-react
 class GoogleMaps extends Component {
     constructor(props) {
         super(props);
-        console.log("GooglePoints")
-        console.log(this.props.points);
         this.state = {
             points: this.props.points,
             current: this.props.current,
-            bounds: null
+            bounds: null,
+            ds: new window.google.maps.DirectionsService()
         }
+        console.log(this.props.points);
+        console.log(this.props);
+        // new window.google.maps.DirectionsService();
     }
     componentDidUpdate(prevProps, prevState) {
       // console.log(this.props.bounds)
       if(prevProps.bounds != this.props.bounds){
-        this.updateBounds(this.props.bounds)
+        this.updateDirections(this.props.bounds)
+      }
+      if(prevProps.current != this.props.current){
+        this.setState({
+          current: this.props.current
+        })
+      }
+      if(prevProps.points != this.props.points){
+        this.setState({
+          points: this.props.points
+        })
       }
       
     }
-    updateBounds = (p) => {
-      var googleBounds = new this.props.google.maps.LatLngBounds();
+
+    updateDirections = (p) => {
+      // console.log(this);
+      var googleBounds = new window.google.maps.LatLngBounds();
       googleBounds.extend(p[0]);
       googleBounds.extend(p[1]);
       this.setState({
-        bounds: googleBounds,
-        points: p
+        points: []
       })
-      console.log(123, "IM HERE")
+      this.map.fitBounds(googleBounds);
+      this.state.ds.route({
+        origin: new window.google.maps.LatLng(p[1].lat,p[1].lng),
+        destination: new window.google.maps.LatLng(p[0].lat,p[0].lng),
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      }, (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          console.log(result);
+          this.setState({
+            directions: result,
+          });
+        } else {
+          this.setState({
+            directions: null,
+          });
+          console.error(`error fetching directions ${result}`);
+        }
+      });
     }
    
     render() {
         return (
-            <Map
-              google={this.props.google}
-              zoom={this.props.zoom}
-              style={mapStyles}
-              initialCenter={{ lat: 49.2027, lng: -123.1007}}
-              center={this.props.latLng}
-              bounds = {this.state.bounds}
-            >
+          <GoogleMap
+            ref={(ref) => { this.map = ref; }}
+            center={this.props.latLng}
+            zoom={this.props.zoom}
+          >
             {this.state.points.map(p => {
-                return(<Marker
-                  title={'The marker`s title will appear as a tooltip.'}
-                  name={'SOMA'}
-                  position={{lat: p.lat, lng: p.lng}}>
-                </Marker>)
+                return(<Marker position={p}></Marker>)
             })}
-            {this.state.current && <Marker position={this.state.current} icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></Marker>}
-            
-          </Map>
-           
+            {this.state.directions && <DirectionsRenderer directions={this.state.directions} />}
+            {this.state.current && <Marker position={this.state.current}></Marker>}
+          </GoogleMap>
         )
     }
 }
@@ -61,6 +84,7 @@ const mapStyles = {
   };
 
 
-export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo'
-  })(GoogleMaps);
+// export default GoogleApiWrapper({
+//     apiKey: 'AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo'
+//   })(GoogleMaps);
+export default withScriptjs(withGoogleMap(GoogleMaps));
