@@ -73,7 +73,7 @@ class GoogleMaps extends Component {
             center={this.props.latLng}
             zoom={this.props.zoom}
           >
-            {this.state.points.map(p => {
+            {this.props.points.map(p => {
                 return(<Marker position={p}></Marker>)
             })}
             {this.state.directions && <DirectionsRenderer directions={this.state.directions} />}
