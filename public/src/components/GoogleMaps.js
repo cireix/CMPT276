@@ -12,9 +12,14 @@ class GoogleMaps extends Component {
             bounds: null,
             ds: new window.google.maps.DirectionsService()
         }
-        console.log(this.props.points);
+        // console.log(this.props.points);
         console.log(this.props);
         // new window.google.maps.DirectionsService();
+    }
+    componentDidMount(){
+      this.setState({
+        points: this.props.points
+      })
     }
     componentDidUpdate(prevProps, prevState) {
       // console.log(this.props.bounds)
@@ -56,7 +61,7 @@ class GoogleMaps extends Component {
           this.setState({
             directions: null,
           });
-          console.error(`error fetching directions ${result}`);
+         
         }
       });
     }

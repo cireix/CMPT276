@@ -32,7 +32,6 @@ class Driver extends Component {
             this.setState({
               current: pos
             })
-            console.log("wowowow",pos);
           });
         }
     }
@@ -50,7 +49,6 @@ class Driver extends Component {
         this.setState({
             bounds: [a,this.state.current] 
         })
-        console.log(this.state.bounds)
 
     }
     async componentDidMount() {

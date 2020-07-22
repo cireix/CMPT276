@@ -39,9 +39,7 @@ class OrderCard extends Component {
                 destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
                 travelMode: window.google.maps.TravelMode.DRIVING,
               }, (result, status) => {
-                  console.log("IMHEREHRJHSAKJSDFKSJD")
                 if (status === window.google.maps.DirectionsStatus.OK) {
-                  console.log("123")
                   this.setState({
                     directions: result,
                     time: result.routes[0].legs[0].duration.text,
@@ -51,7 +49,6 @@ class OrderCard extends Component {
                   this.setState({
                     directions: null,
                   });
-                  console.error(`error fetching directions ${result}`);
                 }
               });
         }
@@ -63,9 +60,7 @@ class OrderCard extends Component {
                 destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
                 travelMode: window.google.maps.TravelMode.DRIVING,
               }, (result, status) => {
-                  console.log("IMHEREHRJHSAKJSDFKSJD")
                 if (status === window.google.maps.DirectionsStatus.OK) {
-                  console.log("123")
                   this.setState({
                     directions: result,
                     time: result.routes[0].legs[0].duration.text,
@@ -75,7 +70,7 @@ class OrderCard extends Component {
                   this.setState({
                     directions: null,
                   });
-                  console.error(`error fetching directions ${result}`);
+                //   console.error(`error fetching directions ${result}`);
                 }
               });
         }
@@ -84,7 +79,7 @@ class OrderCard extends Component {
 
     }
     refreshMap = () =>{
-        console.log(this.state.directions)
+        // console.log(this.state.directions)
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
