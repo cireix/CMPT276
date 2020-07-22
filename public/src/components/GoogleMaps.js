@@ -12,9 +12,6 @@ class GoogleMaps extends Component {
             bounds: null,
             ds: new window.google.maps.DirectionsService()
         }
-        // console.log(this.props.points);
-        console.log(this.props);
-        // new window.google.maps.DirectionsService();
     }
     componentDidMount(){
       this.setState({
@@ -32,13 +29,12 @@ class GoogleMaps extends Component {
         })
       }
       if(prevProps.points != this.props.points){
+        console.log("Should update! new points")
         this.setState({
           points: this.props.points
         })
       }
-      
     }
-
     updateDirections = (p) => {
       // console.log(this);
       var googleBounds = new window.google.maps.LatLngBounds();
@@ -73,7 +69,8 @@ class GoogleMaps extends Component {
             center={this.props.latLng}
             zoom={this.props.zoom}
           >
-            {this.props.points.map(p => {
+            {/* //points have not loaded and rendered */}
+            {this.state.points.map(p => {
                 return(<Marker position={p}></Marker>)
             })}
             {this.state.directions && <DirectionsRenderer directions={this.state.directions} />}
@@ -88,7 +85,4 @@ const mapStyles = {
   };
 
 
-// export default GoogleApiWrapper({
-//     apiKey: 'AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo'
-//   })(GoogleMaps);
 export default withScriptjs(withGoogleMap(GoogleMaps));
