@@ -33,26 +33,52 @@ class OrderCard extends Component {
         }
     }
     componentDidMount(){
-        new window.google.maps.DirectionsService().route({
-            origin: new window.google.maps.LatLng(this.props.current.lat,this.props.current.lng),
-            destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
-            travelMode: window.google.maps.TravelMode.DRIVING,
-          }, (result, status) => {
-              console.log("IMHEREHRJHSAKJSDFKSJD")
-            if (status === window.google.maps.DirectionsStatus.OK) {
-              console.log("123")
-              this.setState({
-                directions: result,
-                time: result.routes[0].legs[0].duration.text,
-                distance: result.routes[0].legs[0].distance.text
+        if(this.props.current) {
+            new window.google.maps.DirectionsService().route({
+                origin: new window.google.maps.LatLng(this.props.current.lat,this.props.current.lng),
+                destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
+                travelMode: window.google.maps.TravelMode.DRIVING,
+              }, (result, status) => {
+                  console.log("IMHEREHRJHSAKJSDFKSJD")
+                if (status === window.google.maps.DirectionsStatus.OK) {
+                  console.log("123")
+                  this.setState({
+                    directions: result,
+                    time: result.routes[0].legs[0].duration.text,
+                    distance: result.routes[0].legs[0].distance.text
+                  });
+                } else {
+                  this.setState({
+                    directions: null,
+                  });
+                  console.error(`error fetching directions ${result}`);
+                }
               });
-            } else {
-              this.setState({
-                directions: null,
+        }
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.current != this.props.current) {
+            new window.google.maps.DirectionsService().route({
+                origin: new window.google.maps.LatLng(this.props.current.lat,this.props.current.lng),
+                destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
+                travelMode: window.google.maps.TravelMode.DRIVING,
+              }, (result, status) => {
+                  console.log("IMHEREHRJHSAKJSDFKSJD")
+                if (status === window.google.maps.DirectionsStatus.OK) {
+                  console.log("123")
+                  this.setState({
+                    directions: result,
+                    time: result.routes[0].legs[0].duration.text,
+                    distance: result.routes[0].legs[0].distance.text
+                  });
+                } else {
+                  this.setState({
+                    directions: null,
+                  });
+                  console.error(`error fetching directions ${result}`);
+                }
               });
-              console.error(`error fetching directions ${result}`);
-            }
-          });
+        }
     }
     sendDetails() {
 
