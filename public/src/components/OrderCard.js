@@ -28,11 +28,37 @@ import 'css/orderCard.scss';
 class OrderCard extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            directions: null
+        }
+    }
+    componentDidMount(){
+        new window.google.maps.DirectionsService().route({
+            origin: new window.google.maps.LatLng(this.props.current.lat,this.props.current.lng),
+            destination: new window.google.maps.LatLng(this.props.latLng.lat,this.props.latLng.lng),
+            travelMode: window.google.maps.TravelMode.DRIVING,
+          }, (result, status) => {
+              console.log("IMHEREHRJHSAKJSDFKSJD")
+            if (status === window.google.maps.DirectionsStatus.OK) {
+              console.log("123")
+              this.setState({
+                directions: result,
+                time: result.routes[0].legs[0].duration.text,
+                distance: result.routes[0].legs[0].distance.text
+              });
+            } else {
+              this.setState({
+                directions: null,
+              });
+              console.error(`error fetching directions ${result}`);
+            }
+          });
     }
     sendDetails() {
 
     }
     refreshMap = () =>{
+        console.log(this.state.directions)
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
@@ -55,6 +81,8 @@ class OrderCard extends Component {
                             )
                         })
                     }
+                    <p><strong>Estimated Driving Time: </strong>{this.state.directions && this.state.time}</p>
+                    <p><strong>Estimated Distance: </strong>{this.state.directions && this.state.distance}</p>
                     <p className="order-addr"><strong>Address: </strong><span>{this.props.address}</span></p>
                </div>
                <button className="button order-button" onClick={this.refreshMap}>Accept</button>             

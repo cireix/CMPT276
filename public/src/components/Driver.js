@@ -77,6 +77,7 @@ class Driver extends Component {
                             updateZoom={this.updateZoom}
                             updateBounds={this.updateBounds}
                             products={data.products}
+                            current={this.state.current}
                         />
                     )
                 })}
