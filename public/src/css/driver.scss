@@ -1,11 +1,19 @@
+@import 'css/app.scss';
+
 .driverMain{
     display: flex;
     flex-direction: row;
     overflow: hidden;
 }
 .orderList{
-    width: 30vw;
+    width: 35vw;
     padding: 20px;
     height: calc(100vh - 45px);
     overflow-y: scroll;
+    @media (max-width: $desktop) {
+        width: 300px;
+        padding: 5px;
+        font-size: 13px;
+    }
+    
 }
