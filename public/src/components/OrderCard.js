@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 // import {toast} from 'react-toastify';
 import 'css/orderCard.scss';
 
@@ -75,14 +75,17 @@ class OrderCard extends Component {
               });
         }
     }
-    sendDetails() {
-
+    async sendDetails() {
+      const res = await axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,phone:this.props.phone}).then(resp => {
+          //test
+      })
     }
     refreshMap = () =>{
         // console.log(this.state.directions)
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
+        // this.sendDetails();
     }
     render() {
         return (
@@ -106,7 +109,10 @@ class OrderCard extends Component {
                     <p><strong>Estimated Distance: </strong>{this.state.directions && this.state.distance}</p>
                     <p className="order-addr"><strong>Address: </strong><span>{this.props.address}</span></p>
                </div>
-               <button className="button order-button" onClick={this.refreshMap}>Accept</button>             
+               <button className="button order-button" onClick={()=>{
+                 this.refreshMap()
+                 this.sendDetails();
+               }}>Accept</button>             
            </div>
         )
     }

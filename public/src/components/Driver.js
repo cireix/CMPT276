@@ -71,6 +71,8 @@ class Driver extends Component {
                         // <div>{data.phone}</div>
                         <OrderCard address={data.address} 
                             latLng={data.latLng}
+                            phone={data.phone}
+                            stripeToken={data.stripeToken}
                             updateLatLng={this.updateLatLng}
                             updateZoom={this.updateZoom}
                             updateBounds={this.updateBounds}

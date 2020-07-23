@@ -30,9 +30,13 @@ const OrderSchema = new Schema({
         type: String,
         require: true
     },
-    complete: {
-        type: Boolean,
+    status: {
+        type: Number,
         require: true
+    },
+    verification: {
+        type: Number,
+        require: true,
     }
     
     
