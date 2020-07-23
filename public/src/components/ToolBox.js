@@ -12,11 +12,7 @@ class ToolBox extends Component {
         this.setState({
             searchString: string
         })
-    }
-
-    // search box
-    search = () => {
-        this.props.search(this.state.searchString);
+        this.props.search(string);
     }
 
     render() {
@@ -33,11 +29,11 @@ class ToolBox extends Component {
                                 onChange={this.searchHandle}
                                 value={this.state.searchString} />
                         </div>
-                        <div className="control">
+                        {/* <div className="control">
                             <button 
                                 className="button"
                                 onClick={this.search}>search</button>
-                        </div>    
+                        </div>     */}
                     </div>       
                 </div>
                 {/* <div className="cart-box">
