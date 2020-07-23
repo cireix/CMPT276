@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Layout from 'Layout';
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import Accordion from 'react-bootstrap/Accordion'
 
 class PreviousOrder extends React.Component {
 
@@ -17,7 +20,7 @@ class PreviousOrder extends React.Component {
         // post to server side and get the qrevious order
         await axios.post("api/orders/getPrevious", { phone: phoneNumber }).then(res => {
             this.setState({
-                order: res.data[0].products
+                order: res.data
             })
         }).catch(err => {
             console.log(err);
@@ -28,32 +31,55 @@ class PreviousOrder extends React.Component {
         return (
             <Layout>
                 <div className="allorders">
-                    <table className="table is-fullwidth">
-                        <thead>
-                            <tr>
-                                {this.headers.map(head => <th>{head}</th>)}
-                            </tr>
-                        </thead>
-                        <tbody>
                             {
                                 this.state.order.length > 0 ? (
-                                    this.state.order.map(row =>
-                                        <tr>
-                                            <td key={row.name}>{row.name}</td>
-                                            <td key={row.price}>{row.price}</td>
-                                            <td key={row.quantity}>{row.quantity}</td>
-                                            <td key={parseFloat(row.price) * parseInt(row.quantity)}></td>
-                                        </tr>
-                                    )
+                                    this.state.order.map(order => {
+                                        return (
+                                            <Accordion defaultActiveKey="0">
+                                                <Card>
+                                                    <Card.Header>
+                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                            Previous Order 
+                                                        </Accordion.Toggle>
+                                                    </Card.Header>
+                                                    <Accordion.Collapse eventKey="0">
+                                                        <Card.Body variant="link">
+                                                            <table className="table is-fullwidth">
+                                                                <thead>
+                                                                    <tr>
+                                                                        {this.headers.map(head => <th>{head}</th>)}
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {
+                                                                        order.products.map(product => {
+                                                                            return (
+                                                                                <tr>
+                                                                                    <td key={product.name}>{product.name}</td>
+                                                                                    <td key={product.price}>{product.price}</td>
+                                                                                    <td key={product.quantity}>{product.quantity}</td>
+                                                                                    <td key={parseFloat(product.price) * parseInt(product.quantity)}>{parseFloat(product.price) * parseInt(product.quantity)}</td>
+                                                                                </tr>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </Card.Body>
+                                                    </Accordion.Collapse>
+                                                </Card> 
+                                            </Accordion>                                     
+                                        )
+                                    })
                                 ) : (
                                     <div>
-                                        <p>No Previous Order</p>
+                                        <p className="title has-text-centered">No Previous Order</p>
                                     </div>
                                 )
                             }
-                        </tbody>
-                    </table>
+                        
                 </div>
+                 
             </Layout>
         )
     }    
