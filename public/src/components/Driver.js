@@ -18,7 +18,8 @@ class Driver extends Component {
                 lat: 49.2027, lng: -123.1007
             },
             bounds: null,
-            current: null
+            current: null,
+            accepted: false,
         }
         this.getCurrentLoc();
     }
@@ -49,7 +50,11 @@ class Driver extends Component {
         this.setState({
             bounds: [a,this.state.current] 
         })
-
+    }
+    acceptOrder = () => {
+        this.setState({
+            accepted: true
+        })
     }
     async componentDidMount() {
         const res = await axios.post('api/orders/getOrders', {}).then(resp => {
@@ -76,8 +81,10 @@ class Driver extends Component {
                             updateLatLng={this.updateLatLng}
                             updateZoom={this.updateZoom}
                             updateBounds={this.updateBounds}
+                            acceptOrder={this.acceptOrder}
                             products={data.products}
                             current={this.state.current}
+                            accepted={this.state.accepted}
                         />
                     )
                 })}

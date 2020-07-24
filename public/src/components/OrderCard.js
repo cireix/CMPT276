@@ -28,9 +28,21 @@ import 'css/orderCard.scss';
 class OrderCard extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            directions: null
+        
+        // console.log(this.props.products)
+        var total = 0;
+        for(var x in this.props.products) {
+          var cProd = this.props.products[x];
+          console.log(cProd);
+          total += cProd.quantity * cProd.price;
+          console.log("total",total)
         }
+        this.state = {
+          directions: null,
+          total: "$"+total.toFixed(2),
+          accepted: false,
+          outsideAccepted: false,
+      }
     }
     componentDidMount(){
         if(this.props.current) {
@@ -52,6 +64,7 @@ class OrderCard extends Component {
                 }
               });
         }
+        
     }
     componentDidUpdate(prevProps){
         if(prevProps.current != this.props.current) {
@@ -74,6 +87,11 @@ class OrderCard extends Component {
                 }
               });
         }
+        if(prevProps.accepted != this.props.accepted) {
+          this.setState({
+            outsideAccepted: true
+          })
+        }
     }
     async sendDetails() {
       const res = await axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,phone:this.props.phone}).then(resp => {
@@ -85,11 +103,18 @@ class OrderCard extends Component {
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
+
         // this.sendDetails();
+    }
+    accept = () => {
+      this.setState({
+        accepted:true
+      })
+      this.props.acceptOrder();
     }
     render() {
         return (
-           <div className="orderCard">
+           <div className="orderCard" onClick={()=>{if(!this.state.outsideAccepted){this.refreshMap()}}}>
                <div className="order-info">
                     {
                         this.props.products.map(p => {
@@ -107,14 +132,18 @@ class OrderCard extends Component {
                             )
                         })
                     }
+                    <div className="order-total">
+                      <p><strong>Total: </strong>{this.state.total}</p>
+                    </div>
                     <p><strong>Estimated Driving Time: </strong>{this.state.directions && this.state.time}</p>
                     <p><strong>Estimated Distance: </strong>{this.state.directions && this.state.distance}</p>
                     <p className="order-addr"><strong>Address: </strong><span>{this.props.address}</span></p>
                </div>
                <button className="button order-button" onClick={()=>{
-                 this.refreshMap()
                  this.sendDetails();
-               }}>Accept</button>             
+                 this.refreshMap();
+                 this.accept()
+               }} disabled={this.state.accepted||this.state.outsideAccepted?true:false}>Accept{this.state.accepted?"ed":""}</button>             
            </div>
         )
     }
