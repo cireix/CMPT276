@@ -92,25 +92,32 @@ router.post("/sms", (req, res) => {
     var num = req.body.From;
     try{
         num = Number.parseInt(num);
+        console.log(num);
     }catch (error) {
+        console.log("Input error")
         twil.messages.create({
             to: num,
             from: "+16042391939",
-            body: 'You have entered an invalid verification code.'
+            body: 'You have entered an invalid input.'
         })
         res.status(400).json({message:"Invalid input"});
         return
     }
     Order.findOne({"phone":num,"verification":Number.parseInt(msg)}).then(order => {
+        //fix
         if(!order) {
+            console.log("no order found")
             twil.messages.create({
                 to: num,
                 from: "+16042391939",
                 body: 'You have entered an invalid verification code.'
             })
             res.status(400).json({message:"Order is not found"});
+            return
         }
         Order.updateOne({"phone":num,"verification":Number.parseInt(msg)},{"status":2}).then(resp => {
+
+            console.log("nice")
             twil.messages.create({
 				to: num,
 				from: "+16042391939",
