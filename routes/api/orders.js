@@ -91,8 +91,8 @@ router.post("/sms", (req, res) => {
 	var msg = req.body.Body.toLowerCase();
     var num = req.body.From;
     try{
-        num = Number.parseInt(num);
-        console.log(num);
+        msg = Number.parseInt(msg);
+        console.log(msg);
     }catch (error) {
         console.log("Input error")
         twil.messages.create({
@@ -103,7 +103,7 @@ router.post("/sms", (req, res) => {
         res.status(400).json({message:"Invalid input"});
         return
     }
-    Order.findOne({"phone":num,"verification":Number.parseInt(msg)}).then(order => {
+    Order.findOne({"phone":num,"verification":msg}).then(order => {
         //fix
         if(!order) {
             console.log("no order found")
@@ -115,8 +115,7 @@ router.post("/sms", (req, res) => {
             res.status(400).json({message:"Order is not found"});
             return
         }
-        Order.updateOne({"phone":num,"verification":Number.parseInt(msg)},{"status":2}).then(resp => {
-
+        Order.updateOne({"phone":num,"verification":msg},{"status":2}).then(resp => {
             console.log("nice")
             twil.messages.create({
 				to: num,
