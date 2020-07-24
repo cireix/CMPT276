@@ -21,13 +21,13 @@ class OngoingOrder extends React.Component {
             this.setState({
                 order: res.data
             })
+            console.log(res);
         }).catch(err => {
             console.log(err);
         });
     }
 
     render() {
-        
         return (
             <Layout>
                 <div className="allorders">
@@ -39,7 +39,7 @@ class OngoingOrder extends React.Component {
                                                 <Card>
                                                     <Card.Header>
                                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                            Ongoing Order 
+                                                            Order - {order.stripeToken.substring(4)}
                                                         </Accordion.Toggle>
                                                     </Card.Header>
                                                     <Accordion.Collapse eventKey="0">

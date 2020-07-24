@@ -6,7 +6,7 @@ import SignUp from 'pages/SignUp';
 import ForgotPw from 'pages/ForgotPw';
 import AllUsers from 'pages/AllUsers';
 import PreviousOrder from 'pages/PreviousOrder';
-import OngoingOrder from 'pages/OngionOrder';
+import OngoingOrder from 'pages/OngoingOrder';
 import ThankYou from 'pages/ThankYou';
 
 const Router = () => (

@@ -61,9 +61,11 @@ export default function UserProfile(props) {
                             <button className="button user-button" onClick={() => {props.close("prevorder");}}>Previous Order</button>
                         </div>
                         <br />
-                        <div className="control user-control">
-                            <button className="button user-button" onClick={() => {props.close("ongoingorder");}}>Ongoing Order</button><br />
-                        </div> 
+                        {props.user.type === 0 &&
+                            <div className="control user-control">
+                                <button className="button user-button" onClick={() => {props.close("ongoingorder");}}>Ongoing Order</button><br />
+                            </div> 
+                        }
                         <br />
                         <div className="control user-control">
                             <button className="button is-danger user-button" onClick={logout}>Logout</button>
