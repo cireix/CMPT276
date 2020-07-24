@@ -90,10 +90,9 @@ router.post("/acceptOrder",(req,res) => {
 router.post("/sms", (req, res) => {
 	var msg = req.body.Body.toLowerCase();
     var num = req.body.From;
-    try{
-        msg = Number.parseInt(msg);
-        console.log(msg);
-    }catch (error) {
+
+    msg = Number.parseInt(msg);
+    if (!msg) {
         console.log("Input error")
         twil.messages.create({
             to: num,
@@ -103,10 +102,9 @@ router.post("/sms", (req, res) => {
         res.status(400).json({message:"Invalid input"});
         return
     }
+   
     Order.findOne({"phone":num,"verification":msg}).then(order => {
-        //fix
         if(!order) {
-            console.log("no order found")
             twil.messages.create({
                 to: num,
                 from: "+16042391939",
@@ -116,7 +114,6 @@ router.post("/sms", (req, res) => {
             return
         }
         Order.updateOne({"phone":num,"verification":msg},{"status":2}).then(resp => {
-            console.log("nice")
             twil.messages.create({
 				to: num,
 				from: "+16042391939",
@@ -126,7 +123,6 @@ router.post("/sms", (req, res) => {
             res.json({message:"Finished"})
         })
     })
-	console.log(msg,num)
 })
 
 module.exports = router;

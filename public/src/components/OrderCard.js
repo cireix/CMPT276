@@ -95,7 +95,9 @@ class OrderCard extends Component {
                         this.props.products.map(p => {
                             return (
                                 <div className="pdct-info">
-                                    <img className="order-image" src={p.image} />
+                                    <div className="order-image-wrapper">
+                                      <img className="order-image" src={p.image} />
+                                    </div>
                                     <div className="order-text">
                                         <p><strong>Name: </strong>{ p.name}</p>
                                         <p><strong>Price: </strong>{"$" + p.price}</p>

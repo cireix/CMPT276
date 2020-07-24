@@ -16,9 +16,16 @@
             @media (max-width: $desktop) {
                 display: block;              
             }
-            
+            .order-image-wrapper {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                width: 100px;
+                height: 100px; 
+            }
             .order-image {
-                height: 100px;
+                margin-top: 10px;
+                height: 80%;
                 width: auto;
                 @media (max-width: $desktop) {
                     height: 80px;
