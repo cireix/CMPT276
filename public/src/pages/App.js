@@ -8,8 +8,10 @@ const App = (props) => {
 
     return(
         <Layout>
-            {user.type !== 2 && <Products user = {user}/>}
-            {user.type === 2 && <Driver user = {user}/>}
+            <div data-test="app-wrapper">
+                {user.type !== 2 && <Products user = {user}/>}
+                {user.type === 2 && <Driver user = {user}/>}
+            </div>
         </Layout>
     );
 
