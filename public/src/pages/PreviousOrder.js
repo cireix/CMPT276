@@ -16,7 +16,6 @@ class PreviousOrder extends React.Component {
         // Get user's phone number
         const user = global.auth.getUser();
         const { phoneNumber } = user;
-        console.log(phoneNumber);
         // post to server side and get the qrevious order
         await axios.post("api/orders/getPrevious", { phone: phoneNumber }).then(res => {
             this.setState({
@@ -30,7 +29,7 @@ class PreviousOrder extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="allorders">
+                <div className="allorders" data-test="previous">
                             {
                                 this.state.order.length > 0 ? (
                                     this.state.order.map(order => {
@@ -54,7 +53,7 @@ class PreviousOrder extends React.Component {
                                                                     {
                                                                         order.products.map(product => {
                                                                             return (
-                                                                                <tr>
+                                                                                <tr data-test="previous-data">
                                                                                     <td key={product.name}>{product.name}</td>
                                                                                     <td key={product.price}>{product.price}</td>
                                                                                     <td key={product.quantity}>{product.quantity}</td>
