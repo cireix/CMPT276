@@ -10,12 +10,12 @@ export default function ForgotPw(props) {
     var [codeSent,setCodeSent] = useState(false);
     // Get phone number that user input in the form
     const onSubmit = async (data) => {
+        setCodeSent(true);
         try {
             const { phoneNumber } = data;
             // post phone number to server side
             // api/users/forgotpw
-            const res = await axios.post('api/users/forgotpw', { phone: phoneNumber });
-            setCodeSent(true);
+            const res = await axios.post('api/users/forgotpw', { phone: phoneNumber });       
             toast.success("Verification code sent");
         } catch (error) {
             const message = error.response.data.message;
@@ -42,7 +42,7 @@ export default function ForgotPw(props) {
 
     return (
         <Layout>
-            <div className="login_wrapper">
+            <div className="login_wrapper" data-test="forgotpw-wrapper">
                 <form className="box login_box" >
 
                     <div className="field">

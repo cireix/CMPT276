@@ -15,8 +15,8 @@ const findByTestAttr = (wrapper, value) => {
 }
 
 
-describe('render Login component', () => {
-    test('reder without error', () => {    
+describe('reder without error', () => {
+    test('render component', () => {    
         const component = findByTestAttr(wrapper, 'login-wrapper');
         expect(component.length).toBe(1);
     })

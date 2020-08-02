@@ -19,17 +19,17 @@ class AllUsers extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="allusers">
+                <div className="allusers" data-test="allusers">
                     <table className="table is-fullwidth">
-                        <thead>
+                        <thead >
                             <tr>
-                                {this.headers.map(head => <th>{head}</th>)}
+                                {this.headers.map(head => <th key={this.headers.indexOf} data-test="thead">{head}</th>)}
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 this.state.users.map(row =>
-                                    <tr>
+                                    <tr data-test="tbody">
                                         <td key={row._id}>{row._id}</td>
                                         <td key={row.name}>{row.name}</td>
                                         <td key={row.phone}>{row.phone}</td>
