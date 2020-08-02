@@ -30,7 +30,7 @@ class OngoingOrder extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="allorders">
+                <div className="allorders" data-test="ongoing">
                             {
                                 this.state.order.length > 0 ? (
                                     this.state.order.map(order => {
@@ -47,14 +47,14 @@ class OngoingOrder extends React.Component {
                                                             <table className="table is-fullwidth">
                                                                 <thead>
                                                                     <tr>
-                                                                        {this.headers.map(head => <th>{head}</th>)}
+                                                                        {this.headers.map(head => <th data-test="ongoing-thead">{head}</th>)}
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     {
                                                                         order.products.map(product => {
                                                                             return (
-                                                                                <tr>
+                                                                                <tr data-test="ongoing-data">
                                                                                     <td key={product.name}>{product.name}</td>
                                                                                     <td key={product.price}>{product.price}</td>
                                                                                     <td key={product.quantity}>{product.quantity}</td>
@@ -72,7 +72,7 @@ class OngoingOrder extends React.Component {
                                         )
                                     })
                                 ) : (
-                                    <div>
+                                    <div data-test="no-ongoing">
                                         <p className="title has-text-centered">No Ongoing Order</p>
                                     </div>
                                 )

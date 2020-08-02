@@ -25,4 +25,3 @@ test('the submit button is disabled until the first button is clicked', () => {
     const submitButton = wrapper.find('button').at(1);
     expect(submitButton.props().disabled).toBe('');
 })
-
