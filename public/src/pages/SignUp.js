@@ -11,14 +11,15 @@ export default function SignUp(props) {
 
     var [codeSent,setCodeSent] = useState(false);
     // Get name, phone number, and password that user input in the form
-    const onSubmit = data => {    
+    const onSubmit = data => {   
+            setCodeSent(true); 
             const { nickname, phoneNumber, password } = data;
             // post to server side for register
             // api/users/register'
             axios.post('api/users/register', { name: nickname, phone: phoneNumber, password: password, password2:password})
             .then(res=>{console.log('res=>',res);
                 toast.success('Sent verification code');
-                setCodeSent(true);
+                
             })
             .catch((err)=>toast.error(err.response.data.message));
 
@@ -48,7 +49,7 @@ export default function SignUp(props) {
 
     return(
         <Layout>
-            <div className="login_wrapper">
+            <div className="login_wrapper" data-test="signup-wrapper">
                 <form className="box login_box" >
                     <div className="field">
                         <label className="label">Name</label>
