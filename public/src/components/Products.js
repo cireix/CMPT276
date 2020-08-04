@@ -73,10 +73,10 @@ class Products extends Component {
         const offset = selectedPage * this.state.perPage;
         this.setState({
             currentPage: selectedPage,
-            offset: offset
-        }, () => {
-            this.receivedData()
-        });
+            offset: offset,
+            currentProducts: this.state.productsFullList.slice(offset, offset + this.state.perPage)
+        })
+
     }
 
     handleCheckout = (data) => {
@@ -108,35 +108,56 @@ class Products extends Component {
                 <div className={this.state.showCart ? 'products' : 'hide'} >
                     <div className="columns is-multiline">
                         {
-                          (this.state.currentProducts.length === 0 && !this.state.loading) ?
-                              <div style={noMsg}>Sorry no products match the search.</div>: this.state.currentProducts.map(pdct => {
-                                if (pdct) {
-                                    return (
-                                        <div className='column is-2' key={pdct.productId}>
-                                            <Product product={pdct} />
-                                            <AddCartButton
-                                                product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
-                                                styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
-                                            />
-                                        </div>
-                                    )
-                                }
+                            (this.state.currentProducts.length === 0 && !this.state.loading) ?
+                                <div style={noMsg}>Sorry no products match the search.</div> : this.state.currentProducts.map(pdct => {
+                                    if (pdct) {
+                                        return (
+                                            <div className='column is-2' key={pdct.productId}>
+                                                <Product product={pdct} />
+                                                <AddCartButton
+                                                    product={{ id: pdct.productId, name: pdct.fullName, price: pdct.price, image: pdct.image }}
+                                                    styles={{ backgroundColor: 'grey', color: 'white', border: '0' }}
+                                                />
+                                            </div>
+                                        )
+                                    }
 
-                            })
+                                })
                         }
                     </div>
 
                     {
-                      (this.state.currentProducts.length !== 0 && !this.state.loading) &&
-                      <ReactPaginate className="mt-4"
-                                     breakClassName={'pagination-ellipsis'}
-                                     containerClassName={'pagination justify-content-center'}
-                                     pageClassName={'pagination-link'}
-                                     previousClassName={'pagination-previous'}
-                                     nextClassName={'pagination-next'}
-                                     activeClassName={'pagination-link is-current'}
-                                      onPageChange={this.handlePageClick}
-                                      pageCount={this.state.pageCount} />
+                        (this.state.currentProducts.length !== 0 && !this.state.loading) &&
+                        <ReactPaginate className="mt-4"
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages pagination'}
+                            breakLinkClassName={'pagination-link'}
+                            containerClassName={'pagination justify-content-center'}
+                            pageClassName={'pagination-link'}
+                            previousClassName={'pagination-previous'}
+                            nextClassName={'pagination-next'}
+                            activeClassName={'pagination-link is-current'}
+                            onPageChange={this.handlePageClick}
+                            pageCount={this.state.pageCount} 
+
+                        // breakClassName={'page-item'}
+                        // breakLinkClassName={'page-link'}
+                        // containerClassName={'pagination'}
+                        // pageClassName={'page-item'}
+                        // pageLinkClassName={'page-link'}
+                        // previousClassName={'page-item'}
+                        // previousLinkClassName={'page-link'}
+                        // nextClassName={'page-item'}
+                        // nextLinkClassName={'page-link'}
+                        // activeClassName={'active'}
+                        // pageCount={this.state.pageCount} 
+                        // onPageChange={this.handlePageClick}
+                        />
                     }
                 </div>
             </div>
