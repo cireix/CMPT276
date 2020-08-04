@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from 'components/Header'
+import Header from './components/Header'
+import { getUser } from './globalFunc/auth';
 
 const Layout = (props) => {
-    const user = global.auth.getUser();
-    console.log(user);
+    const user = getUser();
     return (
         <div className="main">
             <Header user={user} />

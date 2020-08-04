@@ -48,8 +48,4 @@ const logOut = () => {
     localStorage.removeItem('store_token_id');
 }
 
-global.auth = {
-    setToken,
-    getUser,
-    logOut
-}
+export { setToken, getUser, logOut };

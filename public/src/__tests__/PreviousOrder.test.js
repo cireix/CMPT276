@@ -1,51 +1,40 @@
-import React from 'react';
-import Enzyme, {shallow} from 'enzyme';
-import EnzymeAadpter from 'enzyme-adapter-react-16';
-import PreviousOrder from '../pages/PreviousOrder';
-import moxios from 'moxios';
-import { getUser } from '../globalFunc/auth';
+import React from "react";
+import Enzyme, { shallow, mount ,render} from "enzyme";
+import PreviousOrder from '../pages/PreviousOrder'
+import EnzymeAadpter from "enzyme-adapter-react-16";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "mutationobserver-shim";
+import { getPrevious } from "../service/service";
+import axios from "axios";
+jest.mock("axios");
 
 Enzyme.configure({ adapter: new EnzymeAadpter() });
 
-const setup = (props={}) => {
-    return shallow(<PreviousOrder {...props}/>)
-}
+const setup = (props = {}) => {
+  return render(
+    <BrowserRouter>
+      <PreviousOrder {...props} />
+    </BrowserRouter>
+  );
+};
 const wrapper = setup();
-const findByTestAttr = (wrapper, value) => {
-    return wrapper.find(`[data-test="${value}"]`);
-}
 
-test('render component', () => {
-    const component = findByTestAttr(wrapper, 'previous');
+describe("render SignUp component", () => {
+  test("render component", () => {
+    const component = wrapper.find(".allorders");
+    // console.log(component.props());
+    // console.log(component.html(), "++++++");
     expect(component.length).toBe(1);
+  });
+
+  test("test getPrevious api", async () => {
+   
+    axios.post.mockResolvedValue({ data: { code: -1 } });
+    let result = await getPrevious();
+    expect(result.data).toEqual({ code: -1 });
+  });
 });
 
-test('render table', () => {
-    const data = findByTestAttr(wrapper, 'previous-data');
-    expect(data.length).toBe(wrapper.state().order.length);
-})
+// describe("test loigin api", () => {
 
-describe('test axios', () => {
-    beforeEach(() => {
-        moxios.install();
-    });
-    afterEach(() => {
-        moxios.uninstall();
-    })
-
-    test('get data from the server', () => {
-        moxios.wait(() => {
-            const request = moxios.requests.mostRecent();
-            request.respondWith({
-                status: 200,
-                response: [
-                    { name: "beer", quantity: 2, price: 23 },
-                    { name: "wine", quantity: 3, price: 45 },
-                  ]
-            })
-                .then(() => {
-                    expect(wrapper.state().order.length).toBe(2);
-                })
-        })
-    })
-})
+// });

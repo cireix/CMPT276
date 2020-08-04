@@ -1,10 +1,10 @@
-@import 'css/app.scss';
+@import './app.scss';
 
 .tool-box {
     width: 90%;
     display: flex;
     justify-content: space-between;
-    align-items: center;  
+    align-items: center;
     margin: auto;
     border-bottom: 3px solid black;
     padding: 2rem 0.2rem 1.5rem 0.2rem;
@@ -32,7 +32,7 @@
             }
         color: black;
         font-weight: 600;
-        
+
     }
     .search-box {
         .search-input {

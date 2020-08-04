@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 // import {toast} from 'react-toastify';
-import 'css/orderCard.scss';
+import '../css/orderCard.scss';
 
 // address: "CF Richmond Centre, Number 3 Road, Richmond, BC, Canada"
 // complete: false
@@ -28,14 +28,11 @@ import 'css/orderCard.scss';
 class OrderCard extends Component {
     constructor(props){
         super(props)
-        
-        // console.log(this.props.products)
+
         var total = 0;
         for(var x in this.props.products) {
           var cProd = this.props.products[x];
-          console.log(cProd);
           total += cProd.quantity * cProd.price;
-          console.log("total",total)
         }
         this.state = {
           directions: null,
@@ -64,7 +61,7 @@ class OrderCard extends Component {
                 }
               });
         }
-        
+
     }
     componentDidUpdate(prevProps){
         if(prevProps.current != this.props.current) {
@@ -93,18 +90,16 @@ class OrderCard extends Component {
           })
         }
     }
-    async sendDetails() {
-      const res = await axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,phone:this.props.phone}).then(resp => {
+    sendDetails = () => {
+       axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,phone:this.props.phone})
+        .then(resp => {
           //test
-      })
+        })
     }
     refreshMap = () =>{
-        // console.log(this.state.directions)
         this.props.updateLatLng(this.props.latLng)
         this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
-
-        // this.sendDetails();
     }
     accept = () => {
       this.setState({
@@ -113,13 +108,15 @@ class OrderCard extends Component {
       this.props.acceptOrder();
     }
     render() {
+        const isAccepted = this.props.allOrders.find(({ stripeToken }) => stripeToken === this.props.stripeToken && this.state.accepted);
+
         return (
            <div className="orderCard" onClick={()=>{if(!this.state.outsideAccepted){this.refreshMap()}}}>
                <div className="order-info">
                     {
                         this.props.products.map(p => {
                             return (
-                                <div className="pdct-info">
+                                <div className="pdct-info" key={p.id}>
                                     <div className="order-image-wrapper">
                                       <img className="order-image" src={p.image} />
                                     </div>
@@ -143,7 +140,7 @@ class OrderCard extends Component {
                  this.sendDetails();
                  this.refreshMap();
                  this.accept()
-               }} disabled={this.state.accepted||this.state.outsideAccepted?true:false}>Accept{this.state.accepted?"ed":""}</button>             
+               }} disabled={!!isAccepted ? true:false}>Accept{!!isAccepted ? "ed": ""}</button>
            </div>
         )
     }

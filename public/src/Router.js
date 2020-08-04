@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import App from 'pages/App';
-import Login from 'pages/Login';
-import SignUp from 'pages/SignUp';
-import ForgotPw from 'pages/ForgotPw';
-import AllUsers from 'pages/AllUsers';
-import PreviousOrder from 'pages/PreviousOrder';
-import OngoingOrder from 'pages/OngoingOrder';
-import ThankYou from 'pages/ThankYou';
+import App from './pages/App';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import ForgotPw from './pages/ForgotPw';
+import AllUsers from './pages/AllUsers';
+import PreviousOrder from './pages/PreviousOrder';
+import OngoingOrder from './pages/OngoingOrder';
+import ThankYou from './pages/ThankYou';
 
 const Router = () => (
     <BrowserRouter>

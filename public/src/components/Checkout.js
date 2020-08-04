@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import StripeCheckoutButton from'components/StripeCheckoutButton';
-import LocationSearchInput from 'components/LocationSearchInput'
+import StripeCheckoutButton from './StripeCheckoutButton';
+import LocationSearchInput from './LocationSearchInput'
 
 const Checkout = ({ user, products, handleCloseCheckout, total }) => {
     const [address, setAddress] = useState("");
@@ -20,7 +20,7 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
         <Modal.Dialog>
             <Modal.Header >
                 <Modal.Title>Order Summary</Modal.Title>
-                <Button variant="secondary"  onClick={handleCloseCheckout}>X</Button>
+                <Button className="_button" variant="secondary"  onClick={handleCloseCheckout}>X</Button>
             </Modal.Header>
             <Modal.Body>
                 <ul className="list-group mb-3" >
@@ -28,7 +28,7 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
                         products.map(pdct => {
                             return (
                                 <li className="list-group-item d-flex justify-content-between" key={pdct.productId}>
-                                    <img src={pdct.image} alt="product-img" class="img-thumbnail" style={{height: '100px', width: 'auto'}}></img>
+                                    <img src={pdct.image} alt="product-img" className="img-thumbnail" style={{height: '100px', width: 'auto'}}></img>
                                     <p>{pdct.name}</p>
                                     <p>{pdct.quantity}x</p>
                                     <p>{'$' + pdct.price}</p>
@@ -41,8 +41,8 @@ const Checkout = ({ user, products, handleCloseCheckout, total }) => {
                 <ul className="list-group mb-3" >
                     <li className="list-group-item d-flex justify-content-end">
                     {/* <span>{'total quantity = ' + total.productQuantity}</span> */}
-                        <span>Total price (CAD)  $</span> 
-                        <strong>{total.totalPrice.toFixed(2)}</strong>
+                        <span>Total price (CAD)  $</span>
+                        <strong className="test_strong">{total.totalPrice.toFixed(2)}</strong>
                     </li>
                 </ul>
                 <LocationSearchInput update={updateAddress} selectUpdate={updateSelected} latlngUpdate = {updateLatLng}/>

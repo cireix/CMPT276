@@ -1,9 +1,10 @@
 import React from 'react';
-import axios from 'axios';
-import Layout from 'Layout';
+import {getPrevious} from '../service/service'
+import Layout from '../Layout';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Accordion from 'react-bootstrap/Accordion'
+import { getUser } from '../globalFunc/auth';
 
 class PreviousOrder extends React.Component {
 
@@ -12,12 +13,13 @@ class PreviousOrder extends React.Component {
         order: []
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         // Get user's phone number
-        const user = global.auth.getUser();
+        const user = getUser();
         const { phoneNumber } = user;
+        console.log(phoneNumber);
         // post to server side and get the qrevious order
-        await axios.post("api/orders/getPrevious", { phone: phoneNumber }).then(res => {
+        getPrevious({ phone: phoneNumber }).then(res => {
             this.setState({
                 order: res.data
             })
@@ -29,7 +31,7 @@ class PreviousOrder extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="allorders" data-test="previous">
+                <div className="allorders">
                             {
                                 this.state.order.length > 0 ? (
                                     this.state.order.map(order => {
@@ -38,7 +40,7 @@ class PreviousOrder extends React.Component {
                                                 <Card>
                                                     <Card.Header>
                                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                            Previous Order 
+                                                            Previous Order
                                                         </Accordion.Toggle>
                                                     </Card.Header>
                                                     <Accordion.Collapse eventKey="0">
@@ -53,7 +55,7 @@ class PreviousOrder extends React.Component {
                                                                     {
                                                                         order.products.map(product => {
                                                                             return (
-                                                                                <tr data-test="previous-data">
+                                                                                <tr>
                                                                                     <td key={product.name}>{product.name}</td>
                                                                                     <td key={product.price}>{product.price}</td>
                                                                                     <td key={product.quantity}>{product.quantity}</td>
@@ -66,8 +68,8 @@ class PreviousOrder extends React.Component {
                                                             </table>
                                                         </Card.Body>
                                                     </Accordion.Collapse>
-                                                </Card> 
-                                            </Accordion>                                     
+                                                </Card>
+                                            </Accordion>
                                         )
                                     })
                                 ) : (
@@ -76,12 +78,12 @@ class PreviousOrder extends React.Component {
                                     </div>
                                 )
                             }
-                        
+
                 </div>
-                 
+
             </Layout>
         )
-    }    
+    }
 }
 
 

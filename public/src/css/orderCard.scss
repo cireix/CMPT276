@@ -1,4 +1,4 @@
-@import 'css/app.scss';
+@import './app.scss';
 
 .orderCard {
     padding: 10px;
@@ -8,20 +8,20 @@
         padding: 10px;
         @media (max-width: $desktop) {
             padding: 0;
-        } 
+        }
         .pdct-info {
             margin-bottom: 10px;
             display: flex;
             padding-bottom: 10px;
             @media (max-width: $desktop) {
-                display: block;              
+                display: block;
             }
             .order-image-wrapper {
                 display: flex;
                 justify-content: center;
                 align-content: center;
                 width: 100px;
-                height: 100px; 
+                height: 100px;
             }
             .order-image {
                 margin-top: 10px;
@@ -31,14 +31,14 @@
                     height: 80px;
                     padding-left: 20px;
                 }
-                
+
             }
             .order-text {
                 padding-left: 10px;
                 @media (max-width: $desktop) {
                     padding-left: 0;
                 }
-                
+
             }
         }
         .order-total {
@@ -51,7 +51,7 @@
     .order-button {
         display: block;
         margin-left: auto;
-        margin-right: auto;   
+        margin-right: auto;
         width: 100%;
         @media (max-width: $desktop) {
             height: 30px;

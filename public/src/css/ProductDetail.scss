@@ -1,4 +1,4 @@
-@import 'css/app.scss';
+@import './app.scss';
 
 .product-detail {
     width: 100%;
@@ -22,7 +22,7 @@
         }
         .detail-desc {
             font-size: 16px;
-            font-weight: 600;  
+            font-weight: 600;
         }
     }
     .detail-price {

@@ -1,5 +1,5 @@
 import React from 'react';
-import 'css/ProductDetail.scss';
+import '../css/ProductDetail.scss';
 
 export default function ProductDetail(props) {
     const { country, image, desc, fullName, price, rating, type, volume } = props.product;
@@ -19,9 +19,9 @@ export default function ProductDetail(props) {
 
             <div className="detail-footer">
                 <div className="detail-price">{"$" + price}</div>
-               
+
             </div>
 
         </div>
     )
-}   
+}

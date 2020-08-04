@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
 // import {toast} from 'react-toastify';
-import 'css/product.scss';
-import PopupPanel from 'components/PopupPanel';
-import ProductDetail from 'components/ProductDetail';
+import '../css/product.scss';
+import PopupPanel from './PopupPanel';
+import ProductDetail from './ProductDetail';
 
 class Product extends Component {
 
@@ -32,7 +32,7 @@ class Product extends Component {
     //         }
     //         // This function is defined in Products component, and is used to update the number of products in cart
     //         this.props.updateCart();
-    //         toast.success('Add cart successful');    
+    //         toast.success('Add cart successful');
     //     })
     //     .catch(err => {
     //         console.log('get cart err => ', err);
@@ -59,14 +59,14 @@ class Product extends Component {
                 <div className="img-wrapper">
                     <figure className="image">
                         <img className="img" src={image} alt="" />
-                    </figure> 
+                    </figure>
                     <p className="p-volume">{productVolume}</p>
                     <p className="p-name">{productName}</p>
                 </div>
                 <div className="p-footer">
-                    <p className="p-price">{productPrice}</p>      
+                    <p className="p-price">{productPrice}</p>
                     {/* <button className="add-cart" >
-                        <i className="fas fa-shopping-cart"></i> 
+                        <i className="fas fa-shopping-cart"></i>
                     </button> */}
                 </div>
             </div>

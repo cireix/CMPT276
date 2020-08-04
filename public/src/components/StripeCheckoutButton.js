@@ -8,10 +8,9 @@ const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng
   const publishableKey = 'pk_test_51H6m1cIWCPZAHnFyPL64e93LGguHVGL4h4F7LxFn5vRzDUpDggtz5cJSX2VwfprNWspvhqZq1fMFzH3SKN28l4V500sgaYh6Jq';
 
   const onToken = async token => {
-    console.log(latLng);
-    const res = await axios.post('api/orders/checkout', { 
+    const res = await axios.post('api/orders/checkout', {
       products: products,
-      phone: user.phoneNumber, 
+      phone: user.phoneNumber,
       name: user.nickName,
       address: address,
       timeStamp: token.created,
@@ -21,7 +20,6 @@ const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng
     if(res) {
       history.push('/thankyou');
     }
-    console.log(res.data);
 
   };
 
@@ -38,7 +36,7 @@ const StripeCheckoutButton = ({ user, price, products, disabled, address, latLng
       token={onToken}
       stripeKey={publishableKey}
     >
-      <button class="btn btn-primary" disabled={disabled}>
+      <button className="btn btn-primary" disabled={disabled}>
         Pay Now
       </button>
     </StripeCheckout>

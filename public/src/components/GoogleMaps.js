@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react'; 
+// import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react';
 import { withGoogleMap, GoogleMap, Marker, withScriptjs, DirectionsRenderer } from 'react-google-maps';
 // import {toast} from 'react-toastify';
 // https://github.com/fullstackreact/google-maps-react
@@ -36,7 +36,6 @@ class GoogleMaps extends Component {
       }
     }
     updateDirections = (p) => {
-      // console.log(this);
       var googleBounds = new window.google.maps.LatLngBounds();
       googleBounds.extend(p[0]);
       googleBounds.extend(p[1]);
@@ -57,11 +56,11 @@ class GoogleMaps extends Component {
           this.setState({
             directions: null,
           });
-         
+
         }
       });
     }
-   
+
     render() {
         return (
           <GoogleMap
