@@ -130,8 +130,6 @@ class Products extends Component {
                         (this.state.currentProducts.length !== 0 && !this.state.loading) &&
                         <ReactPaginate className="mt-4"
                             previousLabel={'previous'}
-                            nextLabel={'next'}
-                            breakLabel={'...'}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             containerClassName={'pagination'}
@@ -144,19 +142,6 @@ class Products extends Component {
                             activeClassName={'pagination-link is-current'}
                             onPageChange={this.handlePageClick}
                             pageCount={this.state.pageCount} 
-
-                        // breakClassName={'page-item'}
-                        // breakLinkClassName={'page-link'}
-                        // containerClassName={'pagination'}
-                        // pageClassName={'page-item'}
-                        // pageLinkClassName={'page-link'}
-                        // previousClassName={'page-item'}
-                        // previousLinkClassName={'page-link'}
-                        // nextClassName={'page-item'}
-                        // nextLinkClassName={'page-link'}
-                        // activeClassName={'active'}
-                        // pageCount={this.state.pageCount} 
-                        // onPageChange={this.handlePageClick}
                         />
                     }
                 </div>
