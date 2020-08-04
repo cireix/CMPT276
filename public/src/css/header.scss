@@ -1,4 +1,4 @@
-@import 'css/app.scss';
+@import './app.scss';
 
 .header {
     background-color: black;
@@ -8,7 +8,7 @@
     line-height: 45px;
     .grid {
         display: flex;
-        justify-content: space-between;  
+        justify-content: space-between;
         align-items: center;
         margin: auto;
         .start{
@@ -24,7 +24,7 @@
             display: inline-block;
             color: white;
             padding: 0 8px;
-            
+
             font-size: 15px;
             @media (min-width: $phone) {
                 font-size:15px;
@@ -35,8 +35,8 @@
             @media (min-width: $desktop) {
                 font-size:20px;
             }
-           
-            
+
+
             transition: all 0.2s;
             &:hover {
                 color: rgb(189, 186, 186);
@@ -49,7 +49,7 @@
             cursor: pointer;
             transition: all 0.2s;
             &:hover {
-                
+
                 color: rgb(189, 186, 186);
             }
         }

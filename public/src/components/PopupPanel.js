@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import 'css/popPanel.scss';
+import '../css/popPanel.scss';
 
 class PopupPanel extends React.Component {
     state = {
@@ -15,7 +15,7 @@ class PopupPanel extends React.Component {
         // create a time stamp that used to re-render the child component everytime when the Panel component opened
         const _key = new Date().getTime();
         // create a renderable component in the Panel component with close function, a time stamp and a ser object
-        const _component = React.createElement(component, { close: this.close, key: _key, user: user, product: product });  
+        const _component = React.createElement(component, { close: this.close, key: _key, user: user, product: product });
         this.setState({
             component: _component,
             active: true,
@@ -33,17 +33,17 @@ class PopupPanel extends React.Component {
 
     render() {
         return (
-            <div className={ this.state.active === true ? 'panel-wrapper active' : 'panel-wrapper'}>     
-                <div className="over-layer" onClick={ this.close }></div>      
-                <div className="panel">       
-                    <div className="panel-head">    
-                        <i className="far fa-times-circle close" onClick={ this.close }></i> 
+            <div className={ this.state.active === true ? 'panel-wrapper active' : 'panel-wrapper'}>
+                <div className="over-layer" onClick={ this.close }></div>
+                <div className="panel">
+                    <div className="panel-head">
+                        <i className="far fa-times-circle close" onClick={ this.close }></i>
                     </div>
                     <div className="panel-body">
-                        { this.state.component }    
+                        { this.state.component }
                     </div>
                 </div>
-            </div>       
+            </div>
         )
     }
 }

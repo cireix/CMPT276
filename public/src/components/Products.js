@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ToolBox from 'components/ToolBox';
-import Product from 'components/Product';
+import ToolBox from './ToolBox';
+import Product from './Product';
 import { Cart, AddCartButton } from 'react-cart-components'
 import axios from 'axios';
-import 'css/products.scss';
-import Checkout from 'components/Checkout';
+import '../css/products.scss';
+import Checkout from './Checkout';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
@@ -19,17 +19,22 @@ class Products extends Component {
             perPage: 18,
             currentPage: [],
             showCart: true,
-            checkOutData: []
+            checkOutData: [],
+            loading: false,
         }
     }
 
     async receivedData() {
         try {
+            this.setState({ loading: true });
             const res = await axios.post('api/beer/products');
             this.setState({
                 productsFullList: res.data.beer
             })
+
+            this.setState({ loading: false });
         } catch (e) {
+            this.setState({ loading: false });
             console.log(e)
         }
 
@@ -40,21 +45,22 @@ class Products extends Component {
     }
 
 
-    async componentDidMount() {
+    componentDidMount() {
         this.receivedData();
     }
 
-    // Search box 
+    // Search box
     search = async (string) => {
         // Get a copy of full list of products
+        this.setState({ loading: true });
         const res = await axios.post('api/beer/products');
+        this.setState({ loading: false });
         // Get an array of matched products
         let productList = res.data.beer.filter(pdct => {
             const match = pdct.fullName.match(new RegExp(string, 'gi'));
             return match !== null;
-
-
         })
+
         this.setState({
             productsFullList: productList,
             currentProducts: this.state.productsFullList.slice(this.state.offset, this.state.offset + this.state.perPage),
@@ -78,7 +84,6 @@ class Products extends Component {
             this.props.history.push('/login');
             toast.error('Please login to checkout!');
         }
-        console.log(data);
         this.setState({ showCart: false, checkOutData: data })
 
     }
@@ -88,6 +93,11 @@ class Products extends Component {
     }
 
     render() {
+        const noMsg = {
+            textAlign: 'center',
+            width: '100%',
+            marginBottom: '25px',
+        };
         return (
             <div>
                 <ToolBox search={this.search} />
@@ -98,7 +108,8 @@ class Products extends Component {
                 <div className={this.state.showCart ? 'products' : 'hide'} >
                     <div className="columns is-multiline">
                         {
-                            this.state.currentProducts.map(pdct => {
+                          (this.state.currentProducts.length === 0 && !this.state.loading) ?
+                              <div style={noMsg}>Sorry no products match the search.</div>: this.state.currentProducts.map(pdct => {
                                 if (pdct) {
                                     return (
                                         <div className='column is-2' key={pdct.productId}>
@@ -115,15 +126,30 @@ class Products extends Component {
                         }
                     </div>
 
-                    <ReactPaginate className="mt-4"
-                        breakClassName={'pagination-ellipsis'}
-                        containerClassName={'pagination justify-content-center'}
-                        pageClassName={'pagination-link'}
-                        previousClassName={'pagination-previous'}
-                        nextClassName={'pagination-next'}
-                        activeClassName={'pagination-link is-current'}
+                    {/* <ReactPaginate className="mt-4"
+                        breakClassName={'page-item'}
+                        breakLinkClassName={'page-link'}
+                        containerClassName={'pagination'}
+                        pageClassName={'page-item'}
+                        pageLinkClassName={'page-link'}
+                        previousClassName={'page-item'}
+                        previousLinkClassName={'page-link'}
+                        nextClassName={'page-item'}
+                        nextLinkClassName={'page-link'}
+                        activeClassName={'active'}
                         onPageChange={this.handlePageClick}
-                        pageCount={this.state.pageCount} />
+                        pageCount={this.state.pageCount} /> */}
+                    {
+                      (this.state.currentProducts.length !== 0 && !this.state.loading) && <ReactPaginate className="mt-4"
+                                                                                  breakClassName={'button'}
+                                                                                  containerClassName={'pagination justify-content-center'}
+                                                                                  pageClassName={'button'}
+                                                                                  previousClassName={'button'}
+                                                                                  nextClassName={'button'}
+                                                                                  activeClassName={'active'}
+                                                                                  onPageChange={this.handlePageClick}
+                                                                                  pageCount={this.state.pageCount} />
+                    }
 
 
                 </div>

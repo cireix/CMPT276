@@ -1,36 +1,43 @@
 import React from "react";
-import Enzyme, { shallow, mount } from "enzyme";
+import Enzyme, { shallow, mount,render } from "enzyme";
 import EnzymeAadpter from "enzyme-adapter-react-16";
-import Login from "../pages/Login";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "mutationobserver-shim";
-import { login } from "../service/service";
+import Forgotpw from '../pages/ForgotPw'
+import { forgotpw,forgotpw2 } from "../service/service";
 import axios from "axios";
-// import moxios from 'moxios';
 jest.mock("axios");
 
 Enzyme.configure({ adapter: new EnzymeAadpter() });
 
 const setup = (props = {}) => {
-  return mount(
+  return render(
     <BrowserRouter>
-      <Login {...props} />
-    </BrowserRouter>
+      <Forgotpw {...props} />
+    </BrowserRouter> 
   );
 };
 const wrapper = setup();
 
-describe("render Login component", () => {
+describe("render ForgetPw component", () => {
   test("reder without error", () => {
-    const component = wrapper.find(".login_box");
+    const component = wrapper.find(".login_wrapper");
     // console.log(component.props());
+    // console.log(component.html(), "++++++");
     expect(component.length).toBe(1);
   });
 
-  test("reder login api", async () => {
-
+  test("test forgotpw api", async () => {
+   
     axios.post.mockResolvedValue({ data: { code: -1 } });
-    let result = await login({phone:"123"});
+    let result = await forgotpw();
+    expect(result.data).toEqual({ code: -1 });
+  });
+
+  test("test forgotpw2 api", async () => {
+   
+    axios.post.mockResolvedValue({ data: { code: -1 } });
+    let result = await forgotpw2();
     expect(result.data).toEqual({ code: -1 });
   });
 });

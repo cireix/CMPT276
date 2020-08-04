@@ -1,4 +1,4 @@
-@import 'css/app.scss';
+@import './app.scss';
 
 .panel-wrapper {
     &.active {
@@ -12,13 +12,13 @@
 
     .over-layer {
         display: none;
-        position: fixed;   
+        position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         background: rgba(0, 0, 0, 0.4);
-        z-index: 99;    
+        z-index: 99;
     }
 
     .panel {
@@ -30,10 +30,10 @@
         bottom: 0;
         padding: 30px;
         box-shadow: -3px 0 3px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease-in-out;   
-        transform: translateX(24rem);   
+        transition: all 0.3s ease-in-out;
+        transform: translateX(24rem);
         z-index: 999;
-        .panel-head {        
+        .panel-head {
             text-align: right;
             .close {
                 cursor: pointer;

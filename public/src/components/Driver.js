@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Map, GoogleApiWrapper } from 'google-maps-react'; 
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 // import {toast} from 'react-toastify';
 import GoogleMaps from "./GoogleMaps";
 import OrderCard from "./OrderCard";
-import 'css/driver.scss';
+import '../css/driver.scss';
 
 
 class Driver extends Component {
@@ -48,7 +48,7 @@ class Driver extends Component {
     }
     updateBounds = (a) =>  {
         this.setState({
-            bounds: [a,this.state.current] 
+            bounds: [a,this.state.current]
         })
     }
     acceptOrder = () => {
@@ -56,8 +56,8 @@ class Driver extends Component {
             accepted: true
         })
     }
-    async componentDidMount() {
-        const res = await axios.post('api/orders/getOrders', {}).then(resp => {
+    componentDidMount() {
+        axios.post('api/orders/getOrders', {}).then(resp => {
             this.setState({
                 orders: resp.data
             })
@@ -68,13 +68,13 @@ class Driver extends Component {
     }
     render() {
         return (
-           <div class="driverMain">
-               <div class="orderList">
+           <div className="driverMain">
+               <div className="orderList">
                    <p className="title has-text-centered">Order List</p>
                 {this.state.orders.map((data,idx)=>{
                     return(
                         // <div>{data.phone}</div>
-                        <OrderCard address={data.address} 
+                        <OrderCard address={data.address}
                             latLng={data.latLng}
                             phone={data.phone}
                             stripeToken={data.stripeToken}
@@ -85,23 +85,24 @@ class Driver extends Component {
                             products={data.products}
                             current={this.state.current}
                             accepted={this.state.accepted}
+                            allOrders={this.state.orders}
                         />
                     )
                 })}
                </div>
-               
+
                 <GoogleMaps ref="theMap"
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo"
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={ <div style={{ height: 'calc(100vh - 45px)', width: '100%' }} /> }
                     mapElement={ <div style={{ height: `100%` }} />}
-                    points={this.state.points} 
-                    zoom={this.state.zoom} 
-                    latLng={this.state.latLng} 
+                    points={this.state.points}
+                    zoom={this.state.zoom}
+                    latLng={this.state.latLng}
                     bounds={this.state.bounds}
                     current={this.state.current}
                 />
-           </div>           
+           </div>
         )
     }
 }

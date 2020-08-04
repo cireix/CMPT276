@@ -1,10 +1,11 @@
 import React from 'react'
-import 'css/userprofile.scss';
+import '../css/userprofile.scss';
+import { logOut } from '../globalFunc/auth';
 
 export default function UserProfile(props) {
 
     const logout = () => {
-        global.auth.logOut();
+        logOut();
         // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
         props.close("logout");
     }
@@ -30,12 +31,12 @@ export default function UserProfile(props) {
                 <div className="field">
                     <label className="label">Type</label>
                     <div className="control">
-                        <input 
-                        className="input" 
-                        type="text" 
+                        <input
+                        className="input"
+                        type="text"
                         defaultValue={
-                            props.user.type === 1 ? "Admin" : 
-                            [props.user.type === 2 ? "Driver" : 
+                            props.user.type === 1 ? "Admin" :
+                            [props.user.type === 2 ? "Driver" :
                             "General User"]} />
                     </div>
                 </div>
@@ -43,39 +44,39 @@ export default function UserProfile(props) {
 
             <br />
             <br />
-            
+
 
                 { props.user.type === 1 ? (
                     <div className="field is-grouped is-grouped-centered">
                         <div className="control">
-                            <button className="button" onClick={() => {props.close("allusers");}}>All Users</button>
+                            <button className="button allUser" onClick={() => {props.close("allusers");}}>All Users</button>
                         </div>
                         <div className="control">
-                            <button className="button is-danger" onClick={logout}>Logout</button>
+                            <button className="button is-danger Logout" onClick={logout}>Logout</button>
                         </div>
                     </div>
                 ) : (
                     <div className="field">
-                
+
                         <div className="control user-control">
-                            <button className="button user-button" onClick={() => {props.close("prevorder");}}>Previous Order</button>
+                            <button className="button user-button PreviousOrder" onClick={() => {props.close("prevorder");}}>Previous Order</button>
                         </div>
                         <br />
                         {props.user.type === 0 &&
                             <div className="control user-control">
-                                <button className="button user-button" onClick={() => {props.close("ongoingorder");}}>Ongoing Order</button><br />
-                            </div> 
+                                <button className="button user-button Ongoing" onClick={() => {props.close("ongoingorder");}}>Ongoing Order</button><br />
+                            </div>
                         }
                         <br />
                         <div className="control user-control">
-                            <button className="button is-danger user-button" onClick={logout}>Logout</button>
+                            <button className="button is-danger user-button Logout" onClick={logout}>Logout</button>
                         </div>
                     </div>
-                    
+
                 )}
                 <br />
-                
-            
+
+
         </div>
     )
 }

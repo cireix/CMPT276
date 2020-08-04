@@ -1,36 +1,39 @@
 import React from "react";
 import Enzyme, { shallow, mount ,render} from "enzyme";
-import PreviousOrder from '../pages/PreviousOrder'
 import EnzymeAadpter from "enzyme-adapter-react-16";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import AllUsers from '../pages/AllUsers'
 import "mutationobserver-shim";
-import { getPrevious } from "../service/service";
+import { getAllUsers } from "../service/service";
 import axios from "axios";
+// import moxios from 'moxios';
 jest.mock("axios");
 
 Enzyme.configure({ adapter: new EnzymeAadpter() });
 
 const setup = (props = {}) => {
-  return render(
+  return render( 
     <BrowserRouter>
-      <PreviousOrder {...props} />
+      <AllUsers></AllUsers>
     </BrowserRouter>
   );
 };
 const wrapper = setup();
 
-describe("render SignUp component", () => {
+describe("render getAllUsers component", () => {
   test("render component", () => {
-    const component = wrapper.find(".allorders");
-    // console.log(component.props());
-    // console.log(component.html(), "++++++");
-    expect(component.length).toBe(1);
+    const component = wrapper.find(".allusers table thead");
+    // const component2 = wrapper.find('.allusers')
+    
+    // console.log(component2.html());
+ 
+    expect(component.text()).toBe("User IdNamePhone NumberType");
   });
 
-  test("test getPrevious api", async () => {
+  test("test getAllUsers api", async () => {
    
     axios.post.mockResolvedValue({ data: { code: -1 } });
-    let result = await getPrevious();
+    let result = await getAllUsers();
     expect(result.data).toEqual({ code: -1 });
   });
 });

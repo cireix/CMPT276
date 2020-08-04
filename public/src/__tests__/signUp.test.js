@@ -1,36 +1,42 @@
 import React from "react";
-import Enzyme, { shallow, mount } from "enzyme";
+import Enzyme, { shallow, mount,render } from "enzyme";
 import EnzymeAadpter from "enzyme-adapter-react-16";
-import Login from "../pages/Login";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "mutationobserver-shim";
-import { login } from "../service/service";
+import SignUp from '../pages/SignUp'
+import { register, register2 } from "../service/service";
 import axios from "axios";
-// import moxios from 'moxios';
 jest.mock("axios");
 
 Enzyme.configure({ adapter: new EnzymeAadpter() });
 
 const setup = (props = {}) => {
-  return mount(
+  return render(
     <BrowserRouter>
-      <Login {...props} />
+      <SignUp {...props} />
     </BrowserRouter>
   );
 };
 const wrapper = setup();
 
-describe("render Login component", () => {
-  test("reder without error", () => {
-    const component = wrapper.find(".login_box");
+describe("render SignUp component", () => {
+  test("render component", () => {
+    const component = wrapper.find(".login_wrapper");
     // console.log(component.props());
     expect(component.length).toBe(1);
   });
 
-  test("reder login api", async () => {
+  test("test register api", async () => {
 
     axios.post.mockResolvedValue({ data: { code: -1 } });
-    let result = await login({phone:"123"});
+    let result = await register();
+    expect(result.data).toEqual({ code: -1 });
+  });
+
+  test("test register2 api", async () => {
+
+    axios.post.mockResolvedValue({ data: { code: -1 } });
+    let result = await register2();
     expect(result.data).toEqual({ code: -1 });
   });
 });

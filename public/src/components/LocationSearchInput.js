@@ -40,9 +40,9 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span className="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-map-marker-alt"></i></span>
               </div>
               <input
                 {...getInputProps({
