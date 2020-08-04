@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1596538406975" clover="3.2.0">
-  <project timestamp="1596538406975" name="All files">
-    <metrics statements="329" coveredstatements="156" conditionals="161" coveredconditionals="67" methods="138" coveredmethods="55" elements="628" coveredelements="278" complexity="0" loc="329" ncloc="329" packages="6" files="26" classes="26"/>
+<coverage generated="1596541973750" clover="3.2.0">
+  <project timestamp="1596541973750" name="All files">
+    <metrics statements="329" coveredstatements="160" conditionals="161" coveredconditionals="71" methods="138" coveredmethods="57" elements="628" coveredelements="288" complexity="0" loc="329" ncloc="329" packages="6" files="26" classes="26"/>
     <package name="src">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="Layout.js" path="C:\Users\HASEE\Desktop\z-1111\CMPT276\public\src\Layout.js">
@@ -292,7 +292,7 @@
       </file>
     </package>
     <package name="src.pages">
-      <metrics statements="89" coveredstatements="30" conditionals="68" coveredconditionals="31" methods="42" coveredmethods="9"/>
+      <metrics statements="89" coveredstatements="34" conditionals="68" coveredconditionals="35" methods="42" coveredmethods="11"/>
       <file name="AllUsers.js" path="C:\Users\HASEE\Desktop\z-1111\CMPT276\public\src\pages\AllUsers.js">
         <metrics statements="7" coveredstatements="4" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="2"/>
         <line num="6" count="1" type="stmt"/>
@@ -316,24 +316,24 @@
         <line num="21" count="1" type="stmt"/>
       </file>
       <file name="ForgotPw.js" path="C:\Users\HASEE\Desktop\z-1111\CMPT276\public\src\pages\ForgotPw.js">
-        <metrics statements="18" coveredstatements="5" conditionals="24" coveredconditionals="12" methods="8" coveredmethods="1"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <metrics statements="18" coveredstatements="9" conditionals="24" coveredconditionals="16" methods="8" coveredmethods="3"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <line num="29" count="5" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
+        <line num="48" count="5" type="stmt"/>
         <line num="149" count="0" type="stmt"/>
       </file>
       <file name="Login.js" path="C:\Users\HASEE\Desktop\z-1111\CMPT276\public\src\pages\Login.js">
@@ -417,7 +417,7 @@
         <line num="16" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
       </file>
     </package>

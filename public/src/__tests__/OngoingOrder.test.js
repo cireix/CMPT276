@@ -15,26 +15,19 @@ const setup = (props = {}) => {
     <BrowserRouter>
       <OngoingOrder {...props} />
     </BrowserRouter>
-  ); 
+  );
 };
 const wrapper = setup();
 
 describe("render OngoingOrder component", () => {
   test("render component", () => {
     const component = wrapper.find(".allorders");
-    // console.log(component.props());
-    // console.log(component.html(), "++++++");
     expect(component.length).toBe(1);
   });
 
   test("test getOngoing api", async () => {
-   
     axios.post.mockResolvedValue({ data: { code: -1 } });
     let result = await getOngoing();
     expect(result.data).toEqual({ code: -1 });
   });
 });
-
-// describe("test loigin api", () => {
-
-// });
