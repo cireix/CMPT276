@@ -126,32 +126,18 @@ class Products extends Component {
                         }
                     </div>
 
-                    {/* <ReactPaginate className="mt-4"
-                        breakClassName={'page-item'}
-                        breakLinkClassName={'page-link'}
-                        containerClassName={'pagination'}
-                        pageClassName={'page-item'}
-                        pageLinkClassName={'page-link'}
-                        previousClassName={'page-item'}
-                        previousLinkClassName={'page-link'}
-                        nextClassName={'page-item'}
-                        nextLinkClassName={'page-link'}
-                        activeClassName={'active'}
-                        onPageChange={this.handlePageClick}
-                        pageCount={this.state.pageCount} /> */}
                     {
-                      (this.state.currentProducts.length !== 0 && !this.state.loading) && <ReactPaginate className="mt-4"
-                                                                                  breakClassName={'button'}
-                                                                                  containerClassName={'pagination justify-content-center'}
-                                                                                  pageClassName={'button'}
-                                                                                  previousClassName={'button'}
-                                                                                  nextClassName={'button'}
-                                                                                  activeClassName={'active'}
-                                                                                  onPageChange={this.handlePageClick}
-                                                                                  pageCount={this.state.pageCount} />
+                      (this.state.currentProducts.length !== 0 && !this.state.loading) &&
+                      <ReactPaginate className="mt-4"
+                                     breakClassName={'pagination-ellipsis'}
+                                     containerClassName={'pagination justify-content-center'}
+                                     pageClassName={'pagination-link'}
+                                     previousClassName={'pagination-previous'}
+                                     nextClassName={'pagination-next'}
+                                     activeClassName={'pagination-link is-current'}
+                                      onPageChange={this.handlePageClick}
+                                      pageCount={this.state.pageCount} />
                     }
-
-
                 </div>
             </div>
         )

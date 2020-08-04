@@ -22,7 +22,6 @@ const wrapper = setup();
 describe("render SignUp component", () => {
   test("render component", () => {
     const component = wrapper.find(".login_wrapper");
-    // console.log(component.props());
     expect(component.length).toBe(1);
   });
 
@@ -40,7 +39,3 @@ describe("render SignUp component", () => {
     expect(result.data).toEqual({ code: -1 });
   });
 });
-
-// describe("test loigin api", () => {
-
-// });
