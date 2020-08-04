@@ -49,8 +49,8 @@ class Products extends Component {
         this.receivedData();
     }
 
-    // Search box
-    search = async (string) => {
+     // Search box
+     search = async (string) => {
         // Get a copy of full list of products
         this.setState({ loading: true });
         const res = await axios.post('api/beer/products');
@@ -63,7 +63,8 @@ class Products extends Component {
 
         this.setState({
             productsFullList: productList,
-            currentProducts: this.state.productsFullList.slice(this.state.offset, this.state.offset + this.state.perPage),
+            offset: 0, 
+            currentProducts: this.state.productsFullList.slice(0, this.state.perPage),
             pageCount: Math.ceil(this.state.productsFullList.length / this.state.perPage)
         })
     }
