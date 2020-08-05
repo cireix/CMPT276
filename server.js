@@ -8,7 +8,10 @@ const orders = require("./routes/api/orders");
 const path = require("path");
 const cors = require('cors');
 const Api = require("twilio/lib/rest/Api");
+const { Console } = require("console");
 const app = express();
+const port = process.env.PORT || 5000;
+
 // Bodyparser middleware
 app.use(cors());
 app.options('*', cors())
@@ -48,5 +51,23 @@ app.use("/api/beer", beer);
 app.use("/api/orders", orders);
 
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
+const server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+const io = require("socket.io")(server);
+
+var userDic = {};
+io.on("connection",(socket) => {
+	socket.on('set', (user) => {
+		socket.user = user;
+		console.log(socket.user, "online")
+		io.to(socket.id).emit("test",socket.id)
+		userDic[user] = socket.id
+		console.log(userDic);
+	});
+	socket.on("logout",(user) => {
+		delete userDic[user];
+		console.log(socket.user, "offline")
+		socket.user = null;
+		
+	})
+})

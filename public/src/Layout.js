@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from './components/Header'
 import { getUser } from './globalFunc/auth';
-
 const Layout = (props) => {
     const user = getUser();
     return (

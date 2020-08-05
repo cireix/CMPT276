@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import decode from "jwt-decode";
 import Layout from "../Layout";
 import { setToken } from "../globalFunc/auth";
+import { setUser } from "../service/Socket";
 
 export default function SignUp(props) {
   const { register, handleSubmit, errors, watch } = useForm();
@@ -44,6 +45,7 @@ export default function SignUp(props) {
         // route to the home page
         props.history.push("/");
         toast.success("Sign up successfully!");
+        setUser({"phoneNumber":"+1"+phoneNumber})
       })
       .catch((error) => {
         const message = error.response.data.message;

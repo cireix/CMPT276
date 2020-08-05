@@ -1,12 +1,16 @@
 import React from 'react'
 import '../css/userprofile.scss';
-import { logOut } from '../globalFunc/auth';
-
+import { getUser, logOut } from '../globalFunc/auth';
+import { logoutUser } from "../service/Socket";
 export default function UserProfile(props) {
 
     const logout = () => {
+        const user = getUser();
+
+        logoutUser(user);
         logOut();
         // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
+        
         props.close("logout");
     }
 
@@ -75,8 +79,9 @@ export default function UserProfile(props) {
 
                 )}
                 <br />
-
-
+                <div className="notifications">
+                    test
+                </div>
         </div>
     )
 }

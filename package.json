@@ -41,6 +41,8 @@
     "react-stripe-checkout": "^2.6.3",
     "redux": "^4.0.5",
     "sinon": "^9.0.2",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "stripe": "^8.76.0",
     "twilio": "^3.47.0",
     "validator": "^13.1.1"

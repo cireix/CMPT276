@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Layout from "../Layout";
 import "../css/login.scss";
 import { setToken } from "../globalFunc/auth";
+import { setUser } from "./../service/Socket";
 
 export default function Login(props) {
   const { register, handleSubmit, errors } = useForm();
@@ -24,6 +25,8 @@ export default function Login(props) {
         // route to the home page
         props.history.push("/");
         toast.success("Login successful!");
+        //assign user to socket
+        setUser({"phoneNumber":"+1"+phoneNumber})
       })
       .catch((error) => {
         const message = error.response.data.message;
