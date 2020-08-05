@@ -16,7 +16,7 @@ export function getPrevious(param) {
   return axios.post("api/orders/getPrevious", param);
 }
 
-export function register(param) {
+export function register1(param) {
   return axios.post("api/users/register", param);
 }
 

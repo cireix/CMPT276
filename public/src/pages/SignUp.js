@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { register, register2 } from "../service/service";
+import { register1, register2 } from "../service/service";
 import { toast } from "react-toastify";
 import decode from "jwt-decode";
 import Layout from "../Layout";
@@ -16,7 +16,7 @@ export default function SignUp(props) {
     // post to server side for register
     // api/users/register'
 
-    register({
+    register1({
       name: nickname,
       phone: phoneNumber,
       password: password,
