@@ -5,7 +5,7 @@ import '../css/OrderInfo.scss'
 export default class OrderInfo extends React.Component {
     constructor(props){
         super(props);
-        console.log("here",this.props.details.products)
+        // console.log("here",this.props.details.products)
     }
 
     totalPrice = () => {
