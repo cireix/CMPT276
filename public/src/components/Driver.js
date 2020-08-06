@@ -129,8 +129,16 @@ class Driver extends Component {
                             this.state.orders.splice(x,1);
                         }
                     }
+                    axios.post('api/orders/getOrders', {}).then(resp => {
+                        this.setState({
+                            orders: resp.data
+                        })
+                        for(var x in this.state.orders) {
+                            this.state.points.push(this.state.orders[x].latLng)
+                        }
+                        this.forceUpdate();
+                    })
             }
-            this.forceUpdate();
         })
         axios.post('api/orders/getOrders', {}).then(resp => {
             this.setState({
@@ -164,7 +172,6 @@ class Driver extends Component {
         await this.setState({
             current: {lat: 49.2222, lng: -123.0021}
         })
-        // this.forceUpdate();
         sendLocation(this.state.currentOrder.phone,this.state.current)
         sendAlmost(this.state.currentOrder.phone,3)
         createNotification({
@@ -179,7 +186,6 @@ class Driver extends Component {
         await this.setState({
             current: {lat: 49.2243, lng: -123.0046}
         })
-        // this.forceUpdate();
         sendLocation(this.state.currentOrder.phone,this.state.current)
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)
@@ -188,7 +194,6 @@ class Driver extends Component {
         await this.setState({
             current: {lat: 49.2258450, lng: -123.0057950}
         })
-        // this.forceUpdate();
         sendLocation(this.state.currentOrder.phone,this.state.current)
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)

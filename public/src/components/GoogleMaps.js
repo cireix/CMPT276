@@ -9,7 +9,8 @@ class GoogleMaps extends Component {
             points: this.props.points,
             current: this.props.current,
             bounds: null,
-            ds: new window.google.maps.DirectionsService()
+            ds: new window.google.maps.DirectionsService(),
+            directions:null
         }
     }
     async componentDidMount(){
@@ -30,6 +31,11 @@ class GoogleMaps extends Component {
       if(prevProps.points != this.props.points){
         this.setState({
           points: this.props.points
+        })
+      }
+      if(prevProps.accepted != this.props.accepted) {
+        this.setState({
+          directions: null
         })
       }
     }
@@ -54,7 +60,6 @@ class GoogleMaps extends Component {
           this.setState({
             directions: null,
           });
-
         }
       });
     }
