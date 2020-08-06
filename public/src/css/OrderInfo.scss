@@ -1,0 +1,19 @@
+@import './app.scss';
+
+.order-detail {
+    .order-body {
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .order-footer {
+        font-size: 20px;
+        font-weight: 500;
+        padding: 10px;
+        .order-total {
+            text-align: right;
+        }
+        .order-status {
+            text-align: right;
+        }
+    }
+}
