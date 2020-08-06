@@ -69,6 +69,12 @@ router.post("/getOngoing",(req,res) => {
         res.json(order)
     })
 })
+router.post("/getOrder",(req,res) => {
+    Order.findOne({"stripeToken":req.body.orderId}).then(order => {
+        res.json(order)
+    })
+})
+
 router.post("/acceptOrder",(req,res) => {
     Order.findOne({"stripeToken":req.body.stripeToken}).then(order => {
         if(order.status !== 0) {

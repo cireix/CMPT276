@@ -5,12 +5,13 @@ import '../css/orderInfoPanel.scss';
 class OrderInfoPanel extends React.Component {
     state = {
         component: null,
+
         active: false
     }
 
     open = (options) => {
-        const { component } = options;
-        const _component = React.createElement(component, { close: this.close });
+        const { component, details } = options;
+        const _component = React.createElement(component, { close: this.close, details: details });
         this.setState({
             component: _component,
             active: true

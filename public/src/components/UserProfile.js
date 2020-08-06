@@ -5,6 +5,7 @@ import { logoutUser } from "../service/Socket";
 import { getNotifications } from "../service/service";
 import OrderInfoPanel from './OrderInfoPanel';
 import OrderInfo from './OrderInfo';
+import axios from "axios"
 
 export default class UserProfile extends React.Component {
     
@@ -24,9 +25,10 @@ export default class UserProfile extends React.Component {
         this.props.close("logout");
     }
 
-    toOrderDetail = () => {
+    toOrderDetail = (orderDetails) => {
         OrderInfoPanel.open({
-            component: OrderInfo 
+            component: OrderInfo,
+            details: orderDetails
         })
     }
 
@@ -97,7 +99,12 @@ export default class UserProfile extends React.Component {
                     )}
                     <br />
                     <div className="notifications">
-                        <div className="nMessage" onClick={this.toOrderDetail}>
+                        <div className="nMessage" onClick={()=>{
+                             axios.post('api/orders/getOrder', {orderId: "tok_1H7rXyIWCPZAHnFyjn2q1ydp"}).then(resp => {
+                                this.toOrderDetail(resp.data)
+                            })    
+                            
+                        }}>
                             <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
                             <p class="n-m">Your order is on its way!</p>
                             <p class="n-t">2019-06-26 19:10:10</p>

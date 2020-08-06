@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import {toast} from 'react-toastify';
 import '../css/orderCard.scss';
-
+import { sendAccepted } from "../service/Socket";
 // address: "CF Richmond Centre, Number 3 Road, Richmond, BC, Canada"
 // complete: false
 // latLng: {lat: 49.1672705, lng: -123.1384481}
@@ -99,7 +99,8 @@ class OrderCard extends Component {
       this.setState({
         accepted:true
       })
-      this.props.acceptOrder();
+      this.props.acceptOrder(this.props.data);
+      sendAccepted(this.props.phone)
     }
     render() {
         const isAccepted = this.props.allOrders.find(({ stripeToken }) => stripeToken === this.props.stripeToken && this.state.accepted);

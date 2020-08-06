@@ -55,18 +55,23 @@ app.use("/api/orders", orders);
 const server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));
 const io = require("socket.io")(server);
 
-var userDic = {};
 io.on("connection",(socket) => {
 	socket.on('set', (user) => {
 		socket.user = user;
 		console.log(socket.user, "online")
 		io.to(socket.id).emit("test",socket.id)
-		userDic[user] = socket.id
-		console.log(userDic);
 	});
 	socket.on("logout",(user) => {
-		delete userDic[user];
 		console.log(socket.user, "offline")
 		socket.user = null;
+	})
+	socket.on("accepted",(user) => {
+		const socketList = io.sockets.sockets;
+		for(var x in socketList){
+			const c = socketList[x];
+			if(user === c.user) {
+				io.to(c.id).emit("accepted");
+			}
+		}
 	})
 })

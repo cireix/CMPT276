@@ -14,7 +14,6 @@ class Driver extends Component {
         
         const user = getUser();
         console.log(user);
-        
 
         this.state = {
             points: [],
@@ -59,9 +58,10 @@ class Driver extends Component {
             bounds: [a,this.state.current]
         })
     }
-    acceptOrder = () => {
+    acceptOrder = (data) => {
         this.setState({
-            accepted: true
+            accepted: true,
+            current: data
         })
     }
     componentDidMount() {
@@ -103,6 +103,7 @@ class Driver extends Component {
                                     // <div>{data.phone}</div>
                                     <OrderCard 
                                         driver={this.state.user}
+                                        json = {data}
                                         address={data.address}
                                         latLng={data.latLng}
                                         phone={data.phone}
