@@ -26,19 +26,25 @@ class Driver extends Component {
             current: null,
             accepted: false,
             user: user,
-            currentOrder: {}
+            currentOrder: {},
+            interval: null
         }
         this.getCurrentLoc();
     }
     getCurrentLoc = () => {
+        console.log("Getting location")
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position => {
+            navigator.geolocation.getCurrentPosition(position => {
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
             this.setState({
               current: pos
+            })
+            axios.post('api/users/updatePos', {
+                driver: this.state.user.phoneNumber,
+                loc: pos
             })
           });
         }
@@ -61,10 +67,11 @@ class Driver extends Component {
     acceptOrder = (data) => {
         this.setState({
             accepted: true,
-            current: data
+            currentOrder: data
         })
     }
     componentDidMount() {
+        var self = this;
         axios.post('api/orders/getOrders', {}).then(resp => {
             this.setState({
                 orders: resp.data
@@ -77,14 +84,18 @@ class Driver extends Component {
             this.setState({
                 currentOrder: data.data
             })
-            // console.log(data);
-            
         })
+        this.setState({
+            interval: setInterval(function(){self.getCurrentLoc()},30000)
+        })
+        // console.log(this.getCurrentLoc)
+        // this.getCurrentLoc();
+        
     }
     componentDidUpdate(prevProps,prevState){
         if(!Object.is(prevState.currentOrder,this.state.currentOrder)){
             console.log("reached")
-            if (Object.keys(this.state.currentOrder).length > 0) {
+            if (this.state.currentOrder && Object.keys(this.state.currentOrder).length > 0) {
                 console.log(this.state.currentOrder)
                 this.updateLatLng(this.state.currentOrder.latLng)
                 // this.props.updateZoom();
@@ -95,7 +106,7 @@ class Driver extends Component {
     render() {
         return (
            <div className="driverMain">
-               {Object.keys(this.state.currentOrder).length === 0 ? 
+               {this.state.currentOrder && Object.keys(this.state.currentOrder).length === 0 ? 
                     <div className="orderList">
                         <p className="title has-text-centered">Order List</p>
                             {this.state.orders.map((data,idx)=>{
@@ -120,9 +131,16 @@ class Driver extends Component {
                                 )
                         })}
                     </div> :
-                    <div className="orderList">Current Order</div>
+                    //change here use this.state.currentOrder
+                    <div className="orderList">
+                        Current Order
+
+                        {/* DO NOT DELETE
+                        <button onClick={function(){
+                            this.updateLatLng({lat: 49.3323392, lng: -123.14214399999997})
+                        }}>test</button> */}
+                    </div>
                 }
-               
 
                 <GoogleMaps ref="theMap"
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo"

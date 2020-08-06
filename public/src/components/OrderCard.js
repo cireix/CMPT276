@@ -28,7 +28,7 @@ import { sendAccepted } from "../service/Socket";
 class OrderCard extends Component {
     constructor(props){
         super(props)
-
+        console.log(this.props.json)
         var total = 0;
         for(var x in this.props.products) {
           var cProd = this.props.products[x];
@@ -63,6 +63,7 @@ class OrderCard extends Component {
 
     }
     componentDidUpdate(prevProps){
+      console.log(this.props.current)
         if(prevProps.current != this.props.current) {
             new window.google.maps.DirectionsService().route({
                 origin: new window.google.maps.LatLng(this.props.current.lat,this.props.current.lng),
@@ -99,7 +100,7 @@ class OrderCard extends Component {
       this.setState({
         accepted:true
       })
-      this.props.acceptOrder(this.props.data);
+      this.props.acceptOrder(this.props.json);
       sendAccepted(this.props.phone)
     }
     render() {

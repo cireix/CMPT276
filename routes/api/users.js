@@ -254,6 +254,13 @@ router.post("/getCurrent",(req,res)=>{
 	}).catch(err => console.log(err));
 });
 
+router.post("/updatePos",(req,res)=>{
+	User.updateOne({"phone":req.body.driver},{"location":req.body.loc}).then((resp)=>{
+		// console.log(resp);
+		res.json(req.body.loc)
+	})
+})
+
 
 // $(function(){
 //     var calcNewYear = setInterval(function(){

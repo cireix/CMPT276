@@ -12,7 +12,6 @@ export default class UserProfile extends React.Component {
     componentDidMount() {
         const user = getUser();
         getNotifications({user:user.phoneNumber}).then((data)=>{
-            console.log(data);
         });
     }
 
