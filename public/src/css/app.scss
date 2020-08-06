@@ -15,7 +15,11 @@ body{
     background-color: rgba(219, 219, 219, 0.4)
 }
 
-
 .float{
-    z-index: 5!important
+    z-index: 5!important;
+    .float-close-btn{
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+    }
 }
