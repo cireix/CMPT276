@@ -6,6 +6,7 @@ import GoogleMaps from "./GoogleMaps";
 import OrderCard from "./OrderCard";
 import '../css/driver.scss';
 import { getUser } from '../globalFunc/auth';
+import CurrentCard from './CurrentCard';
 
 
 class Driver extends Component {
@@ -133,7 +134,8 @@ class Driver extends Component {
                     </div> :
                     //change here use this.state.currentOrder
                     <div className="orderList">
-                        Current Order
+                        <p className="title has-text-centered">Current Order</p>
+                        <CurrentCard order={this.state.currentOrder} />
 
                         {/* DO NOT DELETE
                         <button onClick={function(){
