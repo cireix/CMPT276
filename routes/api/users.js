@@ -13,6 +13,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 const Notif = require("../../models/Notifications");
+const Order = require("../../models/Order");
 function generateCode() {
 	return Math.floor(Math.random() * Math.floor(1000000));
 }
@@ -175,7 +176,7 @@ router.post("/login", (req, res) => {
 			if (isMatch) {
 				// User matched
 				// Create JWT Payload
-				const payload = {
+				var payload = {
 					nickname: user.name,
 					phoneNumber: user.phone,
 					type: user.type
@@ -235,6 +236,23 @@ router.post("/createNotification", (req,res)=>{
 	newNotif.save();
 	res.send("Notification created.");
 })
+
+router.post("/getCurrent",(req,res)=>{
+	User.findOne({"phone": req.body.driver}).then(user => {
+		if (!user) {
+			return res.status(404).json({ message: "user not found" });
+		} else {
+			if("currentOrder" in user) {
+				Order.findOne({"stripeToken":user.currentOrder}).then(order => {
+					if(!order){ res.json({})}
+					res.json(order);
+				})
+			}else{
+				res.json({})
+			}
+		}
+	}).catch(err => console.log(err));
+});
 
 
 // $(function(){

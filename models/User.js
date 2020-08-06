@@ -25,6 +25,14 @@ const UserSchema = new Schema({
 	code: {
 		type: Number,
 		required: false
+	},
+	currentOrder: {
+		type: String,
+		required: false,
+	},
+	location: {
+		type: Object,
+		required: false
 	}
 });
 module.exports = User = mongoose.model("users", UserSchema);

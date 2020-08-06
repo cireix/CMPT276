@@ -5,11 +5,17 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 import GoogleMaps from "./GoogleMaps";
 import OrderCard from "./OrderCard";
 import '../css/driver.scss';
+import { getUser } from '../globalFunc/auth';
 
 
 class Driver extends Component {
     constructor(props) {
         super(props);
+        
+        const user = getUser();
+        console.log(user);
+        
+
         this.state = {
             points: [],
             orders: [],
@@ -20,6 +26,8 @@ class Driver extends Component {
             bounds: null,
             current: null,
             accepted: false,
+            user: user,
+            currentOrder: {}
         }
         this.getCurrentLoc();
     }
@@ -65,31 +73,55 @@ class Driver extends Component {
                 this.state.points.push(this.state.orders[x].latLng)
             }
         })
+        axios.post("api/users/getCurrent",{"driver":this.state.user.phoneNumber}).then((data)=>{
+            this.setState({
+                currentOrder: data.data
+            })
+            // console.log(data);
+            
+        })
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(!Object.is(prevState.currentOrder,this.state.currentOrder)){
+            console.log("reached")
+            if (Object.keys(this.state.currentOrder).length > 0) {
+                console.log(this.state.currentOrder)
+                this.updateLatLng(this.state.currentOrder.latLng)
+                // this.props.updateZoom();
+                this.updateBounds(this.state.currentOrder.latLng);
+            } 
+        }
     }
     render() {
         return (
            <div className="driverMain">
-               <div className="orderList">
-                   <p className="title has-text-centered">Order List</p>
-                {this.state.orders.map((data,idx)=>{
-                    return(
-                        // <div>{data.phone}</div>
-                        <OrderCard address={data.address}
-                            latLng={data.latLng}
-                            phone={data.phone}
-                            stripeToken={data.stripeToken}
-                            updateLatLng={this.updateLatLng}
-                            updateZoom={this.updateZoom}
-                            updateBounds={this.updateBounds}
-                            acceptOrder={this.acceptOrder}
-                            products={data.products}
-                            current={this.state.current}
-                            accepted={this.state.accepted}
-                            allOrders={this.state.orders}
-                        />
-                    )
-                })}
-               </div>
+               {Object.keys(this.state.currentOrder).length === 0 ? 
+                    <div className="orderList">
+                        <p className="title has-text-centered">Order List</p>
+                            {this.state.orders.map((data,idx)=>{
+                                return(
+                                    // <div>{data.phone}</div>
+                                    <OrderCard 
+                                        driver={this.state.user}
+                                        address={data.address}
+                                        latLng={data.latLng}
+                                        phone={data.phone}
+                                        stripeToken={data.stripeToken}
+                                        updateLatLng={this.updateLatLng}
+                                        updateZoom={this.updateZoom}
+                                        updateBounds={this.updateBounds}
+                                        acceptOrder={this.acceptOrder}
+                                        products={data.products}
+                                        current={this.state.current}
+                                        accepted={this.state.accepted}
+                                        allOrders={this.state.orders}
+                                    />
+                                )
+                        })}
+                    </div> :
+                    <div className="orderList">Current Order</div>
+                }
+               
 
                 <GoogleMaps ref="theMap"
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo"

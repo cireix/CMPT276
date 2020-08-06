@@ -38,7 +38,6 @@ class OrderCard extends Component {
           directions: null,
           total: "$"+total.toFixed(2),
           accepted: false,
-          outsideAccepted: false,
       }
     }
     componentDidMount(){
@@ -84,17 +83,12 @@ class OrderCard extends Component {
                 }
               });
         }
-        if(prevProps.accepted != this.props.accepted) {
-          this.setState({
-            outsideAccepted: true
-          })
-        }
     }
     sendDetails = () => {
-       axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,phone:this.props.phone})
-        .then(resp => {
-          //test
-        })
+       axios.post('api/orders/acceptOrder', {stripeToken:this.props.stripeToken,
+        phone:this.props.phone,
+        driver:this.props.driver.phoneNumber
+      })
     }
     refreshMap = () =>{
         this.props.updateLatLng(this.props.latLng)
@@ -111,7 +105,7 @@ class OrderCard extends Component {
         const isAccepted = this.props.allOrders.find(({ stripeToken }) => stripeToken === this.props.stripeToken && this.state.accepted);
 
         return (
-           <div className="orderCard" onClick={()=>{if(!this.state.outsideAccepted){this.refreshMap()}}}>
+           <div className="orderCard" onClick={()=>{this.refreshMap()}}>
                <div className="order-info">
                     {
                         this.props.products.map(p => {

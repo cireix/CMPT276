@@ -37,6 +37,10 @@ const OrderSchema = new Schema({
     verification: {
         type: Number,
         require: true,
+    },
+    driver: {
+        type: String,
+        require: false
     }
     
     

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../../models/Order");
+const User = require("../../models/User");
 var stripe = require('stripe')('sk_test_51H6m1cIWCPZAHnFy1Q65wxXU51FefPYrmKDc2DFMVyOSSE7dgQICtihQx1p41CVAKWEHd9qq2tZ9FhLA01BrD3d900RwktcsJX');
 const accountSid = process.env.TWILSid;
 const authToken = process.env.TWILAuth;
@@ -74,22 +75,25 @@ router.post("/acceptOrder",(req,res) => {
             res.status(400).json({message: "Order has already been accepted"})
             return;
         }
-        Order.updateOne({"stripeToken":req.body.stripeToken},{"status":1}).then(resp => {
+        Order.updateOne({"stripeToken":req.body.stripeToken},{"status":1,"driver":req.body.driver}).then(resp => {
             twil.messages.create({
 				to: req.body.phone,
 				from: "+16042391939",
 				body: 'Your order is on its way!\nReply with ' + order.verification + ' when you have received your order!'
 			})
             //Send SMS to client
-            res.json({message:"Accepted"})
+            
+            User.updateOne({ "phone": req.body.driver }, {"currentOrder":req.body.stripeToken}).then(user2 => {
+                res.json({message:"Accepted"})
+            });
 
+            
         })
     })
 })
 router.post("/sms", (req, res) => {
 	var msg = req.body.Body.toLowerCase();
     var num = req.body.From;
-
     msg = Number.parseInt(msg);
     if (!msg) {
         console.log("Input error")
@@ -119,7 +123,10 @@ router.post("/sms", (req, res) => {
 				body: 'Thank you!'
 			})
             //Send Thank you SMS to client
-            res.json({message:"Finished"})
+            User.updateOne({"phone":order.driver},{"currentOrder":""}).then((resp2)=>{
+                res.json({message:"Finished"})
+            })
+            
         })
     })
 })
