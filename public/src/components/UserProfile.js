@@ -6,7 +6,7 @@ import { getNotifications } from "../service/service";
 import OrderInfoPanel from './OrderInfoPanel';
 import OrderInfo from './OrderInfo';
 import axios from "axios"
-import socketIOClient from "socket.io-client"
+import {socket} from "./../globalFunc/Socket";
 export default class UserProfile extends React.Component {
     constructor(){
         super();
@@ -16,7 +16,6 @@ export default class UserProfile extends React.Component {
         }
     }
     componentDidMount() {
-        const socket = socketIOClient();
         socket.on("newNotif", (data)=>{
             if(data.user === this.state.user.phoneNumber){
                 // console.log(data);

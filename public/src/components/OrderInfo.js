@@ -4,8 +4,8 @@ import '../css/OrderInfo.scss'
 import { withGoogleMap, GoogleMap, Marker, withScriptjs, DirectionsRenderer } from 'react-google-maps';
 import { compose, withProps, lifecycle } from "recompose"
 import axios from 'axios';
-import socketIOClient from "socket.io-client"
-
+import {toast} from "react-toastify"
+import {socket} from "./../globalFunc/Socket";
 const MiniMap = compose(
     withProps({
       googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo",
@@ -100,12 +100,13 @@ export default class OrderInfo extends React.PureComponent {
         }
     }
     componentDidMount(){
-        const socket = socketIOClient();
         axios.post("api/users/getLocation",{orderId: this.props.details.stripeToken}).then((loc)=>{
             console.log("GOT INITIAL",loc)
             this.setState({driver:loc.data})
+            this.forceUpdate();
         })
         socket.on("location",(loc)=>{
+            console.log("new location",loc)
             this.setState({driver:loc});
         })
     }

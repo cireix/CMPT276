@@ -7,7 +7,7 @@ import CurrentCard from './CurrentCard';
 import { sendAlmost, sendHere, sendLocation } from "../globalFunc/Socket";
 import '../css/driver.scss';
 import { createNotification } from "../service/service";
-import socketIOClient from "socket.io-client"
+import {socket} from "./../globalFunc/Socket";
 class Driver extends Component {
     constructor(props) {
         super(props);
@@ -38,7 +38,7 @@ class Driver extends Component {
     getCurrentLoc = () => {
         console.log("Getting location")
         sendLocation(this.state.currentOrder.phone,this.state.current)
-        
+        console.log("sendLocation")
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
             var pos = {
@@ -109,7 +109,6 @@ class Driver extends Component {
     }
     componentDidMount() {
         var self = this;
-        const socket = socketIOClient();
         socket.on("newOrder",(data)=>{
             this.state.orders.push(data);
             this.forceUpdate();
@@ -166,6 +165,13 @@ class Driver extends Component {
             current: {lat: 49.2222, lng: -123.0021}
         })
         // this.forceUpdate();
+        sendLocation(this.state.currentOrder.phone,this.state.current)
+        sendAlmost(this.state.currentOrder.phone,3)
+        createNotification({
+            user: this.state.currentOrder.phone,
+            message: "Your order is "+3+" mins away!",
+            orderId: this.state.currentOrder.stripeToken,
+        })
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)
     }
@@ -174,6 +180,7 @@ class Driver extends Component {
             current: {lat: 49.2243, lng: -123.0046}
         })
         // this.forceUpdate();
+        sendLocation(this.state.currentOrder.phone,this.state.current)
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)
     }
@@ -182,6 +189,7 @@ class Driver extends Component {
             current: {lat: 49.2258450, lng: -123.0057950}
         })
         // this.forceUpdate();
+        sendLocation(this.state.currentOrder.phone,this.state.current)
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)
     }

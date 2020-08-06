@@ -1,6 +1,7 @@
 import {toast} from "react-toastify"
 import socketIOClient from "socket.io-client"
-const socket = socketIOClient();
+
+export const socket = socketIOClient();
 
 socket.on("accepted",(data)=>{
     toast.success("Your order is on its way!")
@@ -11,12 +12,11 @@ socket.on("almost",(data)=>{
 socket.on("here",(data)=>{
     toast.success("Your order is here!")
 })
-// socket.on("newOrder")
-// socket.on("endOrder")
-// socket.on("newNotif")
+
 
 export function sendLocation(client,loc) {
     socket.emit("location",client,loc)
+    console.log("location sent")
 }
 export function sendHere(client){
     socket.emit("here",client)
@@ -40,3 +40,4 @@ export function logoutUser(user) {
         socket.emit("logout",user["phoneNumber"])
     }
 }
+// export socket;
