@@ -13,6 +13,10 @@ const NotifSchema = new Schema({
 	timestamp: {
 		type: String,
 		required: true
-	},
+    },
+    orderId: {
+        type: String,
+        required: true
+    }
 });
 module.exports = Notifications = mongoose.model("notifications", NotifSchema);

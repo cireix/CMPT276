@@ -1,22 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../css/userprofile.scss';
 import { getUser, logOut } from '../globalFunc/auth';
 import { logoutUser } from "../service/Socket";
 import { getNotifications } from "../service/service";
 export default function UserProfile(props) {
+    const [notifs, setNotifs] = useState([])
     const user = getUser();
     console.log(user);
     getNotifications({user:user.phoneNumber}).then((data)=>{
-        console.log(data);
+        console.log(data.data["notifs"]);
+        setNotifs(data.data["notifs"])
     });
 
     const logout = () => {
-        
-
         logoutUser(user);
         logOut();
         // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
-        
         props.close("logout");
     }
 
@@ -86,11 +85,13 @@ export default function UserProfile(props) {
                 )}
                 <br />
                 <div className="notifications">
-                    <div className="nMessage">
-                        <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
-                        <p class="n-m">Your order is on its way!</p>
-                        <p class="n-t">2019-06-26 19:10:10</p>
-                    </div>
+                    {notifs && notifs.length > 0 && 
+                        <div className="nMessage">
+                            <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
+                            <p class="n-m">Your order is on its way!</p>
+                            <p class="n-t">2019-06-26 19:10:10</p>
+                        </div>
+                    }
                 </div>
         </div>
     )

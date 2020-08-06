@@ -229,7 +229,8 @@ router.post("/createNotification", (req,res)=>{
 	const newNotif = new Notif({
 		user: req.body.user,
 		message: req.body.message,
-		timestamp: new Date()
+		timestamp: new Date(),
+		orderId: req.body.orderId,
 	});
 	newNotif.save();
 	res.send("Notification created.");
