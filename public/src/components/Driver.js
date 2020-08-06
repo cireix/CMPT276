@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
-// import {toast} from 'react-toastify';
 import GoogleMaps from "./GoogleMaps";
 import OrderCard from "./OrderCard";
-import '../css/driver.scss';
 import { getUser } from '../globalFunc/auth';
 import CurrentCard from './CurrentCard';
-
+import { sendAlmost, sendHere, sendLocation } from "../service/Socket";
+import '../css/driver.scss';
 
 class Driver extends Component {
     constructor(props) {
@@ -32,8 +30,13 @@ class Driver extends Component {
         }
         this.getCurrentLoc();
     }
+    toGoogleLatLng(loc) {
+        const googleMaps = window.google.maps
+        return new googleMaps.LatLng(loc.lat,loc.lng)
+    }
     getCurrentLoc = () => {
         console.log("Getting location")
+        sendLocation(this.state.currentOrder.phone,this.state.current)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
             var pos = {
@@ -47,17 +50,33 @@ class Driver extends Component {
                 driver: this.state.user.phoneNumber,
                 loc: pos
             })
+            
           });
         }
+        if(this.state.currentOrder && Object.keys(this.state.currentOrder).length !== 0){
+            this.updateBounds(this.state.currentOrder.latLng);
+            const googleMaps = window.google.maps
+            new googleMaps.DirectionsService().route({
+                origin: this.toGoogleLatLng(this.state.current),
+                destination: this.toGoogleLatLng(this.state.currentOrder.latLng),
+                travelMode: googleMaps.TravelMode.DRIVING,
+            }, (result, status) => {
+                if (status === googleMaps.DirectionsStatus.OK) {
+                    const eta = result.routes[0].legs[0].duration.value
+                    // this.setState({eta:eta});
+                    console.log(eta)
+                    if(eta <= 60){
+                        sendHere(this.state.currentOrder.phone)
+                    }else if(eta <= 300) {
+                        sendAlmost(this.state.currentOrder.phone,Math.round(eta/60))
+                    }
+                }
+            });
+        }   
     }
     updateLatLng = d => {
         this.setState({
             latLng: d
-        })
-    }
-    updateZoom = () => {
-        this.setState({
-            zoom:18
         })
     }
     updateBounds = (a) =>  {
@@ -68,7 +87,12 @@ class Driver extends Component {
     acceptOrder = (data) => {
         this.setState({
             accepted: true,
-            currentOrder: data
+            currentOrder: data,
+        })
+        axios.post("api/users/createNotification",{
+            user: data.phone,
+            message: "Your order is on its way!",
+            orderId: data.stripeToken
         })
     }
     componentDidMount() {
@@ -83,15 +107,13 @@ class Driver extends Component {
         })
         axios.post("api/users/getCurrent",{"driver":this.state.user.phoneNumber}).then((data)=>{
             this.setState({
-                currentOrder: data.data
+                currentOrder: data.data,
+                accepted: true
             })
         })
         this.setState({
-            interval: setInterval(function(){self.getCurrentLoc()},30000)
+            interval: setInterval(function(){self.getCurrentLoc()},10000)
         })
-        // console.log(this.getCurrentLoc)
-        // this.getCurrentLoc();
-        
     }
     componentDidUpdate(prevProps,prevState){
         if(!Object.is(prevState.currentOrder,this.state.currentOrder)){
@@ -99,10 +121,33 @@ class Driver extends Component {
             if (this.state.currentOrder && Object.keys(this.state.currentOrder).length > 0) {
                 console.log(this.state.currentOrder)
                 this.updateLatLng(this.state.currentOrder.latLng)
-                // this.props.updateZoom();
                 this.updateBounds(this.state.currentOrder.latLng);
             } 
         }
+    }
+    async moveTest(){
+        await this.setState({
+            current: {lat: 49.2222, lng: -123.0021}
+        })
+        // this.forceUpdate();
+        this.updateBounds(this.state.currentOrder.latLng);
+        console.log(this.state.current)
+    }
+    async moveTest2(){
+        await this.setState({
+            current: {lat: 49.2243, lng: -123.0046}
+        })
+        // this.forceUpdate();
+        this.updateBounds(this.state.currentOrder.latLng);
+        console.log(this.state.current)
+    }
+    async moveTest3(){
+        await this.setState({
+            current: {lat: 49.2258450, lng: -123.0057950}
+        })
+        // this.forceUpdate();
+        this.updateBounds(this.state.currentOrder.latLng);
+        console.log(this.state.current)
     }
     render() {
         return (
@@ -121,7 +166,6 @@ class Driver extends Component {
                                         phone={data.phone}
                                         stripeToken={data.stripeToken}
                                         updateLatLng={this.updateLatLng}
-                                        updateZoom={this.updateZoom}
                                         updateBounds={this.updateBounds}
                                         acceptOrder={this.acceptOrder}
                                         products={data.products}
@@ -136,15 +180,15 @@ class Driver extends Component {
                     <div className="orderList">
                         <p className="title has-text-centered">Current Order</p>
                         <CurrentCard order={this.state.currentOrder} />
-
-                        {/* DO NOT DELETE
-                        <button onClick={function(){
-                            this.updateLatLng({lat: 49.3323392, lng: -123.14214399999997})
-                        }}>test</button> */}
+                        <button onClick={this.moveTest.bind(this)}>3 mins away test</button>
+                        <br/>
+                        <button onClick={this.moveTest2.bind(this)}>2 mins away test</button>
+                        <br/>
+                        <button onClick={this.moveTest3.bind(this)}>here test</button>
                     </div>
                 }
 
-                <GoogleMaps ref="theMap"
+                <GoogleMaps
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUutEZ3A0Nn-d2-j66fj7OeY7LLVGP-Wo"
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={ <div style={{ height: 'calc(100vh - 45px)', width: '100%' }} /> }
@@ -154,6 +198,7 @@ class Driver extends Component {
                     latLng={this.state.latLng}
                     bounds={this.state.bounds}
                     current={this.state.current}
+                    accepted={this.state.accepted}
                 />
            </div>
         )

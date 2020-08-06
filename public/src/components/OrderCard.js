@@ -93,7 +93,6 @@ class OrderCard extends Component {
     }
     refreshMap = () =>{
         this.props.updateLatLng(this.props.latLng)
-        this.props.updateZoom();
         this.props.updateBounds(this.props.latLng);
     }
     accept = () => {

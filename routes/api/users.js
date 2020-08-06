@@ -254,6 +254,15 @@ router.post("/getCurrent",(req,res)=>{
 	}).catch(err => console.log(err));
 });
 
+router.post("/getLocation",(req,res)=>{
+	Order.findOne({"stripeToken":req.body.orderId}).then((order)=>{
+		if(order.status !== 1) { res.status(404).json({message: "order already finished"})}
+		User.findOne({"phone":order.driver}).then((user)=>{
+			res.json(user.location)
+		})
+	})
+})
+
 router.post("/updatePos",(req,res)=>{
 	User.updateOne({"phone":req.body.driver},{"location":req.body.loc}).then((resp)=>{
 		// console.log(resp);
@@ -262,23 +271,7 @@ router.post("/updatePos",(req,res)=>{
 })
 
 
-// $(function(){
-//     var calcNewYear = setInterval(function(){
-//         date_future = new Date(new Date().getFullYear() +1, 0, 1);
-//         date_now = new Date();
 
-//         seconds = Math.floor((date_future - (date_now))/1000);
-//         minutes = Math.floor(seconds/60);
-//         hours = Math.floor(minutes/60);
-//         days = Math.floor(hours/24);
-        
-//         hours = hours-(days*24);
-//         minutes = minutes-(days*24*60)-(hours*60);
-//         seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-
-//         $("#time").text("Time until new year:\nDays: " + days + " Hours: " + hours + " Minutes: " + minutes + " Seconds: " + seconds);
-//     },1000);
-// });
 
 
 module.exports = router;

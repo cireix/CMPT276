@@ -74,4 +74,31 @@ io.on("connection",(socket) => {
 			}
 		}
 	})
+	socket.on("almost",(user,eta) => {
+		const socketList = io.sockets.sockets;
+		for(var x in socketList){
+			const c = socketList[x];
+			if(user === c.user) {
+				io.to(c.id).emit("almost",eta);
+			}
+		}
+	})
+	socket.on("here",(user) => {
+		const socketList = io.sockets.sockets;
+		for(var x in socketList){
+			const c = socketList[x];
+			if(user === c.user) {
+				io.to(c.id).emit("here");
+			}
+		}
+	})
+	socket.on("location",(user,loc) => {
+		const socketList = io.sockets.sockets;
+		for(var x in socketList){
+			const c = socketList[x];
+			if(user === c.user) {
+				io.to(c.id).emit("location",loc);
+			}
+		}
+	})
 })

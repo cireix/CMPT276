@@ -8,10 +8,19 @@ import OrderInfo from './OrderInfo';
 import axios from "axios"
 
 export default class UserProfile extends React.Component {
-    
+    constructor(){
+        super();
+        this.state = {
+            notifs: []
+        }
+    }
     componentDidMount() {
         const user = getUser();
         getNotifications({user:user.phoneNumber}).then((data)=>{
+            this.setState({
+                notifs: data.data.notifs.reverse()
+            })
+            console.log(data.data.notifs)
         });
     }
 
@@ -29,6 +38,33 @@ export default class UserProfile extends React.Component {
             component: OrderInfo,
             details: orderDetails
         })
+    }
+    parseTime = (d) => {
+
+        const date1 = new Date();
+        const date2 = new Date(d);
+
+        var seconds = Math.floor((date1 - (date2))/1000);
+        var minutes = Math.floor(seconds/60);
+        var hours = Math.floor(minutes/60);
+        const days = Math.floor(hours/24);
+        
+        hours = hours-(days*24);
+        minutes = minutes-(days*24*60)-(hours*60);
+        seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+
+        var output = ""
+        if(days) {
+            output += days + "d"
+        }else if(hours) {
+            output += hours + "h"
+        }else if(minutes) {
+            output += minutes + "m"
+        }else{
+            output += seconds + "s"
+        }
+        output += " ago"
+        return output
     }
 
     render() {
@@ -98,16 +134,20 @@ export default class UserProfile extends React.Component {
                     )}
                     <br />
                     <div className="notifications">
-                        <div className="nMessage" onClick={()=>{
-                             axios.post('api/orders/getOrder', {orderId: "tok_1H7rXyIWCPZAHnFyjn2q1ydp"}).then(resp => {
-                                this.toOrderDetail(resp.data)
-                            })    
-                            
-                        }}>
-                            <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
-                            <p class="n-m">Your order is on its way!</p>
-                            <p class="n-t">2019-06-26 19:10:10</p>
-                        </div>
+                        {this.state.notifs.map((n)=>{
+                            return (
+                                <div className="nMessage" onClick={()=>{
+                                    axios.post('api/orders/getOrder', {orderId: n.orderId}).then(resp => {
+                                       this.toOrderDetail(resp.data)
+                                   })     
+                                }}>
+                                   <p class="n-o">{n.orderId.substring(4)}</p>
+                                   <p class="n-m">{n.message}</p>
+                                   <p class="n-t">{this.parseTime(n.timestamp)}</p>
+                               </div>
+                            )
+                        })}
+                        
                     </div>
             </div>
         )

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import { Map, GoogleApiWrapper, Marker,InfoWindow } from 'google-maps-react';
 import { withGoogleMap, GoogleMap, Marker, withScriptjs, DirectionsRenderer } from 'react-google-maps';
-// import {toast} from 'react-toastify';
+
 // https://github.com/fullstackreact/google-maps-react
 class GoogleMaps extends Component {
     constructor(props) {
@@ -13,8 +12,8 @@ class GoogleMaps extends Component {
             ds: new window.google.maps.DirectionsService()
         }
     }
-    componentDidMount(){
-      this.setState({
+    async componentDidMount(){
+      await this.setState({
         points: this.props.points
       })
     }
@@ -29,7 +28,6 @@ class GoogleMaps extends Component {
         })
       }
       if(prevProps.points != this.props.points){
-        console.log("Should update! new points")
         this.setState({
           points: this.props.points
         })
@@ -68,20 +66,16 @@ class GoogleMaps extends Component {
             center={this.props.latLng}
             zoom={this.props.zoom}
           >
-            {/* //points have not loaded and rendered */}
             {this.state.points.map(p => {
                 return(<Marker position={p}></Marker>)
             })}
             {this.state.directions && <DirectionsRenderer directions={this.state.directions} />}
-            {this.state.current && <Marker position={this.state.current}></Marker>}
+            {!this.props.accepted && this.state.current && <Marker position={this.state.current}></Marker>}
           </GoogleMap>
         )
     }
 }
-const mapStyles = {
-    width: '70vw',
-    height: 'calc(100vh - 45px)',
-  };
+
 
 
 export default withScriptjs(withGoogleMap(GoogleMaps));
