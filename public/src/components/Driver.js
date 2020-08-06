@@ -65,7 +65,6 @@ class Driver extends Component {
             }, (result, status) => {
                 if (status === googleMaps.DirectionsStatus.OK) {
                     var eta = result.routes[0].legs[0].duration.value
-                    // this.setState({eta:eta});
                     console.log(eta)
                     if(eta <= 60){
                         sendHere(this.state.currentOrder.phone)
@@ -118,7 +117,7 @@ class Driver extends Component {
         socket.on("finishOrder",(orderId)=>{
             console.log(orderId);
             if(this.state.currentOrder && 
-                Object.keys(this.state.currentOrder).length === 0 &&
+                Object.keys(this.state.currentOrder).length !== 0 &&
                 orderId === this.state.currentOrder.stripeToken){
                     //finish order
                     this.setState({
