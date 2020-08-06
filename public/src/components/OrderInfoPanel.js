@@ -5,7 +5,6 @@ import '../css/orderInfoPanel.scss';
 class OrderInfoPanel extends React.Component {
     state = {
         component: null,
-
         active: false
     }
 
@@ -20,7 +19,8 @@ class OrderInfoPanel extends React.Component {
 
     close = () => {
         this.setState({
-            active: false
+            active: false,
+            component: null
         })
     }
 

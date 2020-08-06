@@ -113,8 +113,8 @@ class Driver extends Component {
             this.state.orders.push(data);
             this.forceUpdate();
         })
-        socket.on("finishOrder",(orderId)=>{
-            console.log(orderId);
+        socket.on("finishOrder",(order)=>{
+            var orderId = order.id;
             if(this.state.currentOrder && 
                 Object.keys(this.state.currentOrder).length !== 0 &&
                 orderId === this.state.currentOrder.stripeToken){

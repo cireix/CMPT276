@@ -132,7 +132,7 @@ router.post("/sms", (req, res) => {
 			})
             //Send Thank you SMS to client
             User.updateOne({"phone":order.driver},{"currentOrder":""}).then((resp2)=>{
-                io.emit("finishOrder",order.stripeToken)
+                io.emit("finishOrder",{id:order.stripeToken,phone:order.phone})
                 res.json({message:"Finished"})
             })
             

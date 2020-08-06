@@ -1,8 +1,9 @@
 import {toast} from "react-toastify"
 import socketIOClient from "socket.io-client"
-
+import { getUser } from '../globalFunc/auth';
 export const socket = socketIOClient();
 
+var user = getUser();
 socket.on("accepted",(data)=>{
     toast.success("Your order is on its way!")
 })
@@ -11,6 +12,12 @@ socket.on("almost",(data)=>{
 })
 socket.on("here",(data)=>{
     toast.success("Your order is here!")
+})
+socket.on("finishOrder",(order)=>{
+    var phone = order.phone;
+    if(user.phoneNumber === phone) {
+        toast.success("Your order has been completed!")
+    }
 })
 
 
