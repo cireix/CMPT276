@@ -3,6 +3,8 @@ import '../css/userprofile.scss';
 import { getUser, logOut } from '../globalFunc/auth';
 import { logoutUser } from "../service/Socket";
 import { getNotifications } from "../service/service";
+import OrderInfoPanel from './OrderInfoPanel';
+import OrderInfo from './OrderInfo';
 
 export default class UserProfile extends React.Component {
     
@@ -20,6 +22,12 @@ export default class UserProfile extends React.Component {
         // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
         
         this.props.close("logout");
+    }
+
+    toOrderDetail = () => {
+        OrderInfoPanel.open({
+            component: OrderInfo 
+        })
     }
 
     render() {
@@ -89,7 +97,7 @@ export default class UserProfile extends React.Component {
                     )}
                     <br />
                     <div className="notifications">
-                        <div className="nMessage">
+                        <div className="nMessage" onClick={this.toOrderDetail}>
                             <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
                             <p class="n-m">Your order is on its way!</p>
                             <p class="n-t">2019-06-26 19:10:10</p>
