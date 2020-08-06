@@ -28,7 +28,7 @@ export default class OrderInfo extends React.Component {
                     }
                </div>
                <div className="order-footer">
-                    <div className="order-total">Total: ${parseInt(this.totalPrice())}</div>
+                    <div className="order-total">Total: ${this.totalPrice().toFixed(2)}</div>
                     <div className="order-status">Status: </div>
                </div>
            </div>
