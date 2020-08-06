@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export function getNotifications(param) {
+  return axios.post("api/users/getNotifications",param);
+}
+
+export function createNotification(param) {
+  return axios.post("api/users/createNotification",param);
+}
+
 export function getAllUsers() {
   return axios.post("api/users/allUsers");
 }

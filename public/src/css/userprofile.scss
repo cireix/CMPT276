@@ -9,8 +9,40 @@
 .user-control {
     display: flex;
 }
-
+.panel{
+    overflow-y:scroll;
+}
+.panel-body,.user-profile {
+    height:100%;
+}
 .notifications{
     width:100%;
-    outline:black;
+    height: 50%;
+    border:1px solid black;
+    overflow-y:scroll;
+    margin-bottom:30px;
+}
+.nMessage{
+    position: relative;
+    height: 5rem;
+    background: lightblue;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .n-o{
+        font-size:0.75rem;
+        position: absolute;
+        top: 5px;
+        left: 5px
+    }
+    .n-m{
+
+    }
+    .n-t{
+        font-size:0.75rem;
+        position: absolute;
+        bottom: 5px;
+        right: 5px
+    }
 }

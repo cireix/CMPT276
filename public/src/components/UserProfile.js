@@ -2,10 +2,16 @@ import React from 'react'
 import '../css/userprofile.scss';
 import { getUser, logOut } from '../globalFunc/auth';
 import { logoutUser } from "../service/Socket";
+import { getNotifications } from "../service/service";
 export default function UserProfile(props) {
+    const user = getUser();
+    console.log(user);
+    getNotifications({user:user.phoneNumber}).then((data)=>{
+        console.log(data);
+    });
 
     const logout = () => {
-        const user = getUser();
+        
 
         logoutUser(user);
         logOut();
@@ -80,7 +86,11 @@ export default function UserProfile(props) {
                 )}
                 <br />
                 <div className="notifications">
-                    test
+                    <div className="nMessage">
+                        <p class="n-o">1H8EGpIWCPZAHnFyWp1TPC7k</p>
+                        <p class="n-m">Your order is on its way!</p>
+                        <p class="n-t">2019-06-26 19:10:10</p>
+                    </div>
                 </div>
         </div>
     )

@@ -12,7 +12,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
-
+const Notif = require("../../models/Notifications");
 function generateCode() {
 	return Math.floor(Math.random() * Math.floor(1000000));
 }
@@ -214,4 +214,45 @@ router.post("/allUsers", (req, res) => {
 		}
 	}).catch(err => console.log(err));
 });
+
+router.post("/getNotifications", (req,res)=>{
+	Notif.find({"user": req.body.user}).then(notifs => {
+		if (!notifs) {
+			return res.status(404).json({ message: "notifications not found" });
+		} else {
+			res.json({ notifs });
+		}
+	}).catch(err => console.log(err));
+})
+
+router.post("/createNotification", (req,res)=>{
+	const newNotif = new Notif({
+		user: req.body.user,
+		message: req.body.message,
+		timestamp: new Date()
+	});
+	newNotif.save();
+	res.send("Notification created.");
+})
+
+
+// $(function(){
+//     var calcNewYear = setInterval(function(){
+//         date_future = new Date(new Date().getFullYear() +1, 0, 1);
+//         date_now = new Date();
+
+//         seconds = Math.floor((date_future - (date_now))/1000);
+//         minutes = Math.floor(seconds/60);
+//         hours = Math.floor(minutes/60);
+//         days = Math.floor(hours/24);
+        
+//         hours = hours-(days*24);
+//         minutes = minutes-(days*24*60)-(hours*60);
+//         seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+
+//         $("#time").text("Time until new year:\nDays: " + days + " Hours: " + hours + " Minutes: " + minutes + " Seconds: " + seconds);
+//     },1000);
+// });
+
+
 module.exports = router;

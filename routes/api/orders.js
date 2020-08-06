@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../../models/Order");
-const User = require("../../models/User");
 var stripe = require('stripe')('sk_test_51H6m1cIWCPZAHnFy1Q65wxXU51FefPYrmKDc2DFMVyOSSE7dgQICtihQx1p41CVAKWEHd9qq2tZ9FhLA01BrD3d900RwktcsJX');
 const accountSid = process.env.TWILSid;
 const authToken = process.env.TWILAuth;

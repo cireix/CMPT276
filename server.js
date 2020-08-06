@@ -68,6 +68,5 @@ io.on("connection",(socket) => {
 		delete userDic[user];
 		console.log(socket.user, "offline")
 		socket.user = null;
-		
 	})
 })
