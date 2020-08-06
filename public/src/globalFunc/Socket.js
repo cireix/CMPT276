@@ -1,6 +1,6 @@
 import {toast} from "react-toastify"
 import socketIOClient from "socket.io-client"
-const socket = socketIOClient("http://localhost:"+process.env.PORT || 3000);
+const socket = socketIOClient();
 
 socket.on("accepted",(data)=>{
     toast.success("Your order is on its way!")
