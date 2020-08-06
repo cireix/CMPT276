@@ -109,7 +109,7 @@ class Driver extends Component {
     }
     componentDidMount() {
         var self = this;
-        const socket = socketIOClient("http://localhost:3000")//+process.env.PORT || 3000);
+        const socket = socketIOClient("http://localhost:"+process.env.PORT || 3000);
         socket.on("newOrder",(data)=>{
             this.state.orders.push(data);
             this.forceUpdate();

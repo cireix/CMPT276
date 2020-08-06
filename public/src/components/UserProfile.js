@@ -16,7 +16,7 @@ export default class UserProfile extends React.Component {
         }
     }
     componentDidMount() {
-        const socket = socketIOClient("http://localhost:3000")//+process.env.PORT || 3000);
+        const socket = socketIOClient("http://localhost:"+process.env.PORT || 3000);
         socket.on("newNotif", (data)=>{
             if(data.user === this.state.user.phoneNumber){
                 // console.log(data);

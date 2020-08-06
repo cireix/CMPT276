@@ -100,7 +100,7 @@ export default class OrderInfo extends React.PureComponent {
         }
     }
     componentDidMount(){
-        const socket = socketIOClient("http://localhost:3000")//+process.env.PORT || 3000);
+        const socket = socketIOClient("http://localhost:"+process.env.PORT || 3000);
         axios.post("api/users/getLocation",{orderId: this.props.details.stripeToken}).then((loc)=>{
             console.log("GOT INITIAL",loc)
             this.setState({driver:loc.data})
