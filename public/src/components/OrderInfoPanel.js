@@ -25,7 +25,7 @@ class OrderInfoPanel extends React.Component {
 
     render() {
         return (
-            <div className={ this.state.active === true ? 'orderInfoPanel-wrapper orderActive' : 'orderInfoPanle-wrapper'}>
+            <div className={ this.state.active === true ? 'orderInfoPanel-wrapper orderActive' : 'orderInfoPanel-wrapper'}>
                 <div className="order-overlayer" onClick={this.close}></div>
                 <div className="orderInfoPanel">
                     <div className="orderInfoPanel-head">
