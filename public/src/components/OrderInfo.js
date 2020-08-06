@@ -18,11 +18,6 @@ const MiniMap = compose(
         const refs = {}
         this.setState({
             refs: {},
-            bounds: null,
-            center: {
-                lat: 41.9, lng: -87.624
-            },
-            markers: [],
             directions: null,
             onMapMounted: ref => {
                 refs.map = ref;
@@ -90,8 +85,18 @@ const MiniMap = compose(
 export default class OrderInfo extends React.PureComponent {
     constructor(props){
         super(props);
+        var status = this.props.details.status;
+        var statusText;
+        if (status === 0) {
+            statusText = "Waiting for a driver"
+        }else if(status === 1) {
+            statusText = "On the way"
+        }else if(status === 3){
+            statusText = "Completed"
+        }
         this.state = {
-            driver: {lat: 49.1,lng:-123.2}
+            driver: {lat: 49.1,lng:-123.2},
+            status: statusText
         }
     }
     componentDidMount(){
@@ -129,11 +134,17 @@ export default class OrderInfo extends React.PureComponent {
                 </div>
                 <div className="order-footer">
                     <div className="order-total">Total: ${this.totalPrice().toFixed(2)}</div>
-                    <div className="order-status">Status: </div>
+                
+                <div className="order-status">Status: {this.state.status}</div>
                 </div>
-                <MiniMap driverLoc={this.state.driver}
-                    current={this.props.details.latLng}    
-                />
+                {this.props.details.status === 1 &&
+                    <div className="hidden">
+                        <div className="order-driver">Phone: {this.props.details.driver}</div>
+                        <MiniMap driverLoc={this.state.driver}
+                            current={this.props.details.latLng}    
+                        />
+                    </div>
+                }
            </div>
        )
    } 

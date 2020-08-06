@@ -36,6 +36,9 @@ export default class CurrentOrder extends React.Component {
                     <div className="order-total">
                       <p><strong>Total: </strong>{this.state.total}</p>
                     </div>
+                    <hr style={{backgroundColor: "black"}}></hr>
+                    <p className="order-addr"><strong>Address: </strong><span>{this.props.order.address}</span></p>
+                    <p className="order-phone"><strong>Phone: </strong><a target={"tel:" + this.props.order.phone}>{this.props.order.phone}</a></p>
                 </div>
             </div>
         )

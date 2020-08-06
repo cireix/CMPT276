@@ -2,15 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const users = require("./routes/api/users");
-const beer = require("./routes/api/beer");
-const orders = require("./routes/api/orders");
 const path = require("path");
 const cors = require('cors');
 const Api = require("twilio/lib/rest/Api");
 const { Console } = require("console");
+
 const app = express();
 const port = process.env.PORT || 5000;
+const server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
+var io = require("./config/socket").init(server);
+const users = require("./routes/api/users");
+const beer = require("./routes/api/beer");
+const orders = require("./routes/api/orders");
+
+
 
 // Bodyparser middleware
 app.use(cors());
@@ -52,8 +58,7 @@ app.use("/api/orders", orders);
 
 
 
-const server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));
-const io = require("socket.io")(server);
+
 
 io.on("connection",(socket) => {
 	socket.on('set', (user) => {
@@ -102,3 +107,14 @@ io.on("connection",(socket) => {
 		}
 	})
 })
+
+module.exports = {
+	init: function(server) {
+        // start socket.io server and cache io value
+        io = require('socket.io').listen(server); io.origins('*:*');
+        return io;
+    },
+	getIO: function() {
+		return io;
+	}
+}

@@ -6,6 +6,7 @@ import { getUser } from '../globalFunc/auth';
 import CurrentCard from './CurrentCard';
 import { sendAlmost, sendHere, sendLocation } from "../service/Socket";
 import '../css/driver.scss';
+import { createNotification } from "../service/service";
 
 class Driver extends Component {
     constructor(props) {
@@ -37,6 +38,7 @@ class Driver extends Component {
     getCurrentLoc = () => {
         console.log("Getting location")
         sendLocation(this.state.currentOrder.phone,this.state.current)
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
             var pos = {
@@ -62,13 +64,24 @@ class Driver extends Component {
                 travelMode: googleMaps.TravelMode.DRIVING,
             }, (result, status) => {
                 if (status === googleMaps.DirectionsStatus.OK) {
-                    const eta = result.routes[0].legs[0].duration.value
+                    var eta = result.routes[0].legs[0].duration.value
                     // this.setState({eta:eta});
                     console.log(eta)
                     if(eta <= 60){
                         sendHere(this.state.currentOrder.phone)
+                        createNotification({
+                            user: this.state.currentOrder.phone,
+                            message: "Your order is here!",
+                            orderId: this.state.currentOrder.stripeToken,
+                        })
                     }else if(eta <= 300) {
-                        sendAlmost(this.state.currentOrder.phone,Math.round(eta/60))
+                        eta = Math.round(eta/60)
+                        sendAlmost(this.state.currentOrder.phone,eta)
+                        createNotification({
+                            user: this.state.currentOrder.phone,
+                            message: "Your order is "+eta+" mins away!",
+                            orderId: this.state.currentOrder.stripeToken,
+                        })
                     }
                 }
             });
@@ -97,6 +110,28 @@ class Driver extends Component {
     }
     componentDidMount() {
         var self = this;
+        const socket = window.socket;
+        socket.on("newOrder",(data)=>{
+            this.state.orders.push(data);
+            this.forceUpdate();
+        })
+        socket.on("endOrder",(orderId)=>{
+            if(this.state.currentOrder && 
+                Object.keys(this.state.currentOrder).length === 0 &&
+                orderId === this.state.currentOrder.stripeToken){
+                    //finish order
+                    this.setState({
+                        accepted: false,
+                        currentOrder: [],
+                    })
+                    for(var x in this.state.orders){
+                        const cur = this.state.orders[x]
+                        if(cur.stripeToken === orderId){
+                            this.state.orders.splice(x,1);
+                        }
+                    }
+            }
+        })
         axios.post('api/orders/getOrders', {}).then(resp => {
             this.setState({
                 orders: resp.data

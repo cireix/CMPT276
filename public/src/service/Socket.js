@@ -10,6 +10,9 @@ socket.on("almost",(data)=>{
 socket.on("here",(data)=>{
     toast.success("Your order is here!")
 })
+// socket.on("newOrder")
+// socket.on("endOrder")
+// socket.on("newNotif")
 
 export function sendLocation(client,loc) {
     socket.emit("location",client,loc)

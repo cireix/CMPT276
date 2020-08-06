@@ -7,8 +7,7 @@ const accountSid = process.env.TWILSid;
 const authToken = process.env.TWILAuth;
 const twil = require("twilio")(accountSid, authToken);
 require("dotenv").config();
-
-
+const io = require("./../../config/socket").getIO();
 function generateCode() {
 	return Math.floor(Math.random() * Math.floor(1000000));
 }
@@ -43,6 +42,7 @@ router.post("/checkout", (req, res) => {
                             verification: verification
                         });
                         newOrder.save()
+                        io.emit("newOrder", newOrder);
                         res.json({message: "Order placed."})
                     }else{
                         return res.status(404).json({ message: "Have not paid for order. Cannot add to DB" });
@@ -130,11 +130,13 @@ router.post("/sms", (req, res) => {
 			})
             //Send Thank you SMS to client
             User.updateOne({"phone":order.driver},{"currentOrder":""}).then((resp2)=>{
+                io.emit("finishOrder",order.stripeToken)
                 res.json({message:"Finished"})
             })
             
         })
     })
+
 })
 
 module.exports = router;
