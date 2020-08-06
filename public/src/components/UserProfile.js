@@ -1,12 +1,12 @@
 import React from 'react'
 import '../css/userprofile.scss';
 import { getUser, logOut } from '../globalFunc/auth';
-import { logoutUser } from "../service/Socket";
+import { logoutUser } from "../globalFunc/Socket";
 import { getNotifications } from "../service/service";
 import OrderInfoPanel from './OrderInfoPanel';
 import OrderInfo from './OrderInfo';
 import axios from "axios"
-
+import socketIOClient from "socket.io-client"
 export default class UserProfile extends React.Component {
     constructor(){
         super();
@@ -16,7 +16,7 @@ export default class UserProfile extends React.Component {
         }
     }
     componentDidMount() {
-        const socket = window.socket;
+        const socket = socketIOClient("http://localhost:3000")//+process.env.PORT || 3000);
         socket.on("newNotif", (data)=>{
             if(data.user === this.state.user.phoneNumber){
                 // console.log(data);
@@ -161,9 +161,9 @@ export default class UserProfile extends React.Component {
                                        this.toOrderDetail(resp.data)
                                    })     
                                 }}>
-                                   <p class="n-o">{n.orderId.substring(4)}</p>
-                                   <p class="n-m">{n.message}</p>
-                                   <p class="n-t">{this.parseTime(n.timestamp)}</p>
+                                   <p className="n-o">{n.orderId.substring(4)}</p>
+                                   <p className="n-m">{n.message}</p>
+                                   <p className="n-t">{this.parseTime(n.timestamp)}</p>
                                </div>
                             )
                         })}

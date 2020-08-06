@@ -4,7 +4,7 @@ import EnzymeAadpter from "enzyme-adapter-react-16";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "mutationobserver-shim";
 import SignUp from '../pages/SignUp'
-import { register, register2 } from "../service/service";
+import { register1, register2 } from "../service/service";
 import axios from "axios";
 jest.mock("axios");
 
@@ -28,7 +28,7 @@ describe("render SignUp component", () => {
   test("test register api", async () => {
 
     axios.post.mockResolvedValue({ data: { code: -1 } });
-    let result = await register();
+    let result = await register1();
     expect(result.data).toEqual({ code: -1 });
   });
 

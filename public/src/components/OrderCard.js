@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import {toast} from 'react-toastify';
 import '../css/orderCard.scss';
-import { sendAccepted } from "../service/Socket";
+import { sendAccepted } from "../globalFunc/Socket";
 // address: "CF Richmond Centre, Number 3 Road, Richmond, BC, Canada"
 // complete: false
 // latLng: {lat: 49.1672705, lng: -123.1384481}

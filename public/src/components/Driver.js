@@ -4,10 +4,10 @@ import GoogleMaps from "./GoogleMaps";
 import OrderCard from "./OrderCard";
 import { getUser } from '../globalFunc/auth';
 import CurrentCard from './CurrentCard';
-import { sendAlmost, sendHere, sendLocation } from "../service/Socket";
+import { sendAlmost, sendHere, sendLocation } from "../globalFunc/Socket";
 import '../css/driver.scss';
 import { createNotification } from "../service/service";
-
+import socketIOClient from "socket.io-client"
 class Driver extends Component {
     constructor(props) {
         super(props);
@@ -109,7 +109,7 @@ class Driver extends Component {
     }
     componentDidMount() {
         var self = this;
-        const socket = window.socket;
+        const socket = socketIOClient("http://localhost:3000")//+process.env.PORT || 3000);
         socket.on("newOrder",(data)=>{
             this.state.orders.push(data);
             this.forceUpdate();

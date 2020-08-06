@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Layout from "../Layout";
 import "../css/login.scss";
 import { setToken } from "../globalFunc/auth";
-import { setUser } from "./../service/Socket";
+import { setUser } from "../globalFunc/Socket";
 
 export default function Login(props) {
   const { register, handleSubmit, errors } = useForm();

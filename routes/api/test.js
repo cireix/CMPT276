@@ -55,7 +55,6 @@ function T_checkout(phone,products,name,address,latLng,)
     data.latLng=latLng;
     getResponse("/checkout","POST",data,fun);
     console.log(res);
-
 }
 
 //Generate random order number

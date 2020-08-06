@@ -2,6 +2,7 @@ let io;
 module.exports = {
     init: function(server) {
         io = require('socket.io').listen(server);
+        io.origins('*:*');
         return io;
     },
     getIO: function() {

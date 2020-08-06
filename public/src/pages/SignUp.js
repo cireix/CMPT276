@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import decode from "jwt-decode";
 import Layout from "../Layout";
 import { setToken } from "../globalFunc/auth";
-import { setUser } from "../service/Socket";
+import { setUser } from "../globalFunc/Socket";
 
 export default function SignUp(props) {
   const { register, handleSubmit, errors, watch } = useForm();

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import store from './store';
 import { getUser } from './globalFunc/auth';
-import { setUser } from "./service/Socket";
+import { setUser } from "./globalFunc/Socket";
 
 
 const user = getUser();
