@@ -115,7 +115,8 @@ class Driver extends Component {
             this.state.orders.push(data);
             this.forceUpdate();
         })
-        socket.on("endOrder",(orderId)=>{
+        socket.on("finishOrder",(orderId)=>{
+            console.log(orderId);
             if(this.state.currentOrder && 
                 Object.keys(this.state.currentOrder).length === 0 &&
                 orderId === this.state.currentOrder.stripeToken){
@@ -131,6 +132,7 @@ class Driver extends Component {
                         }
                     }
             }
+            this.forceUpdate();
         })
         axios.post('api/orders/getOrders', {}).then(resp => {
             this.setState({

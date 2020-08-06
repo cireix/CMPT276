@@ -11,6 +11,7 @@ const twil = require("twilio")(accountSid, authToken);
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
+const io = require("./../../config/socket").getIO();
 const User = require("../../models/User");
 const Notif = require("../../models/Notifications");
 const Order = require("../../models/Order");
@@ -233,6 +234,7 @@ router.post("/createNotification", (req,res)=>{
 		timestamp: new Date(),
 		orderId: req.body.orderId,
 	});
+	io.emit("newNotif",newNotif)
 	newNotif.save();
 	res.send("Notification created.");
 })

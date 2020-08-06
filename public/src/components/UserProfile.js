@@ -11,10 +11,31 @@ export default class UserProfile extends React.Component {
     constructor(){
         super();
         this.state = {
-            notifs: []
+            notifs: [],
+            user:getUser()
         }
     }
     componentDidMount() {
+        const socket = window.socket;
+        socket.on("newNotif", (data)=>{
+            if(data.user === this.state.user.phoneNumber){
+                // console.log(data);
+                // console.log(this.state.notifs)
+                // this.state.notifs.push(data);
+                var tempNotifs = [];
+                tempNotifs.push(data)
+                
+                for(var i = 0; i < this.state.notifs.length; i ++) {
+                    tempNotifs.push(this.state.notifs[i])
+                }
+                
+                this.setState({
+                    notifs: tempNotifs
+                })
+                this.forceUpdate();
+            }
+            
+        })
         const user = getUser();
         getNotifications({user:user.phoneNumber}).then((data)=>{
             this.setState({
@@ -25,8 +46,7 @@ export default class UserProfile extends React.Component {
     }
 
     logout = () => {
-        const user = getUser();
-        logoutUser(user);
+        logoutUser(this.state.user);
         logOut();
         // Since this component doesn't have access to Route, pass the string "logout" to the Header component to reload the page
         
