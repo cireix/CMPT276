@@ -188,6 +188,12 @@ class Driver extends Component {
         })
         sendLocation(this.state.currentOrder.phone,this.state.current)
         this.updateBounds(this.state.currentOrder.latLng);
+        sendAlmost(this.state.currentOrder.phone,2)
+        createNotification({
+            user: this.state.currentOrder.phone,
+            message: "Your order is "+2+" mins away!",
+            orderId: this.state.currentOrder.stripeToken,
+        })
         console.log(this.state.current)
     }
     async moveTest3(){
@@ -195,6 +201,12 @@ class Driver extends Component {
             current: {lat: 49.2258450, lng: -123.0057950}
         })
         sendLocation(this.state.currentOrder.phone,this.state.current)
+        sendHere(this.state.currentOrder.phone)
+        createNotification({
+            user: this.state.currentOrder.phone,
+            message: "Your order is here!",
+            orderId: this.state.currentOrder.stripeToken,
+        })
         this.updateBounds(this.state.currentOrder.latLng);
         console.log(this.state.current)
     }
